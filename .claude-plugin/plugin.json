@@ -1,6 +1,6 @@
 {
   "name": "copilot",
-  "description": "Bern's copilot twin",
+  "description": "Bern's copilot twin — neuro-design review, a memory wiki, commit discipline, a product/GTM desk, and a software-architecture desk for Go + Vite/React + Kubernetes projects",
   "version": "0.1.0",
   "author": {
     "name": "Bernardo Forcillo"
