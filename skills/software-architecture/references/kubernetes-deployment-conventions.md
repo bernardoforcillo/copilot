@@ -83,8 +83,10 @@ resource's own independently-chosen name.
 
 Every workload's `securityContext` carries the same baseline: `runAsNonRoot: true`; every Linux
 capability dropped (`drop: ["ALL"]`, adding nothing back unless a specific, documented need
-requires it); `readOnlyRootFilesystem: true`, with an `emptyDir` volume mounted wherever the app
-genuinely needs scratch space (most commonly `/tmp`); and `seccompProfile: RuntimeDefault`. When
+requires it) alongside `allowPrivilegeEscalation: false` (without it, a setuid binary in the image
+could still escalate privileges even with capabilities dropped); `readOnlyRootFilesystem: true`,
+with an `emptyDir` volume mounted wherever the app genuinely needs scratch space (most commonly
+`/tmp`); and `seccompProfile: RuntimeDefault`. When
 the runtime image is itself a distroless non-root image, also set `runAsUser`, `runAsGroup`, and
 `fsGroup` explicitly to that image's actual UID/GID rather than leaving them unset — commonly
 `65532` for `gcr.io/distroless/*:nonroot` images. This baseline applies to every new workload, not
@@ -133,8 +135,9 @@ register every new file in `kustomization.yaml`.
 - Mirror an existing app's `main/` folder for a new app rather than inventing a new layout.
 - Register every new manifest in `kustomization.yaml` — an unregistered manifest silently never
   applies.
-- Apply the full pod-hardening baseline (`runAsNonRoot`, drop `ALL` capabilities, read-only root
-  filesystem, `seccompProfile: RuntimeDefault`) to every new workload.
+- Apply the full pod-hardening baseline (`runAsNonRoot`, drop `ALL` capabilities,
+  `allowPrivilegeEscalation: false`, read-only root filesystem, `seccompProfile: RuntimeDefault`)
+  to every new workload.
 - Keep the `IngressRoute`'s service port in sync with the `Service`'s port.
 - Give a new channel its own distinct `tier` label.
 - Never remove or hand-edit an `$imagepolicy` setter marker.
