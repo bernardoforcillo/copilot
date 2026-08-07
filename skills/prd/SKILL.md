@@ -62,10 +62,12 @@ Empathize pass suggested it, optionally use the PRFAQ format (mock press release
 synthesis artifact bridging Define into Ideate/Prototype.
 
 **4. Ideate** — dispatch `product-strategist`
-The agent peer-dispatches `gtm-engineer`, `growth-marketer`, and `neuro-design-reviewer` in
-parallel, each strictly report-only, for the acquisition, positioning, and in-product-UX lenses
-respectively. Present 2-3 candidate approaches back to the user with their trade-offs laid out
-side by side, plus a recommendation — the synthesis, not three raw sub-reports stapled together.
+The agent peer-dispatches three lenses in parallel, each strictly report-only: `growth-marketer`
+for acquisition, network effects, and referral implications; `gtm-engineer` for positioning,
+messaging, and how the thing gets found once it ships; and `neuro-design-reviewer` for
+in-product flow, activation, and retention mechanics. Present 2-3 candidate approaches back to
+the user with their trade-offs laid out side by side, plus a recommendation — the synthesis, not
+three raw sub-reports stapled together.
 
 **5. Prototype** — dispatch `product-strategist`
 The agent runs an anti-confirmation-bias gate (Assumption Mapping + a Riskiest Assumption Test)
