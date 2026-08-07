@@ -27,22 +27,26 @@ Before the first pass, always read the two technology-agnostic reference files:
 - `${CLAUDE_PLUGIN_ROOT}/skills/software-architecture/references/scaling-and-infra.md`
 - `${CLAUDE_PLUGIN_ROOT}/skills/software-architecture/references/code-organization.md`
 
-Then check whether the target project is on Bernardo's concrete default stack — Go services on
-Kubernetes with a Vite/React frontend — by looking for the signals directly rather than asking:
-a `go.mod` at or near the project root, a Vite config (`vite.config.ts`/`vite.config.js`, or a
-`vite` dependency in `package.json`), and `infrastructure/kubernetes`-style manifests (a deploy
-repo or folder shaped like `<namespace>/<app>/<channel>/`, a `kustomization.yaml`,
-`Deployment`/`IngressRoute` manifests). Load the matching stack-convention file(s) independently —
-a project doesn't need all three signals for both files to apply:
+Then check whether the target project touches either half of Bernardo's stack-specific
+conventions — a Vite/React frontend, a Kubernetes/Flux-style deploy — by looking for the signals
+directly rather than asking: a Vite config (`vite.config.ts`/`vite.config.js`, or a `vite`
+dependency in `package.json`), and `infrastructure/kubernetes`-style manifests (a deploy repo or
+folder shaped like `<namespace>/<app>/<channel>/`, a `kustomization.yaml`, `Deployment`/
+`IngressRoute` manifests). There is no separate Go-specific reference file to gate — Go's own
+structural conventions already live inside the two always-loaded, technology-agnostic files above,
+each of which ends with an "Applying this to Go..." section, so a Go backend's presence (`go.mod`)
+needs no detection step of its own; it's covered the moment `scaling-and-infra.md` and
+`code-organization.md` are read. Load the matching stack-convention file(s) below independently —
+a project doesn't need both signals for both files to apply:
 
 - `${CLAUDE_PLUGIN_ROOT}/skills/software-architecture/references/vite-react-conventions.md` — if a
   Vite config is present.
 - `${CLAUDE_PLUGIN_ROOT}/skills/software-architecture/references/kubernetes-deployment-conventions.md`
   — if Kubernetes/Flux-style manifests are present.
 
-If the project is on a different stack entirely — no Go, no Vite, no Kubernetes-shaped deploy —
-apply only the two technology-agnostic files, and say so explicitly in the report. Don't force the
-Go/Kubernetes-specific rules onto a stack they don't describe, and don't silently omit why they're
+If neither signal is present — no Vite config, no Kubernetes-shaped deploy — apply only the two
+technology-agnostic files, and say so explicitly in the report. Don't force the Vite/Kubernetes-
+specific rules onto a project that doesn't have that surface, and don't silently omit why they're
 absent — state the detection result plainly so the reader knows the review's scope.
 
 Also read the target project's own architecture docs, rules, or memory-wiki if it has any — a
