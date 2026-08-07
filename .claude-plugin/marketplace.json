@@ -1,0 +1,14 @@
+{
+  "name": "copilot",
+  "owner": {
+    "name": "Bernardo Forcillo"
+  },
+  "description": "Bernardo's personal Claude Code plugins",
+  "plugins": [
+    {
+      "name": "copilot",
+      "source": "./",
+      "description": "Bern's copilot twin"
+    }
+  ]
+}
