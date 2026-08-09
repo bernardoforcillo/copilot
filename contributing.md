@@ -1,6 +1,6 @@
 # Contributing
 
-This plugin is distributed under the [PolyForm Strict License](LICENSE) — you're free to use
+This plugin is distributed under the [PolyForm Strict License](license.md) — you're free to use
 it, but redistributing it or publishing your own modified version isn't licensed. If you've
 improved something, the way to share that improvement is to send it back here, not to
 redistribute your own copy.
