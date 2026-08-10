@@ -67,6 +67,12 @@ dispatched). Dispatch the applicable specialist agents in parallel, report-only,
 decision/problem statement plus a one-line reminder of which lens it's being asked to apply, so it
 reasons from its own discipline rather than free-associating.
 
+Watch for one double-counting trap: that same Ideate step already peer-dispatches
+`growth-marketer` and `neuro-design-reviewer` internally, so when `product-strategist` is among
+the dispatched lenses, don't also dispatch those two standalone in the same run — or if both do
+run alongside it, flag in Step 3 that they aren't fully independent of `product-strategist`'s own
+analysis.
+
 ## Step 3 — synthesize
 
 - **Convergence check.** Do two or more independent lenses point the same direction? Name which
