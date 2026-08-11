@@ -95,11 +95,13 @@ Convergence here means two or more independent lenses agree, **or** every applic
 from the lens-mapping table has already been dispatched (this adopter's cap is the mapping
 table itself — at most four agent lenses plus the two gap-discipline entries — not a
 separately-stated round number). Each round: dispatch the next applicable lens from the table
-that hasn't run yet (respecting the double-counting guard above — don't dispatch
-`growth-marketer`/`neuro-design-reviewer` standalone in the same round `product-strategist`
-already covered them), then re-run the synthesis. At the cap — every applicable lens
-exhausted and still in tension — report the tension as a genuine, real trade-off; never
-quietly pick a side without naming what it's resolving.
+that hasn't run yet, then re-run the synthesis. The double-counting guard above persists across
+every round, not just the round `product-strategist` ran in: once `product-strategist` has been
+dispatched in any prior round, don't dispatch `growth-marketer`/`neuro-design-reviewer`
+standalone in a later round either — or if you do, flag the non-independence in Step 3, per the
+guard above. At the cap — every applicable lens exhausted and still in tension — report the
+tension as a genuine, real trade-off; never quietly pick a side without naming what it's
+resolving.
 
 - **Man-with-a-hammer check.** Name any lens or discipline from the Step 2 table that was
   available but not dispatched, and state briefly why it doesn't apply here. This guards against
