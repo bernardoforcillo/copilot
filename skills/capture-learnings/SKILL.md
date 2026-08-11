@@ -85,6 +85,17 @@ Always end the lint pass with `node .claude/memory/check.mjs` and append a
 finding, but fix nothing without the user's explicit approval first — lint is diagnostic by
 default, not self-healing.
 
+#### Loop
+
+If the user wants lint findings fixed rather than just reported, this loops instead of
+stopping at one pass — see the shared loop-until-converged pattern in
+`../../docs/architecture.md`. Convergence here means `node .claude/memory/check.mjs` exits 0
+**and** the lint pass finds no remaining unresolved contradiction, stale claim, orphan, or
+dangling link; the cap is 3 rounds. Each round: apply the user-approved fixes for the current
+round's findings, then re-run the full lint pass including `check.mjs`. At the cap, report the
+remaining issues and append them to `log.md` as a known residual
+(`## [<date>] lint | <scope> — N issues remain after 3 rounds`) rather than stopping silently.
+
 ## Rules
 
 - Never auto-commit. Ingest and lint both leave changes staged in the working tree only;
