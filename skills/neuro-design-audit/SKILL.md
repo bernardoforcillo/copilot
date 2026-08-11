@@ -76,3 +76,13 @@ Goal: <the design goal used to judge findings>
 - Every finding names the principle it rests on and its bibliography cite key (from the reference file's `Cite:` lines). Do not invent principles or citations.
 - Stay within the stated goal; flag aesthetic preferences as `Minor` at most unless they demonstrably harm the goal.
 - Prefer specific, buildable fixes ("increase primary CTA contrast to ≥3:1 and remove the competing banner outline") over vague advice ("improve hierarchy").
+
+## Loop
+
+If the user wants findings fixed rather than just reported, this audit loops instead of
+stopping at one pass — see the shared loop-until-converged pattern in
+`../../docs/architecture.md`. Convergence here means no lens scored `Blocking` remains; the
+cap is 3 rounds. Each round: apply the user-approved fixes for the current `Blocking`
+findings, then re-run the six-lens audit against the updated artifact. At the cap, report the
+remaining `Blocking`/`Minor` findings as residual — never report an artifact as passing while
+a `Blocking` finding is still open.
