@@ -93,6 +93,19 @@ service, a queue, or a cache with no concrete, dated trigger behind it is exactl
 as a proposal that's missing a gateway it needs — don't soften a "premature" verdict into a
 passing mention; state it as firmly as a "real gap."
 
+#### Loop
+
+If the user wants findings fixed rather than just reported, this review loops instead of
+stopping at one pass — see the shared loop-until-converged pattern in
+`../docs/architecture.md`. Convergence here means no rule verdict remains `real gap` (only
+`compliant` or `premature` verdicts left); the cap is 3 rounds. Each round: scaffold the
+user-approved fix for the current `real gap` findings (briefly entering scaffolding mode for
+that fix only, then returning to review), then re-review the result against the same rule set
+from `scaling-and-infra.md`, `code-organization.md`, and — when loaded — the two
+stack-convention files. At the cap, report any remaining `real gap` findings in the "Open
+questions / flagged debt" report section rather than silently dropping them or claiming a
+clean pass that isn't accurate.
+
 ## Scaffolding mode (on request only)
 
 Only scaffold when explicitly asked — a review never automatically slides into building it. When
