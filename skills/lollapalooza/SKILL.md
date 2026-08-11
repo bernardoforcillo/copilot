@@ -86,6 +86,21 @@ analysis.
 - **Tension check.** Where lenses disagree, say so explicitly and name the actual trade-off,
   rather than quietly picking a side. A synthesis that resolves disagreement without stating it
   isn't synthesis — it's silently discarding a lens's finding.
+
+#### Loop
+
+When the Convergence check finds tension rather than agreement, this doesn't have to stop at
+one pass — see the shared loop-until-converged pattern in `../../docs/architecture.md`.
+Convergence here means two or more independent lenses agree, **or** every applicable lens
+from the lens-mapping table has already been dispatched (this adopter's cap is the mapping
+table itself — at most four agent lenses plus the two gap-discipline entries — not a
+separately-stated round number). Each round: dispatch the next applicable lens from the table
+that hasn't run yet (respecting the double-counting guard above — don't dispatch
+`growth-marketer`/`neuro-design-reviewer` standalone in the same round `product-strategist`
+already covered them), then re-run the synthesis. At the cap — every applicable lens
+exhausted and still in tension — report the tension as a genuine, real trade-off; never
+quietly pick a side without naming what it's resolving.
+
 - **Man-with-a-hammer check.** Name any lens or discipline from the Step 2 table that was
   available but not dispatched, and state briefly why it doesn't apply here. This guards against
   forcing a favorite tool onto a problem it doesn't fit, and against the opposite failure of
