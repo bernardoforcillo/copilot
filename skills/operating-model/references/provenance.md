@@ -53,6 +53,50 @@ favour of either.
 - Analysis of the shared-platform components — https://www.tanayj.com/p/bending-spoon-s-1-breakdown and https://www.francescatabor.com/articles/2025/7/28/bending-spoons-a-different-kind-of-tech-company — one platform covering engineering, billing, marketing, and support, with central data infrastructure, a lifetime-value predictor, an experimentation toolkit, a payments system, and a recruiting system offered to every product team. Feeds the "what belongs in the shared layer" table in `platform-and-compounding.md`, generalized to small-team equivalents.
 - Employee reviews (Glassdoor) — https://www.glassdoor.com/Reviews/Bending-Spoons-Reviews-E1164562.htm — the reported failure mode of continuous evaluation: high turnover, and feedback quality varying with the individual lead. Feeds `talent-and-standards.md`.
 
+## The foundations tier
+
+`references/foundations/` is a different kind of file from the rest of this skill. It doesn't
+describe anyone's practice — it derives each principle from a published result, so the principle
+can be checked, argued with, and switched off when its mechanism is absent. The works it draws on,
+by file:
+
+- **complexity-and-coupling** — Frederick P. Brooks Jr., *The Mythical Man-Month* (1975), for the
+  *n(n−1)/2* communication-path argument, and *No Silver Bullet* (1986) for essential vs accidental
+  complexity; Herbert A. Simon, *The Architecture of Complexity* (1962), for near-decomposability;
+  Melvin E. Conway, *How Do Committees Invent?* (1968); Meir M. Lehman's laws of software evolution
+  (1980) for accretion; John Gall, *Systemantics* (1975), for evolved-from-simple; Hyrum's law
+  (Hyrum Wright, hyrumslaw.com) for behavior hardening into contract; G. K. Chesterton, *The Thing*
+  (1929), for the fence.
+- **uncertainty-and-information** — Frank H. Knight, *Risk, Uncertainty and Profit* (1921); Ronald
+  A. Howard, *Information Value Theory* (IEEE Transactions on Systems Science and Cybernetics,
+  1966); Amos Tversky and Daniel Kahneman, *Judgment under Uncertainty: Heuristics and Biases*
+  (Science, 1974); Charles Goodhart (1975) in Marilyn Strathern's (1997) formulation, and Donald T.
+  Campbell (1979). The sample-size expression (n ≈ 16σ²/δ² per arm at 80% power, α = 0.05) is the
+  standard two-sample rule of thumb.
+- **irreversibility-and-optionality** — Jeff Bezos's 2015 Amazon shareholder letter for the Type 1 /
+  Type 2 door framing; standard real-options reasoning for the asymmetry; Nassim Nicholas Taleb,
+  *Antifragile* (2012), for convexity under uncertainty.
+- **flow-and-queues** — John D. C. Little, *A Proof for the Queuing Formula: L = λW* (Operations
+  Research, 1961); standard M/M/1 results for the 1/(1−ρ) latency curve and Kingman's approximation
+  for variability; Donald G. Reinertsen, *The Principles of Product Development Flow* (2009), for
+  batch size and cost of delay; Nicole Forsgren, Jez Humble and Gene Kim, *Accelerate* (2018), for
+  the empirical throughput/stability result; Eliyahu M. Goldratt, *The Goal* (1984), for
+  constraints.
+- **compounding-and-capital** — Ronald H. Coase, *The Nature of the Firm* (Economica, 1937), for
+  make-vs-buy as transaction costs; T. P. Wright (1936) for the learning curve; J. L. Kelly Jr.
+  (1956) for growth-optimal sizing and the absorbing nature of ruin.
+- **incentives-and-trust** — Michael C. Jensen and William H. Meckling, *Theory of the Firm* (Journal
+  of Financial Economics, 1976), for agency costs; Robert Axelrod, *The Evolution of Cooperation*
+  (1984), for repeated games and the shadow of the future; Nassim Nicholas Taleb, *Skin in the Game*
+  (2018); standard results on selection under imperfect signal correlation and regression to the
+  mean (Kahneman, *Thinking, Fast and Slow*, 2011, for the latter's practical treatment).
+
+These are cited by title and year from standard literature; the session that wrote this file had no
+network access to the publishers, so nothing here was re-verified against the original text at
+writing time. Check any citation you intend to lean on. The *derivations* — which principle follows
+from which mechanism, and when it voids — are this plugin's own reasoning, not the cited authors'
+claims about this operating model.
+
 ## Caveats
 
 - Company-published material describes intent; it is not independent evidence of practice.

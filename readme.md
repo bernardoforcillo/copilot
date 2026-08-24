@@ -66,19 +66,30 @@ work in progress as rotting inventory), limits and failure modes (where this mod
 transfer, and how it damages itself where it does), and worked examples (four end-to-end passes
 with real verdicts).
 
-`references/provenance.md` traces every principle to its source — including the critical reporting
-on where the playbook does damage, and an explicit note on which files are this plugin's own
-construction rather than distillation.
+*Foundations, under `references/foundations/`*: the mechanism each principle is derived from, so a
+rule can be argued with instead of obeyed — interaction combinatorics and essential-vs-accidental
+complexity; value of information, base rates and the sample-size arithmetic that says what a small
+product can and can't settle; reversibility as the axis decisions actually sort on; Little's Law
+and the 1/(1−ρ) latency curve; compounding, learning curves and transaction costs; agency costs and
+repeated games. Each file ends with the condition under which its mechanism is absent — which is
+also the condition under which the principle above it stops being true. The derivation table in
+the skill maps principle → mechanism → what voids it.
 
-- Skill `operating-model` — the six principles, the operating-loop graph they gate, and a
-  *reduction loop* that strips unjustified complications one at a time until each survivor has a
-  written justification.
+`references/provenance.md` traces every principle to its source — including the critical reporting
+on where the playbook does damage, the standard literature behind the foundations tier, and an
+explicit note on which files are this plugin's own construction rather than distillation.
+
+- Skill `operating-model` — the six principles, the operating-loop graph they gate, a *reduction
+  loop* that strips unjustified complications one at a time until each survivor has a written
+  justification, and the derivation table linking each principle to the mechanism it comes from.
 - Agent `operating-partner` — a full pass over a plan, diff, roadmap, or inherited codebase: it
   establishes whether the model applies to the target's domain at all, then which maturity column
   the product is in, then a verdict per principle (`aligned` / `unearned complexity` /
   `misapplied rigor` / `real gap`),
   plus ranking mode (expected-value ordering with kill criteria) and takeover mode (assess →
-  migrate → delete → optimize). Also serves as `lollapalooza`'s capital-allocation lens.
+  migrate → delete → optimize). Contested findings are argued from the mechanism rather than the
+  rule, and withdrawn if the mechanism turns out not to apply. Also serves as `lollapalooza`'s
+  capital-allocation lens.
 
 ## Installation
 

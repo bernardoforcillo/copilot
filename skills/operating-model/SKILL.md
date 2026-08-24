@@ -6,10 +6,11 @@ description: Apply a high-performance operating model to how work gets chosen, b
 
 A distilled operating model for building and running software products at a high standard with a
 small number of people: how work gets chosen, how much ceremony it earns, who owns it end to end,
-what counts as evidence, and what happens to an asset you inherit rather than start. Twelve
-self-contained reference files — six core, one per principle, and six applied, each carrying the
-depth behind a specific kind of call. Read the one that matches the decision in front of you
-rather than loading the set.
+what counts as evidence, and what happens to an asset you inherit rather than start. Eighteen
+self-contained reference files in three tiers — six core (one per principle), six applied (the
+depth behind a specific kind of call), and six foundations (the mechanism each principle is
+derived from, and the condition under which it stops holding). Read the one that matches the
+decision in front of you rather than loading the set.
 
 This is deliberately an *operating* model, not a methodology. It says nothing about ticket formats
 or ceremony names. It says which complications you're allowed to buy, what you must show to buy
@@ -158,6 +159,30 @@ about its subject, not by default.
 - **Worked examples** — four end-to-end passes with real verdicts: a premature service split, a
   legacy takeover, a price rise at small scale, and an over-elaborate agent-produced PR.
   `references/worked-examples.md`
+
+**Foundations — why the principles hold at all.** Six files under `references/foundations/`,
+each deriving a principle from a mechanism rather than from anyone's practice. Read one when a
+rule is contested, when adapting the model to a context it wasn't written for, or when deciding
+whether a principle applies here at all. The point of a first-principles tier isn't depth for its
+own sake: a rule derived from a mechanism tells you the exact condition under which it stops being
+true, and a rule taken on authority never does.
+
+| Principle | Mechanism that generates it | Voids when the mechanism is absent |
+| --- | --- | --- |
+| Radical simplicity | Interactions grow as *n(n−1)/2* while parts grow linearly; state spaces multiply; systems accrete complexity unless work is done to remove it — `foundations/complexity-and-coupling.md` | The complexity is essential rather than accidental, the system is genuinely short-lived, or interactions are capped by construction |
+| Impact only / evidence over taste | Information is worth exactly zero if it can't change the decision; base rates and power arithmetic bound what a sample can settle — `foundations/uncertainty-and-information.md` | No measurable outcome in a usable time frame, no adequate sample available, or the decision is unique with no reference class |
+| Speed on two-way doors, care on one-way | Loss on a reversible decision is bounded by the cost of undoing; irreversible outcomes remove all later decisions from the board — `foundations/irreversibility-and-optionality.md` | Nothing is reversible (safety-critical, regulated), or the undo cost is paid by someone other than you |
+| Rigor proportional to maturity | Verification cost is justified against the consequence of failure and the probability the thing survives — `foundations/uncertainty-and-information.md` and `foundations/irreversibility-and-optionality.md` together | Consequence of failure is set externally — harm, regulation, contract — in which case rigor is set by the consequence, never by the stage |
+| Ownership end to end | Agency costs appear wherever the decider doesn't bear the consequence; every handoff creates one — `foundations/incentives-and-trust.md` | Decider and consequence-bearer must be kept separate by design (audit, regulated separation of duties) |
+| Transform, don't restart; reinvest | Reinvested returns compound geometrically; learning curves track cumulative experience; shared cost divided over *k* consumers — `foundations/compounding-and-capital.md` | There is no next cycle, decay exceeds return, or *k* = 1 |
+| Decision latency and batch size | Cycle time = WIP ÷ throughput; waiting time scales as 1/(1−ρ) — `foundations/flow-and-queues.md` | The work isn't a repeating flow, or the constraint is somewhere else entirely |
+
+**How to use the table.** When you're about to apply a principle in an unfamiliar context, read
+the middle column and ask whether that mechanism is actually operating here. When someone disputes
+a verdict, argue the mechanism, not the rule — and if the mechanism genuinely isn't present,
+withdraw the verdict rather than defending it by precedent. `references/limits-and-failure-modes.md`
+is the same content read from the other end: whole contexts where several mechanisms are absent at
+once.
 
 `references/provenance.md` records where these principles come from — company documents,
 engineering writing, the IPO prospectus, and outside reporting including the critical kind — so
