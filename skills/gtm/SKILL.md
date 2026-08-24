@@ -1,4 +1,5 @@
 ---
+name: gtm
 description: Use when the user asks for go-to-market work — landing/positioning copy, SEO, analytics events/funnels/experiments, launch plans, channel or keyword research — or invokes /gtm <task>. Dispatches the gtm-engineer subagent and relays its GTM report.
 ---
 

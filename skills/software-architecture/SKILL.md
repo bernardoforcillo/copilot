@@ -1,4 +1,5 @@
 ---
+name: software-architecture
 description: Apply scaling, code-organization, and Bernardo's concrete Go + Vite/React + Kubernetes stack conventions when designing, reviewing, or scaffolding a service, module, or deployment. Use when making an architecture/infra decision, organizing code into layers, or setting up a new service or k8s app/channel.
 ---
 
@@ -45,3 +46,11 @@ the `software-architect` agent instead of applying the files yourself.
 `agents/software-architect.md` applies these same four reference files when dispatched for a full
 architecture/PR review or to scaffold a new service, module, or deployment end to end — use it
 when the task calls for a complete pass rather than a single decision.
+
+## Related skill
+
+These files decide the *shape* of a system. The `operating-model` skill decides whether that
+shape's complications were earned in the first place — the burden of proof that a cache, a
+service split, or a queue has to meet before `scaling-and-infra.md`'s trigger even applies, and
+how much rigor the product's maturity actually justifies. Reach for it when the question is "does
+this deserve to exist?" rather than "what should this look like?".

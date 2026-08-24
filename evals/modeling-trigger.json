@@ -1,0 +1,22 @@
+[
+  {"query": "can you map out how checkout actually works across our services? i keep losing track of who calls stripe and when the order row gets written", "should_trigger": true},
+  {"query": "the order status field has 9 values now and nobody can tell me which transitions are legal. we've had two bugs from it this month", "should_trigger": true},
+  {"query": "how much does one AI summary actually cost us? we charge 19 eur a month flat and some users are generating hundreds of them", "should_trigger": true},
+  {"query": "new contractor starts monday and needs to understand our system. what's the minimum set of docs/diagrams worth making, i don't want to spend three days on it", "should_trigger": true},
+  {"query": "before i write the first migration i want to get the entities straight — orders, line items, refunds, payments — and how they relate. can you help me think it through", "should_trigger": true},
+  {"query": "which diagram is right for showing that the refund approval step is done manually by a support agent, while everything else is automatic", "should_trigger": true},
+  {"query": "we're adding a fair use limit to the pro plan but i have no idea where to set the number. usage is very uneven across accounts", "should_trigger": true},
+  {"query": "i want a picture of what runs where in prod — pods, managed services, what scales with traffic and what we pay for regardless", "should_trigger": true},
+  {"query": "does this look right? i've drawn composition between Order and Customer, and Customer inherits from User which also has an Admin subclass", "should_trigger": true},
+  {"query": "the auditor wants proof that every requirement in the spec is actually implemented somewhere. is there a sane way to show that visually", "should_trigger": true},
+  {"query": "generate a mermaid flowchart of our CI steps (lint, test, build, deploy) for the readme", "should_trigger": false},
+  {"query": "refactor this go service so the domain package stops importing the postgres driver directly, it's leaking everywhere", "should_trigger": false},
+  {"query": "p95 on the dashboard query is 2.4s against about 40GB. help me get it down", "should_trigger": false},
+  {"query": "write the sql for a multi-tenant orders table with row level security on tenant_id, postgres 16", "should_trigger": false},
+  {"query": "should we raise prices on customers who are already subscribed, or only on new signups?", "should_trigger": false},
+  {"query": "quick one — what's the actual difference between aggregation and composition in UML, i can never remember which diamond is which", "should_trigger": false},
+  {"query": "put together a slide deck explaining our architecture to the board next thursday, 10 slides max", "should_trigger": false},
+  {"query": "here's the aws cost export csv, can you break down what we spent per service last month and flag anything that grew", "should_trigger": false},
+  {"query": "review my PR for bugs before i merge it, it touches the retry logic in the webhook handler", "should_trigger": false},
+  {"query": "add an index on orders.created_at and show me the query plan before and after", "should_trigger": false}
+]

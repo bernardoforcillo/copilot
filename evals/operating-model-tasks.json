@@ -1,0 +1,47 @@
+{
+  "skill_name": "operating-model",
+  "evals": [
+    {
+      "id": 1,
+      "name": "premature-service-split",
+      "prompt": "My cofounder wants to split our API into three services (orders, users, notifications) before we launch. We have about 40 people on the beta and one engineer. He says it'll be painful to split later. Write me a short assessment I can send him.",
+      "expected_output": "An assessment that names the maturity column, issues an unearned-complexity verdict on the split because no measured trigger exists, and proposes the smallest next step (measure, or wait for a concrete trigger) rather than either splitting or flatly refusing.",
+      "files": [],
+      "assertions": [
+        "States which maturity column the product is in (prototype / early users / mature) and the signals behind it",
+        "Judges the proposed split as unearned or premature complexity, explicitly because no measured trigger exists today",
+        "Names the concrete evidence that would earn the split (a measured scaling or deploy-cadence conflict, or a real team boundary)",
+        "Recommends a smaller step rather than the split, and does not simply endorse the three-service plan",
+        "Addresses the 'painful to split later' argument rather than ignoring it"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "legacy-takeover",
+      "prompt": "We acquired a small competitor and I've inherited their PHP monolith. Six years old, no test suite, about 200 daily users who genuinely like it, one departed maintainer. My instinct is to rewrite it in Go since that's our stack. What should I actually do first?",
+      "expected_output": "A takeover plan in the assess -> migrate -> delete -> optimize order, arguing against the immediate full rewrite by naming the base rate and what the asset actually is (users, edge cases, data), with migration options ordered from cheapest.",
+      "files": [],
+      "assertions": [
+        "Separates what has proven value (users, encoded edge cases, data, integrations) from what is merely cost base",
+        "Presents the steps in the order assess -> migrate -> delete -> optimize, and does not put optimization before deletion",
+        "Argues against the immediate full rewrite and states the base rate for rewrites explicitly",
+        "Offers migration options ordered by cost, starting with moving onto infrastructure the team already runs",
+        "Requires usage evidence before deleting anything"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "backlog-ranking",
+      "prompt": "Here's my Q4 backlog: SSO for enterprise trials, rewrite the billing service, add a public API, fix the flaky checkout test, translate the app into German, an onboarding checklist, and usage-based pricing. Team is two engineers. Help me rank it.",
+      "expected_output": "An expected-value ranking with effect, probability and cost-to-learn per item, a kill criterion per ranked item, and an explicit statement of which items stay in the backlog permanently.",
+      "files": [],
+      "assertions": [
+        "Ranks by expected value with the effect, probability and cost to learn stated per item",
+        "Uses cost to learn rather than cost to build for at least one item where a cheap probe would resolve the uncertainty",
+        "Gives every item it recommends starting a kill criterion (a date, a threshold, or a discovery)",
+        "Names explicitly which items are expected to stay in the backlog permanently rather than ranking everything as worth doing",
+        "Flags the flaky test as a reliability item that competes on cost of recurrence rather than silently deprioritising it"
+      ]
+    }
+  ]
+}

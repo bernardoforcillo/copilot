@@ -1,4 +1,5 @@
 ---
+name: commit
 description: Use when the user asks to commit changes, stage work, or write a git commit message — produces a Conventional Commits message that reads like a senior engineer wrote it. Defers to the project's own commit convention if one already exists.
 ---
 

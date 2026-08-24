@@ -164,7 +164,7 @@ The visual system does not register a scene as a grid of independent pixels — 
 
 **Cite:** [PGC-GILC-99]
 
-**See also (cross-domain):** `../cross-domain/graphical-perception-dataviz.md`, `../cross-domain/neurodiversity-inclusive.md`
+**See also (cross-domain):** `cross-domain/graphical-perception-dataviz.md`, `cross-domain/neurodiversity-inclusive.md`
 
 ## Deeper dive (v3)
 
@@ -219,4 +219,4 @@ The visual system does not register a scene as a grid of independent pixels — 
 **Cite:** [PGC2-KUNN-55]
 **Cite:** [PGC2-KUNN-57]
 
-**See also (cross-domain):** `../cross-domain/graphical-perception-dataviz.md`, `../cross-domain/neurodiversity-inclusive.md`
+**See also (cross-domain):** `cross-domain/graphical-perception-dataviz.md`, `cross-domain/neurodiversity-inclusive.md`

@@ -1,6 +1,6 @@
 {
   "name": "copilot",
-  "description": "Bern's copilot twin — neuro-design review, a memory wiki, commit discipline, a product/GTM desk, and a software-architecture desk for Go + Vite/React + Kubernetes projects",
+  "description": "Bern's copilot twin — neuro-design review, a memory wiki, commit discipline, a product/GTM desk, a software-architecture desk for Go + Vite/React + Kubernetes projects, an operating-model desk for what's worth building and what complexity it's allowed to buy, and a modeling desk that carries a design from UML views through to contribution per unit",
   "version": "0.1.0",
   "author": {
     "name": "Bernardo Forcillo"

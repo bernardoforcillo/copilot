@@ -1,4 +1,5 @@
 ---
+name: prd
 description: Use when the user wants to define a new product feature — turn a raw idea or problem into a rigorous PRD through a design-thinking process before any technical design — or invokes /prd <feature>. Facilitates the dialogue in the main loop and dispatches the product-strategist subagent for the heavy research passes.
 ---
 
@@ -155,6 +156,10 @@ hand-off happens, then filled in with a link.
 - **Report-only, always.** Every specialist dispatched during a PRD run — `product-strategist`
   and everything it peer-dispatches — edits nothing. Relay one consolidated view back to the
   user; never dump every raw sub-report into the conversation.
+- **Rank and gate with the operating model.** Competing bets get ordered by expected value, and
+  every bet that leaves this skill carries a kill criterion written before work starts — see the
+  `operating-model` skill's `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/impact-and-prioritization.md`. A PRD with no stated
+  condition under which the feature gets stopped isn't finished.
 - **Never commit.** The PRD lives at `docs/superpowers/prd/YYYY-MM-DD-<feature>.md` as a
   working-tree file the user reviews and commits themselves. This skill does not run `git add`
   or `git commit` on it.

@@ -112,7 +112,7 @@ Working memory is small, effortful, and easily overloaded — every design choic
 - If a delay or distraction (e.g., a follow-up dialog) will separate a list from the user's next decision, expect the recency advantage to fade; bring the relevant item back into view rather than relying on memory of "the last thing I saw."
 **Cite:** [CLM-MURD-62]
 
-**See also (cross-domain):** [`../cross-domain/multimedia-learning.md`](../cross-domain/multimedia-learning.md) · [`../cross-domain/behavioral-economics.md`](../cross-domain/behavioral-economics.md) · [`../cross-domain/human-factors-safety.md`](../cross-domain/human-factors-safety.md)
+**See also (cross-domain):** [`cross-domain/multimedia-learning.md`](../cross-domain/multimedia-learning.md) · [`cross-domain/behavioral-economics.md`](../cross-domain/behavioral-economics.md) · [`cross-domain/human-factors-safety.md`](../cross-domain/human-factors-safety.md)
 
 ## Deeper dive (v3)
 
@@ -151,4 +151,4 @@ Working memory is small, effortful, and easily overloaded — every design choic
 - For time- or event-triggered tasks (e.g., "come back and confirm this in three days"), use active notifications rather than expecting unprompted recall — passive availability is a weak retrieval trigger.
 **Cite:** [CLM2-MCDA-00]
 
-**See also (cross-domain):** [`../cross-domain/multimedia-learning.md`](../cross-domain/multimedia-learning.md) · [`../cross-domain/behavioral-economics.md`](../cross-domain/behavioral-economics.md) · [`../cross-domain/human-factors-safety.md`](../cross-domain/human-factors-safety.md)
+**See also (cross-domain):** [`cross-domain/multimedia-learning.md`](../cross-domain/multimedia-learning.md) · [`cross-domain/behavioral-economics.md`](../cross-domain/behavioral-economics.md) · [`cross-domain/human-factors-safety.md`](../cross-domain/human-factors-safety.md)
