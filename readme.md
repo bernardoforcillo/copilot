@@ -1,8 +1,9 @@
 # copilot
 
-Bernardo's personal Claude Code plugin — a set of skills, agents, and a Stop hook covering
-design review, project knowledge management, commit discipline, product/growth work,
-software architecture, and the operating model that decides what's worth building at all. Single-maintainer, source-available (see [license.md](license.md)).
+Bernardo's personal Claude Code plugin — a set of skills, agents, a Stop hook, and a project
+reference base covering design review, project knowledge management, commit discipline,
+product/growth work, software architecture, system modeling through to unit economics, and the
+operating model that decides what's worth building at all. Single-maintainer, source-available (see [license.md](license.md)).
 
 ## What's inside
 
@@ -116,11 +117,37 @@ Skills are invoked scoped to the plugin: `/copilot:<skill-name>` — e.g. `/copi
 way, `@copilot:<agent-name>` (e.g. `@copilot:software-architect`) or via the `Agent` tool with
 `subagent_type: "<agent-name>"`.
 
+### Modeling
+The UML pillars that earn their place — use case, domain/class, sequence, state machine, component,
+deployment — plus the step most modeling guides omit: carrying the model through to money.
+
+- Skill `modeling` — the five questions and the view that answers each, the modeling flow, and a
+  *traceability loop* that converges only when every element traces to a requirement **and** every
+  requirement appears in a view. Five references: UML core concepts (relationship semantics, 4+1,
+  CIM/PIM/PSM), structural views, behavioral views, profit modeling, and a mermaid cookbook whose
+  every snippet is parser-validated.
+- `references/profit-modeling.md` is the centrepiece: use case gives the unit, sequence gives
+  variable cost, deployment gives fixed and stepped cost, the state machine gives lifecycle
+  economics, and the activity view gives operational cost — ending in contribution per unit,
+  break-even volume, the dominant cost driver, and the EV of a proposed change.
+- Agent `system-modeler` — produces a model set, reviews an existing design for traceability and
+  notation honesty, or runs the profit chain. Emits validated mermaid and never carries a
+  provider's pricing from memory.
+
+### Project reference base
+`docs/engineering/` and `docs/product/` hold the blueprints a project copies into its own docs:
+system design and ADR templates, API and data-modeling guides, testing strategy, observability and
+SLOs, a security baseline, release and environments — and on the product side JTBD brief, PRD,
+metrics tree, experiment brief, pricing and packaging worksheet, roadmap and bets, launch
+readiness. Each is a page or two, each asks only for what changes a decision, and each points back
+at the desk whose rules it applies.
+
 ## Checks
 
 `node scripts/check-plugin.mjs` validates the plugin's structure: skill/agent frontmatter, every
-path-shaped file reference, orphaned reference files, and whether `docs/architecture.md`'s dispatch
-graph and loop-adopters table still describe what exists. No dependencies; exit 0 means consistent.
+path-shaped file reference, orphaned reference files, mermaid blocks (closed, and declaring a known
+diagram type), and whether `docs/architecture.md`'s dispatch graph and loop-adopters table still
+describe what exists. No dependencies; exit 0 means consistent.
 
 ## License and contributing
 

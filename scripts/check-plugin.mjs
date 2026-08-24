@@ -165,7 +165,34 @@ for (const adopter of adopters) {
     p(`docs/architecture.md: adopters table lists '${adopter}', which is neither a skill nor an agent`);
 }
 
-// --- (6) plugin.json and marketplace.json stay in sync ---------------------
+// --- (6) mermaid blocks are closed and declare a known diagram type ---------
+// Not a parser — that needs a browser DOM and a dependency. This catches the two
+// ways a diagram actually breaks in a text file: an unclosed fence, and a first
+// line that isn't a diagram declaration.
+const MERMAID_TYPES = [
+  'graph', 'flowchart', 'sequenceDiagram', 'classDiagram', 'stateDiagram-v2', 'stateDiagram',
+  'erDiagram', 'journey', 'gantt', 'pie', 'quadrantChart', 'requirementDiagram', 'gitGraph',
+  'mindmap', 'timeline', 'sankey-beta', 'xychart-beta', 'block-beta', 'packet-beta', 'kanban',
+  'architecture-beta', 'zenuml', 'C4Context', 'C4Container', 'C4Component', 'C4Dynamic',
+  'C4Deployment',
+];
+for (const file of docFiles) {
+  const lines = readFileSync(join(root, file), 'utf8').split('\n');
+  let open = null;
+  for (const [i, line] of lines.entries()) {
+    if (open === null && line.trim() === '```mermaid') {
+      open = i + 1;
+      const first = lines.slice(i + 1).find((l) => l.trim() && !l.trim().startsWith('%%'));
+      if (!first || !MERMAID_TYPES.some((t) => first.trim().startsWith(t)))
+        p(`${file}:${i + 1}: mermaid block does not start with a known diagram type`);
+    } else if (open !== null && line.trim() === '```') {
+      open = null;
+    }
+  }
+  if (open !== null) p(`${file}:${open}: unclosed mermaid block`);
+}
+
+// --- (7) plugin.json and marketplace.json stay in sync ---------------------
 const plugin = JSON.parse(readFileSync(join(root, '.claude-plugin/plugin.json'), 'utf8'));
 const market = JSON.parse(readFileSync(join(root, '.claude-plugin/marketplace.json'), 'utf8'));
 const entry = (market.plugins || []).find((x) => x.name === plugin.name);

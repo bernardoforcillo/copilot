@@ -20,6 +20,7 @@ graph LR
     lollapalooza
     software-architecture
     operating-model
+    modeling
     neuro-design
     neuro-design-audit
     commit
@@ -32,6 +33,7 @@ graph LR
     gtm-engineer
     software-architect
     operating-partner
+    system-modeler
     neuro-design-reviewer
   end
 
@@ -51,6 +53,7 @@ graph LR
   lollapalooza -.router.-> operating-partner
   software-architecture -.delegate for isolated pass.-> software-architect
   operating-model -.delegate for isolated pass.-> operating-partner
+  modeling -.delegate for isolated pass.-> system-modeler
   neuro-design -.delegate for isolated pass.-> neuro-design-reviewer
   neuro-design-audit -.shares reference files with.-> neuro-design-reviewer
 
@@ -65,6 +68,9 @@ graph LR
 
   operating-partner -->|architecture rule behind a complexity verdict| software-architect
   operating-partner -->|growth mechanics behind an EV estimate| growth-marketer
+
+  system-modeler -->|boundary or dependency-direction question| software-architect
+  system-modeler -->|was the modelled complexity earned; rank the change| operating-partner
 ```
 
 **Terminal nodes** — no outgoing peer-dispatch of their own: `software-architect`,
@@ -85,12 +91,17 @@ lenses `lollapalooza` believes are independent would partly be echoes of each ot
 same double-counting problem `product-strategist`'s Ideate step has, solved from the opposite side:
 `product-strategist` lets the caller de-duplicate, `operating-partner` de-duplicates itself.
 
+`system-modeler` adds two more edges of the same kind and resolves them the same way: it shows the
+shape and hands the judgement to `software-architect` (is this boundary right?) or
+`operating-partner` (was this complexity earned, and how does the change rank?), and when either of
+them dispatched it, it returns the model instead of dispatching back.
+
 `commit` has no outgoing edges — it's fully self-contained.
 
 ## The loop-until-converged pattern
 
-Six skills/agents in this plugin do review, audit, or reduction work where a single pass isn't
-always the end of the story: findings come back, some get fixed, and the fix should be re-checked
+Eight skills/agents in this plugin do review, audit, reduction, or traceability work where a
+single pass isn't always the end of the story: findings come back, some get fixed, and the fix should be re-checked
 rather than taken on faith. Each uses the same four-step shape (the same shape
 `superpowers:subagent-driven-development`'s fix-loop already uses for reviewing implementation
 tasks, generalized here to a skill/agent looping on its own output):
@@ -115,4 +126,6 @@ back to this section — the four-step shape itself isn't restated per adopter.
 | `capture-learnings` skill (lint mode) | `node .claude/memory/check.mjs` exits 0 and no unresolved contradiction/stale-claim/orphan/dangling-link remains | 3 rounds | Apply approved fixes, re-run the full lint pass |
 | `operating-model` skill (reduction loop) | Every surviving complication has a written justification from the "What counts as proof" list, and the last removal attempt broke something real | 3 rounds | Strip the single least-justified complication, check what actually breaks against the code or a measurement rather than intuition, then remove it or record its justification |
 | `operating-partner` agent (review mode) | No verdict remains `unearned complexity` or `real gap` (only `aligned` and accepted `misapplied rigor` trade-offs) | 3 rounds | Apply the approved fixes — running the `operating-model` reduction loop for the complexity findings — then re-review against every applicable principle, re-establishing the maturity column if the fix moved it |
+| `modeling` skill (traceability loop) | Every model element traces to a stated requirement or question, **and** every stated requirement appears in at least one view — both directions | 3 rounds | List the orphans in both directions, delete elements nothing requires, add the minimum for unmodelled requirements, re-check |
+| `system-modeler` agent (modeling mode) | Same bidirectional traceability, over the model set it just produced | 3 rounds | Same per-round action, then re-emit and re-validate the affected diagrams |
 | `lollapalooza` skill (Step 3) | Two or more independent lenses agree, or every applicable lens from the lens-mapping table has been dispatched | Bounded by the lens-mapping table itself (5 agent lenses plus the two gap-discipline entries) rather than a separate number | Dispatch the next applicable undispatched lens, re-run the synthesis |

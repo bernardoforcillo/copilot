@@ -12,8 +12,11 @@ redistribute your own copy.
    correction, etc.) following the conventions already established in the files around it.
 3. Run `node scripts/check-plugin.mjs` and fix anything it reports. It checks the invariants
    that drift silently: frontmatter, every path-shaped reference resolving, no orphaned reference
-   files, and the two hand-maintained sections of `docs/architecture.md` — the dispatch graph and
-   the loop-until-converged adopters table — still matching what's actually on disk.
+   files, mermaid blocks declaring a known diagram type, and the two hand-maintained sections of
+   `docs/architecture.md` — the dispatch graph and the loop-until-converged adopters table — still
+   matching what's actually on disk. It has no dependencies; if you're adding diagrams, also render
+   them once (any mermaid renderer) before opening the PR, since the checker validates structure
+   rather than syntax.
 4. Open a pull request against `master` describing what changed and why.
 
 Forking to open a pull request is fine — the license restricts redistributing the software,
