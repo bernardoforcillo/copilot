@@ -1,8 +1,8 @@
 # copilot
 
 Bernardo's personal Claude Code plugin — a set of skills, agents, and a Stop hook covering
-design review, project knowledge management, commit discipline, product/growth work, and
-software architecture. Single-maintainer, source-available (see [license.md](license.md)).
+design review, project knowledge management, commit discipline, product/growth work,
+software architecture, and the operating model that decides what's worth building at all. Single-maintainer, source-available (see [license.md](license.md)).
 
 ## What's inside
 
@@ -47,6 +47,23 @@ DoorDash's experimentation platform).
   concrete to Bernardo's own Go + Vite/React + Kubernetes/Flux stack.
 - Agent `software-architect` — reviews a design/PR against all four by default; scaffolds a
   new service, module, or k8s app/channel on request.
+
+### Operating model
+How work gets chosen, how much rigor it earns, who owns it end to end, what counts as evidence, and
+what happens to a system you inherit rather than start. Six reference files: radical simplicity
+(the burden of proof sits on every complication, not on the simple version), ownership and
+execution, impact and prioritization by expected value, evidence and experimentation, asset
+transformation (acquire → transform → reinvest, at business scale and at codebase scale), and
+talent/standards. `references/provenance.md` traces every principle to its source, including the
+critical reporting on where the playbook does damage.
+
+- Skill `operating-model` — the six principles, the operating-loop graph they gate, and a
+  *reduction loop* that strips unjustified complications one at a time until each survivor has a
+  written justification.
+- Agent `operating-partner` — a full pass over a plan, diff, roadmap, or inherited codebase with a
+  verdict per principle (`aligned` / `unearned complexity` / `misapplied rigor` / `real gap`),
+  plus ranking mode (expected-value ordering with kill criteria) and takeover mode (assess →
+  migrate → delete → optimize). Also serves as `lollapalooza`'s capital-allocation lens.
 
 ## Installation
 
