@@ -87,20 +87,24 @@ loudly, keep the revert handy.
 
 **4. Re-monetize or re-scope deliberately.** Whatever "value capture" means here — pricing,
 limits, or simply what the system is allowed to be responsible for — set it explicitly rather
-than inheriting it by default. Inherited defaults are somebody else's decision, made under
+than inheriting it by default. When it is literally pricing, the levers and their order of
+reversibility are in `pricing-and-value-capture.md`; the aggressive version of this step is where
+this playbook earns most of its criticism. Inherited defaults are somebody else's decision, made under
 conditions that no longer hold.
 
 **5. Reinvest into the platform, not into the asset.** The tooling, patterns, and knowledge from
 this transformation should make the next one cheaper. Extract them; put them where the next
 project will find them (this plugin's `capture-learnings` skill is exactly this step). An
-improvement that stays local to one codebase doesn't compound.
+improvement that stays local to one codebase doesn't compound. `platform-and-compounding.md`
+covers what belongs in that shared layer, when extraction is earned, and how to tell whether it's
+actually paying.
 
 ## The order matters
 
 Cost base before optimization, always. Optimizing a system you haven't yet simplified means
 tuning things that should have been deleted, and every experiment you run on it costs more than it
-should. The sequence — **assess, migrate, delete, then optimize** — is not a preference; running it
-out of order is how transformations stall at step 3 with the original cost structure intact.
+should. The sequence — **assess, migrate, delete, then optimize** — is not a preference; running
+it out of order is how transformations stall at step 3 with the original cost structure intact.
 
 ## Anti-patterns
 

@@ -48,6 +48,9 @@ favour of either.
 - *Bending Spoons Operating Manual* (Colin Keeley) — https://www.colinkeeley.com/blog/bending-spoons-operating-manual — the "be good, not lucky" framing: designing an operating machine so outcomes depend less on luck.
 - Reporting on hiring selectivity — https://fortune.com/2026/07/15/bending-spoons-hired-0-04-of-800000-job-applicants-2025-ceo-says-hiring-unlike-useless-interviews/ — ~800,000 applications, ~0.04% hired, tests rather than unstructured interviews doing the filtering. Feeds the false-negative caveat in `talent-and-standards.md`.
 - Reporting on post-acquisition outcomes — https://techcrunch.com/2026/07/05/what-is-bending-spoons-everything-to-know-about-aols-acquirer/ and coverage of the Evernote, Meetup, and WeTransfer acquisitions — large layoffs at acquired companies, migration onto centralized infrastructure, and aggressive price increases with the resulting user backlash. Feeds the "where this does damage" section of `asset-transformation.md`.
+- Investigative reporting on the acquire-cut-raise pattern — https://www.ftm.eu/articles/wetransfer-owner-buys-up-apps-then-makes-them-more-expensive — the sequence applied across acquisitions: redundancies first, then price increases and product changes, with profitability lifting immediately after purchase. Feeds `pricing-and-value-capture.md` and the "where this does damage" section of `asset-transformation.md`.
+- Reporting on the specific pricing moves — https://www.forbes.com/sites/iainmartin/2026/07/01/how-bending-spoons-built-a-184-billion-empire-by-buying-internet-has-beens-like-aol/ and https://discussion.evernote.com/forums/topic/145109-bending-spoons-price-increases-begin/ — Evernote's personal plan moving from roughly $100 to $249/yr (~86%), free tiers narrowed, and WeTransfer's $15 and $25 plans consolidated into a single $25 tier with free transfers capped at 10/month. These are the figures quoted in `pricing-and-value-capture.md`; they come from journalism and user forums rather than from the company, and are stated there as reported rather than as disclosed.
+- Analysis of the shared-platform components — https://www.tanayj.com/p/bending-spoon-s-1-breakdown and https://www.francescatabor.com/articles/2025/7/28/bending-spoons-a-different-kind-of-tech-company — one platform covering engineering, billing, marketing, and support, with central data infrastructure, a lifetime-value predictor, an experimentation toolkit, a payments system, and a recruiting system offered to every product team. Feeds the "what belongs in the shared layer" table in `platform-and-compounding.md`, generalized to small-team equivalents.
 - Employee reviews (Glassdoor) — https://www.glassdoor.com/Reviews/Bending-Spoons-Reviews-E1164562.htm — the reported failure mode of continuous evaluation: high turnover, and feedback quality varying with the individual lead. Feeds `talent-and-standards.md`.
 
 ## Caveats
@@ -59,3 +62,9 @@ favour of either.
   not used in this skill.
 - The generalizations to a solo engineer or small team are this plugin's own — they're an
   adaptation of the model, not a claim about how the company works at that scale.
+- Four of the applied reference files are largely this plugin's own construction rather than
+  distillation: `reliability-and-incidents.md` and `decision-latency.md` generalize from standard
+  practice (error budgets, blameless postmortems, one-way/two-way doors, batch size) because the
+  company publishes little on either; `limits-and-failure-modes.md` is a deliberate counterweight
+  written against the model, not from it; `worked-examples.md` is invented illustration, and its
+  numbers are made up for the example rather than drawn from any real system.

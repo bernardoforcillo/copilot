@@ -69,8 +69,10 @@ the pace governs *how* you execute it.
   understanding that transfers. One-off wins that leave nothing behind rank lower than their
   immediate effect suggests.
 - **Fast pace on execution.** Once chosen, ship it at the coarsest useful granularity, quickly,
-  and read the result. Speed over sophistication when in doubt — most decisions are two-way doors
-  (see `radical-simplicity.md`), and deliberation on a two-way door is a cost with no buyer.
+  and read the result. Speed over sophistication when in doubt — most decisions are two-way doors,
+  and deliberation on a two-way door is a cost with no buyer. `decision-latency.md` carries the
+  door taxonomy, how to time-box the decision itself, and why work in progress is inventory that
+  rots.
 
 The compounding preference is why "boring infrastructure work" often outranks a visible feature,
 and why the reverse is true when the infrastructure work serves a product that hasn't proven it

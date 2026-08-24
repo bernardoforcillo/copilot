@@ -20,7 +20,8 @@ person will find it:
   "The dashboard query is 2.4s at p95 against 40 GB, measured 2026-08-14" is.
 - **A failure that already happened.** An incident, a data-loss near-miss, a rollback, a customer
   report. The complication is the fix for a specific thing that went wrong, not insurance against
-  a thing that hasn't.
+  a thing that hasn't. This is the main way complications legitimately enter a system — see
+  `reliability-and-incidents.md` for what an incident owes you beyond the fix.
 - **A requirement in writing from someone who can set requirements.** A contractual obligation, a
   compliance rule, a platform constraint you cannot design around. Not an inferred future need.
 - **The one-way-door test.** The decision is genuinely hard to reverse later and cheap to get

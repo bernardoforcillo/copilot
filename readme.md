@@ -50,18 +50,33 @@ DoorDash's experimentation platform).
 
 ### Operating model
 How work gets chosen, how much rigor it earns, who owns it end to end, what counts as evidence, and
-what happens to a system you inherit rather than start. Six reference files: radical simplicity
-(the burden of proof sits on every complication, not on the simple version), ownership and
-execution, impact and prioritization by expected value, evidence and experimentation, asset
-transformation (acquire → transform → reinvest, at business scale and at codebase scale), and
-talent/standards. `references/provenance.md` traces every principle to its source, including the
-critical reporting on where the playbook does damage.
+what happens to a system you inherit rather than start. Twelve reference files in two tiers.
+
+*Core, one per principle*: radical simplicity (the burden of proof sits on every complication, not
+on the simple version), ownership and execution, impact and prioritization by expected value,
+evidence and experimentation, asset transformation (acquire → transform → reinvest, at business
+scale and at codebase scale), talent and standards.
+
+*Applied, loaded when the decision is about their subject*: platform and compounding (what belongs
+in a shared layer, when extraction is earned, whether the platform is paying), pricing and value
+capture (the business half — packaging before price, levers ordered by reversibility, and the line
+between monetization and extraction), reliability and incidents (reliability as a budget set by
+maturity, and what an incident owes you), decision latency (one-way vs two-way doors, batch size,
+work in progress as rotting inventory), limits and failure modes (where this model does not
+transfer, and how it damages itself where it does), and worked examples (four end-to-end passes
+with real verdicts).
+
+`references/provenance.md` traces every principle to its source — including the critical reporting
+on where the playbook does damage, and an explicit note on which files are this plugin's own
+construction rather than distillation.
 
 - Skill `operating-model` — the six principles, the operating-loop graph they gate, and a
   *reduction loop* that strips unjustified complications one at a time until each survivor has a
   written justification.
-- Agent `operating-partner` — a full pass over a plan, diff, roadmap, or inherited codebase with a
-  verdict per principle (`aligned` / `unearned complexity` / `misapplied rigor` / `real gap`),
+- Agent `operating-partner` — a full pass over a plan, diff, roadmap, or inherited codebase: it
+  establishes whether the model applies to the target's domain at all, then which maturity column
+  the product is in, then a verdict per principle (`aligned` / `unearned complexity` /
+  `misapplied rigor` / `real gap`),
   plus ranking mode (expected-value ordering with kill criteria) and takeover mode (assess →
   migrate → delete → optimize). Also serves as `lollapalooza`'s capital-allocation lens.
 

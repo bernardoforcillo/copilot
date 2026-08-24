@@ -6,9 +6,10 @@ description: Apply a high-performance operating model to how work gets chosen, b
 
 A distilled operating model for building and running software products at a high standard with a
 small number of people: how work gets chosen, how much ceremony it earns, who owns it end to end,
-what counts as evidence, and what happens to an asset you inherit rather than start. Six
-self-contained reference files — read the one that matches the decision in front of you rather
-than loading all six.
+what counts as evidence, and what happens to an asset you inherit rather than start. Twelve
+self-contained reference files — six core, one per principle, and six applied, each carrying the
+depth behind a specific kind of call. Read the one that matches the decision in front of you
+rather than loading the set.
 
 This is deliberately an *operating* model, not a methodology. It says nothing about ticket formats
 or ceremony names. It says which complications you're allowed to buy, what you must show to buy
@@ -24,6 +25,12 @@ them, and what happens to work that can't justify itself.
 - Taking over a codebase, product, or system someone else built.
 - Reviewing your own throughput: whether what you finished last month was the highest-expected-value
   work available at the time.
+
+**Check the context first.** This model is tuned for software that's iterated continuously, where
+mistakes are cheap and reversible and demand is measurable. In safety-critical, regulated,
+research, community, or client-contracted work several of its principles are actively wrong —
+`references/limits-and-failure-modes.md` says which, and what to use instead. Establish which
+context you're in before applying anything below.
 
 Not for a decision that's already obvious, or work small enough that reasoning about it costs more
 than doing it. Applying an operating model to a two-line fix is itself a complication that hasn't
@@ -103,26 +110,54 @@ loop-until-converged pattern in `../../docs/architecture.md`:
   design simple. An unjustified complication that survives the cap is flagged debt, not an
   approved one.
 
-## The six references
+## The references
+
+**Core — one per principle.** Read the one that matches the decision in front of you.
 
 - **Radical simplicity** — the default-to-simple rule, what counts as proof that a complication is
   earned, the complication ledger (which evidence each standard complication requires), and the
-  table of how rigor scales with product maturity. Read `references/radical-simplicity.md`.
+  table of how rigor scales with product maturity. `references/radical-simplicity.md`
 - **Ownership and execution** — end-to-end ownership, breadth with one or two depths, the finisher
-  rule, speaking up, decision rights without titles, and writing decisions down. Read
-  `references/ownership-and-execution.md`.
+  rule, speaking up, decision rights without titles, writing decisions down.
+  `references/ownership-and-execution.md`
 - **Impact and prioritization** — expected-value ranking, kill criteria written in advance,
-  opportunity cost, the permanent backlog, long horizon with fast pace. Read
-  `references/impact-and-prioritization.md`.
+  opportunity cost, the permanent backlog, long horizon with fast pace.
+  `references/impact-and-prioritization.md`
 - **Evidence and experimentation** — what to instrument before building, when an experiment is the
-  right tool and when it isn't, reading results honestly, and lifetime-value framing for spend.
-  Read `references/evidence-and-experimentation.md`.
+  right tool and when it isn't, reading results honestly, lifetime-value framing for spend.
+  `references/evidence-and-experimentation.md`
 - **Asset transformation** — the acquire → transform → reinvest loop at business scale and at
-  codebase scale, migration over rewrite, and an honest account of where the playbook does damage.
-  Read `references/asset-transformation.md`.
+  codebase scale, migration over rewrite, and where the playbook does damage.
+  `references/asset-transformation.md`
 - **Talent and standards** — evaluation as measurement: the rubric written before the search,
-  structured comparable signals, density over headcount, and how the same mechanics apply to
-  reviewing agent-produced work. Read `references/talent-and-standards.md`.
+  structured comparable signals, density over headcount, and the same mechanics applied to
+  reviewing agent-produced work. `references/talent-and-standards.md`
+
+**Applied — the depth behind a specific kind of call.** Load one when the decision is actually
+about its subject, not by default.
+
+- **Platform and compounding** — what belongs in a shared layer and what must stay local, when
+  extraction is earned (the third consumer, never the second), build-vs-buy, and how to tell
+  whether the platform is actually paying. This is the reinvestment edge of the loop.
+  `references/platform-and-compounding.md`
+- **Pricing and value capture** — the business half: packaging before price, the levers ordered by
+  reversibility, how to raise a price on people who already trusted you, what to measure besides
+  revenue, and where the line between monetization and extraction sits.
+  `references/pricing-and-value-capture.md`
+- **Reliability and incidents** — reliability as a budget set by the maturity column, alerting on
+  symptoms rather than causes, the regression-test rule that converts an incident into a permanent
+  improvement, and on-call for teams too small for a rotation.
+  `references/reliability-and-incidents.md`
+- **Decision latency** — speed as an operating variable: two-way doors decided fast and one-way
+  doors decided carefully, time-boxing the decision itself, batch size, work-in-progress as
+  rotting inventory, and the coordination tax. `references/decision-latency.md`
+- **Limits and failure modes** — where this model does not transfer (safety-critical, regulated,
+  research, community, client work, long-horizon infrastructure) and how it damages itself when it
+  does apply. Read this *before* applying the model to an unfamiliar context.
+  `references/limits-and-failure-modes.md`
+- **Worked examples** — four end-to-end passes with real verdicts: a premature service split, a
+  legacy takeover, a price rise at small scale, and an over-elaborate agent-produced PR.
+  `references/worked-examples.md`
 
 `references/provenance.md` records where these principles come from — company documents,
 engineering writing, the IPO prospectus, and outside reporting including the critical kind — so
@@ -143,7 +178,11 @@ This skill sets the *standard*; the other desks do the specialist work under it.
   cost, base rates, compounding.
 - `capture-learnings` is the reinvestment edge of the operating loop: what generalizes goes to the
   memory wiki, or the cycle doesn't compound.
-- `commit` is where the *why* behind an earned complication survives.
+- `commit` is where the *why* behind an earned complication survives, and where a one-way-door
+  decision gets its written reason.
+- `growth` / `gtm` also own the execution around value capture — positioning, lifecycle,
+  channels — while `references/pricing-and-value-capture.md` sets what the capture is allowed to
+  be and what evidence it needs before it moves.
 
 ## Related agent
 

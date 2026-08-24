@@ -75,7 +75,8 @@ is a bet that the value of the cohort acquired exceeds what it cost to acquire i
 
 For the strategy layer above this — loops, channel selection, retention mechanics — this plugin's
 `growth` skill and `growth-marketer` agent are the specialists; this file only fixes the standard
-of evidence they're held to.
+of evidence they're held to. For the price side of the same question — what to test, in which
+order, and what the guardrails have to include — see `pricing-and-value-capture.md`.
 
 ## Scale changes what's answerable
 

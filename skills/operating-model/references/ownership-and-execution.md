@@ -18,7 +18,8 @@ Concretely, on any piece of work you own:
 - You ship it — the pipeline, the flag, the rollout, the rollback path are yours too.
 - You instrument it, and you go back and read the number afterwards. Work whose result nobody ever
   read isn't finished; it's abandoned at the last step.
-- You carry it when it breaks, and the fix for the incident includes the regression test.
+- You carry it when it breaks, and the fix for the incident includes the regression test — see
+  `reliability-and-incidents.md` for what else that incident owes you.
 
 The handoff at a layer boundary — "backend's done, waiting on frontend", "shipped, waiting on
 analytics" — is the failure mode this rule exists to remove. Every handoff is a place where the

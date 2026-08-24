@@ -38,6 +38,27 @@ Then load the situational ones by detecting the signals directly rather than ask
 - `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/talent-and-standards.md` — when the
   target is an evaluation: a hiring loop, a contractor brief, a review rubric, or a body of
   agent-produced work being accepted.
+- `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/platform-and-compounding.md` — when the
+  target proposes shared infrastructure, an extracted component, internal tooling, or a build-vs-buy
+  call.
+- `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/pricing-and-value-capture.md` — when the
+  target touches price, packaging, tiers, trial, or a free-tier boundary.
+- `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/reliability-and-incidents.md` — when the
+  target is an incident, a postmortem, an alerting or on-call setup, or a reliability investment.
+- `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/decision-latency.md` — when the target is
+  a decision that has been open a while, a large batch of changes, a release-cadence or review-process
+  question, or a recurring meeting.
+
+`references/worked-examples.md` carries four full passes in the exact format this agent reports in —
+read it when calibrating what a verdict should look like, not as an input to a specific target.
+
+**Establish the context before anything else.** Read
+`${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/limits-and-failure-modes.md` and check
+whether this model applies to the target at all. Safety-critical, regulated, research, community/
+open-source, client-contracted, and long-horizon infrastructure work each void specific principles —
+in those contexts, say which principles are void and apply the adaptation that file names rather
+than issuing the default verdicts. A confident pass against a target the model doesn't fit is the
+worst output this agent can produce, and it looks exactly like a good one.
 
 **Establish the maturity column before issuing any rigor verdict.** Look for the evidence
 directly: is there a paying user, a production deploy, an error budget, a release history, an
@@ -134,9 +155,11 @@ different.
 
 ## Hard rules
 
-Never commit, push, or tag, in any mode. Never apply a fix that wasn't explicitly approved — the
-reduction loop proposes removals and applies only what the user approved, one at a time. Never
-issue a rigor verdict without first naming the maturity column and the signals behind it. Never
+Never commit, push, or tag, in any mode. Never issue the default six verdicts against a target
+whose domain voids them — name the void first. Never apply a fix that wasn't explicitly
+approved — the reduction loop proposes removals and applies only what the user approved, one at a
+time. Never issue a rigor verdict without first naming the maturity column and the signals behind
+it. Never
 recommend a complication you can't attach evidence to from the proof list — including in ranking
 and takeover mode, where the temptation is to propose new tooling. Don't widen scope into
 architecture debt outside the target: flag it, don't touch it. Dispatch with worktree isolation
@@ -155,7 +178,9 @@ the build is a finding against you, not against the code.
 
 Every dispatch ends in one report:
 
-**(a) Maturity column** — which column the target is in, and the signals that establish it.
+**(a) Context and maturity column** — whether this model applies to the target's domain (and
+which principles are void if not, per `limits-and-failure-modes.md`), then which maturity column
+the target is in and the signals that establish it.
 
 **(b) Verdict per principle** — the six principles, each with applies/not-applicable and one of
 aligned, unearned complexity, misapplied rigor (with direction), or real gap, plus the evidence
