@@ -1,0 +1,22 @@
+[
+  {"query": "ok so we've got 14 things in the Q4 backlog and i genuinely can't tell which to start. two of them are 'add SSO for the enterprise trial' and 'rewrite the billing service because it's ugly'. how should i be deciding this", "should_trigger": true},
+  {"query": "my cofounder wants to split our api into three services (orders, users, notifications) before we launch. we have about 40 people on the beta. is that a reasonable call or am i right to push back", "should_trigger": true},
+  {"query": "we just acquired a small competitor and i inherited their php monolith. 6 years old, no tests, around 200 daily users who love it. rewrite it in go or keep it running?", "should_trigger": true},
+  {"query": "how much testing does this thing actually need? it's an internal tool that 4 people use, but it touches payroll data so i'm nervous about being too casual", "should_trigger": true},
+  {"query": "i keep shipping stuff and none of our numbers move. how do i tell whether what i finished last month was actually the right work to be doing", "should_trigger": true},
+  {"query": "thinking of putting redis in front of postgres because reads feel slow on the dashboard. worth doing now or am i jumping the gun", "should_trigger": true},
+  {"query": "team of 3. someone wants us to add a staging environment plus a QA sign-off step before every release. we deploy twice a week to ~300 users. push back or accept?", "should_trigger": true},
+  {"query": "we're at 220 paying customers on 9 eur a month and i'm pretty sure we're underpriced. thinking about doubling it. how do i think about this without torching the base", "should_trigger": true},
+  {"query": "an agent wrote me a 900 line PR that adds a whole plugin registry and a format-agnostic parser interface, for what was supposed to be 'add csv import'. how should i approach reviewing this", "should_trigger": true},
+  {"query": "took over a repo from a contractor who's gone. what do i do first — there's a lot in here and i don't know what's load bearing", "should_trigger": true},
+  {"query": "write me a conventional commit message for what's currently staged, it's a bugfix in the auth middleware plus a test", "should_trigger": false},
+  {"query": "can you look at this login screen? the contrast on the secondary button feels off and my eye never lands on the CTA", "should_trigger": false},
+  {"query": "help me draft a PRD for a shared team inbox. we've done 8 customer interviews and i've got the notes in docs/research/", "should_trigger": false},
+  {"query": "our canary channel deploy keeps failing the cert-manager check — here's the IngressRoute and the certificate manifest, what's wrong", "should_trigger": false},
+  {"query": "write the hero copy for our pricing page, we're targeting small agencies who bill hourly", "should_trigger": false},
+  {"query": "explain what an aggregate root is in DDD, i keep seeing it and half-getting it", "should_trigger": false},
+  {"query": "activation dropped from 34% to 28% after the onboarding redesign three weeks ago. help me work out what's going on and which channel it's concentrated in", "should_trigger": false},
+  {"query": "set up a github action that runs go test ./... and golangci-lint on every PR to main", "should_trigger": false},
+  {"query": "summarize what changed in this diff so i can paste it into the release notes", "should_trigger": false},
+  {"query": "what's the practical difference between a message queue and an event stream, in terms of when you'd reach for each", "should_trigger": false}
+]

@@ -149,6 +149,22 @@ path-shaped file reference, orphaned reference files, mermaid blocks (closed, an
 diagram type), and whether `docs/architecture.md`'s dispatch graph and loop-adopters table still
 describe what exists. No dependencies; exit 0 means consistent.
 
+## Evals
+
+`evals/` holds two kinds of measurement, because a skill fails in two independent ways — good advice
+that never loads, and advice that loads reliably and is wrong.
+
+- `<skill>-trigger.json` — 20 queries per skill, half of them near-misses that belong to another
+  desk, run through `claude -p` by `skill-creator`'s `run_eval.py` to measure whether the
+  description actually discriminates.
+- `<skill>-tasks.json` — task prompts with objectively checkable assertions, written against the
+  specific failures each desk exists to prevent (endorsing a split with no measured trigger,
+  optimising before deleting in a takeover, a sequence diagram with no failure path, a cost model
+  with rates asserted from memory).
+
+See [evals/README.md](evals/README.md) for how to run them and for what they deliberately don't
+measure.
+
 ## License and contributing
 
 Free to use; not licensed for redistribution or publishing a modified copy — see

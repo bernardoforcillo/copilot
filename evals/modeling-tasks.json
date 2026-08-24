@@ -1,0 +1,47 @@
+{
+  "skill_name": "modeling",
+  "evals": [
+    {
+      "id": 1,
+      "name": "checkout-sequence",
+      "prompt": "Can you map out how our checkout actually works? Browser posts to our Go API, we write the order row in Postgres, call Stripe to authorize, then send a receipt through Postmark. I keep losing track of what happens when Stripe declines.",
+      "expected_output": "A single sequence diagram in mermaid with the failure path modelled, the external calls marked as costing money, and a short note on what it deliberately omits.",
+      "files": [],
+      "assertions": [
+        "Emits a mermaid sequenceDiagram (not a flowchart) as the primary view",
+        "Models the decline path explicitly, using an alt/else fragment rather than only the happy path",
+        "Marks or notes the calls that cross to an external paid service",
+        "Keeps participants to roughly five or fewer",
+        "States what the view deliberately omits, or which question it answers, rather than presenting it as a complete description of the system"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "unit-cost-of-a-feature",
+      "prompt": "We charge 19 EUR/month flat and just launched an AI summary feature. Each summary sends about 6k tokens in and 800 out, does three DB queries, writes a 200KB file, and roughly 1 in 100 generates a support ticket that takes ~6 minutes. Some users generate hundreds a month. Is this going to hurt us?",
+      "expected_output": "A per-driver cost table, contribution and break-even usage per subscriber, the dominant driver named, rates flagged as needing lookup, and the heavy-tail warning about averages.",
+      "files": [],
+      "assertions": [
+        "Produces a per-driver cost table covering inference, support, and infrastructure separately",
+        "Names the dominant cost driver explicitly and points optimisation at it",
+        "Computes a break-even usage per subscriber from the monthly price",
+        "Flags model/infra rates as needing to be looked up rather than asserting current provider prices as fact",
+        "Warns that usage is heavy-tailed so the average subscriber is not the design input, and asks for or reasons about the distribution"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "order-lifecycle",
+      "prompt": "Our order status field has nine values: draft, placed, paid, payment_failed, shipped, delivered, cancelled, refunded, expired. Nobody knows which transitions are legal and we've shipped two bugs from it. Help.",
+      "expected_output": "A state machine in mermaid covering all nine states with triggers and guards, timeouts modelled as transitions, illegal transitions named explicitly, and terminal states identified.",
+      "files": [],
+      "assertions": [
+        "Emits a mermaid stateDiagram-v2 covering all nine named states",
+        "Gives transitions a trigger, and a guard where the transition is conditional",
+        "Models at least one timeout or expiry as an explicit transition rather than leaving it implicit",
+        "Names at least one illegal transition that should be impossible by construction",
+        "Identifies the terminal states, and shows every non-terminal state having an exit"
+      ]
+    }
+  ]
+}

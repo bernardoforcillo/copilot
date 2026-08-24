@@ -192,7 +192,35 @@ for (const file of docFiles) {
   if (open !== null) p(`${file}:${open}: unclosed mermaid block`);
 }
 
-// --- (7) plugin.json and marketplace.json stay in sync ---------------------
+// --- (7) eval sets point at skills that exist ------------------------------
+// Eval files name a skill in their filename (and, for task evals, in a field).
+// A renamed skill silently orphans its evals otherwise.
+if (existsSync(join(root, 'evals'))) {
+  for (const file of readdirSync(join(root, 'evals')).filter((f) => f.endsWith('.json'))) {
+    let parsed;
+    try {
+      parsed = JSON.parse(readFileSync(join(root, 'evals', file), 'utf8'));
+    } catch (err) {
+      p(`evals/${file}: not valid JSON (${err.message})`);
+      continue;
+    }
+    const named = file.replace(/-(trigger|tasks)\.json$/, '');
+    if (!skills.includes(named)) p(`evals/${file}: names skill '${named}', which does not exist`);
+    if (!Array.isArray(parsed) && parsed.skill_name && !skills.includes(parsed.skill_name))
+      p(`evals/${file}: skill_name '${parsed.skill_name}' does not exist`);
+    if (Array.isArray(parsed)) {
+      const bad = parsed.filter((q) => typeof q.query !== 'string' || typeof q.should_trigger !== 'boolean');
+      if (bad.length) p(`evals/${file}: ${bad.length} entr(ies) missing a string query or boolean should_trigger`);
+    } else {
+      for (const e of parsed.evals || []) {
+        if (!e.prompt) p(`evals/${file}: eval ${e.id ?? '?'} has no prompt`);
+        if (!(e.assertions || []).length) p(`evals/${file}: eval ${e.id ?? '?'} has no assertions`);
+      }
+    }
+  }
+}
+
+// --- (8) plugin.json and marketplace.json stay in sync ---------------------
 const plugin = JSON.parse(readFileSync(join(root, '.claude-plugin/plugin.json'), 'utf8'));
 const market = JSON.parse(readFileSync(join(root, '.claude-plugin/marketplace.json'), 'utf8'));
 const entry = (market.plugins || []).find((x) => x.name === plugin.name);
