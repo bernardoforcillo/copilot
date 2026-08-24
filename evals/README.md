@@ -44,6 +44,44 @@ have it propose description rewrites and score them on a held-out split — but 
 description before applying it: an optimizer will happily produce a description that triggers well
 and describes the skill badly.
 
+### What the first run measured
+
+Both skills, 20 queries each, 2 runs per query, `--num-workers 3 --timeout 300`, opus:
+
+| Skill | Positives firing at least once | Mean rate on positives | Near-misses that fired |
+| --- | --- | --- | --- |
+| `operating-model` | 6 / 10 | 0.35 | **0 / 10** |
+| `modeling` | 3 / 10 | 0.15 | **0 / 10** |
+
+Perfect precision, poor recall — and the misses are on central cases (mapping a flow across
+services, which state transitions are legal, what a feature costs per use). A rewrite of both
+descriptions naming exactly those situations, plus the anti-under-triggering line skill-creator
+recommends, produced no detectable change (0.35 → 0.30 and 0.15 → 0.15) and was reverted.
+
+**Know what this measurement can resolve before reading a delta as a result.** With `k` runs per
+query over `m` positives, the standard error of the mean rate is `sqrt(m·p(1−p)/k)/m`. At k=2,
+m=10, p≈0.3 that is ±0.10, so a before/after difference carries a 95% interval of about ±0.28:
+
+| To resolve a difference of | Runs per query | Calls per skill |
+| --- | --- | --- |
+| 0.20 | 9 | 180 |
+| 0.15 | 15 | 300 |
+| 0.10 | 33 | 660 |
+
+So this configuration is a **floor check**, not an A/B for description wording: it answers "does
+the skill load at all, and do the near-misses stay clean?" It cannot referee two candidate
+descriptions, and treating a ±0.1 swing as evidence is reading noise.
+
+### The structural finding
+
+Triggering held near-perfect specificity and low recall across two quite different description
+texts. That's consistent with how skills load: Claude consults one when the task isn't something it
+can already handle, and most of these prompts are advice-shaped questions it answers directly. The
+practical consequence is worth stating plainly — **these desks earn their keep when invoked
+(`/copilot:operating-model`, `/copilot:modeling`) or dispatched as agents, more than as ambient
+skills that fire on their own.** A description rewrite is unlikely to change that, which is why
+the reverted attempt is recorded here rather than repeated.
+
 ## Task evals
 
 Three prompts per skill, each with assertions phrased so that a grader (or a person) can mark them

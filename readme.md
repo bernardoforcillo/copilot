@@ -162,8 +162,9 @@ that never loads, and advice that loads reliably and is wrong.
   optimising before deleting in a takeover, a sequence diagram with no failure path, a cost model
   with rates asserted from memory).
 
-See [evals/README.md](evals/README.md) for how to run them and for what they deliberately don't
-measure.
+See [evals/README.md](evals/README.md) for how to run them, what the first run measured (perfect
+precision, low recall on both new desks), what that configuration can and cannot resolve, and what
+it deliberately doesn't measure.
 
 ## License and contributing
 
