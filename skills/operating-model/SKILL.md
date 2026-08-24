@@ -1,6 +1,6 @@
 ---
 name: operating-model
-description: Apply a high-performance operating model to how work gets chosen, built, shipped, and inherited — radical simplicity with the burden of proof on complexity, end-to-end ownership, impact-only prioritization by expected value, evidence over taste, rigor proportional to product maturity, and transformation rather than rewriting of assets you inherit. Use when deciding what to build next, how much process a piece of work deserves, whether a complication is earned, or what to do with a codebase or product handed to you.
+description: Decide what is worth building, how much process it deserves, and what complexity it is allowed to buy — radical simplicity with the burden of proof on every complication, end-to-end ownership, prioritization by expected value with kill criteria, evidence over taste, rigor proportional to product maturity, and transforming rather than rewriting what you inherit. Use this whenever someone is choosing between competing pieces of work or asking what to do first; questioning whether a service split, cache, queue, abstraction, extra environment, or process step is justified yet; asking how much testing, review, or ceremony something needs; taking over a codebase, repo, or product someone else built; weighing a rewrite against a migration; reviewing a change that looks over-engineered, including one an agent wrote; or setting, raising, or packaging a price. It applies even when they don't ask for a framework — they usually won't.
 ---
 
 # Operating model

@@ -1,6 +1,6 @@
 ---
 name: modeling
-description: Model a system with the UML pillars that actually earn their place — use case, domain/class, sequence, state machine, component and deployment views — and carry the model through to unit economics, so an engineering decision can be read as a change in contribution per transaction. Use when designing or documenting a system, deciding which diagram answers a question, modelling a domain, or working out what a design costs and earns per unit.
+description: Model a system with the UML views that earn their place — use case, domain/class, sequence, state machine, component, deployment — and carry the model through to unit economics, so a design decision reads as a change in cost or contribution per transaction. Use this whenever someone wants to map, diagram, or explain how a flow works across services; wants to know which states something can be in or which transitions are legal; is sketching entities or a schema before a migration; needs to hand a system over to someone new; asks which diagram or view fits a question, or whether an existing one is right; wants to trace requirements to the things that implement them; or asks what a feature costs per use, where to set a usage limit, or whether a design pays for itself. Reach for it even when they never say UML or diagram — a question about how a flow works, what states are legal, or what a transaction costs belongs here.
 ---
 
 # Modeling
