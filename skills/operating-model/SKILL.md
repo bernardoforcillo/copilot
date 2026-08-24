@@ -1,4 +1,5 @@
 ---
+name: operating-model
 description: Apply a high-performance operating model to how work gets chosen, built, shipped, and inherited — radical simplicity with the burden of proof on complexity, end-to-end ownership, impact-only prioritization by expected value, evidence over taste, rigor proportional to product maturity, and transformation rather than rewriting of assets you inherit. Use when deciding what to build next, how much process a piece of work deserves, whether a complication is earned, or what to do with a codebase or product handed to you.
 ---
 

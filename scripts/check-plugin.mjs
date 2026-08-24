@@ -37,8 +37,16 @@ for (const skill of skills) {
     continue;
   }
   const fm = readFileSync(join(root, file), 'utf8').match(/^---\n([\s\S]*?)\n---\n/);
-  if (!fm) p(`${file}: missing frontmatter block`);
-  else if (!/^description:\s*\S/m.test(fm[1])) p(`${file}: missing 'description'`);
+  if (!fm) {
+    p(`${file}: missing frontmatter block`);
+    continue;
+  }
+  if (!/^description:\s*\S/m.test(fm[1])) p(`${file}: missing 'description'`);
+  const skillName = fm[1].match(/^name:\s*(\S+)\s*$/m);
+  // Claude Code infers the name from the directory, but tooling that reads the
+  // frontmatter directly (the eval harness, for one) gets an empty name without it.
+  if (!skillName) p(`${file}: missing 'name'`);
+  else if (skillName[1] !== skill) p(`${file}: name '${skillName[1]}' != directory '${skill}'`);
 }
 for (const agent of agents) {
   const file = join('agents', `${agent}.md`);

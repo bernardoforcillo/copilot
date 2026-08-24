@@ -1,4 +1,5 @@
 ---
+name: lollapalooza
 description: Apply Charlie Munger's latticework of mental models to a decision or problem — route to the plugin's existing specialist agents as lenses where relevant, apply inversion/incentive-analysis/base-rate checks inline, and synthesize on convergence (multiple independent lenses agreeing is a stronger signal than any one alone) versus tension (a genuinely hard trade-off). Use for a decision or problem worth more than one perspective, not a trivial or already-obvious call.
 ---
 

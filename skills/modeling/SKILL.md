@@ -1,4 +1,5 @@
 ---
+name: modeling
 description: Model a system with the UML pillars that actually earn their place — use case, domain/class, sequence, state machine, component and deployment views — and carry the model through to unit economics, so an engineering decision can be read as a change in contribution per transaction. Use when designing or documenting a system, deciding which diagram answers a question, modelling a domain, or working out what a design costs and earns per unit.
 ---
 

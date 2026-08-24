@@ -1,4 +1,5 @@
 ---
+name: capture-learnings
 description: Use at the end of executing a plan or PRD (or when the user asks to capture lessons / update memory) to distil reusable knowledge into the .claude/memory wiki. Bootstraps the wiki automatically on first use in a project. Never auto-commits.
 ---
 

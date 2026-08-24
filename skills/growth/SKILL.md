@@ -1,4 +1,5 @@
 ---
+name: growth
 description: Use when the user asks for growth or launch strategy — launch plans, channel/audience strategy, waitlist and referral mechanics, message framing — or invokes /growth <task>. Dispatches the growth-marketer subagent, which itself peer-dispatches gtm-engineer to implement the handoff when build was asked for.
 ---
 

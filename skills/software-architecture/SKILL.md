@@ -1,4 +1,5 @@
 ---
+name: software-architecture
 description: Apply scaling, code-organization, and Bernardo's concrete Go + Vite/React + Kubernetes stack conventions when designing, reviewing, or scaffolding a service, module, or deployment. Use when making an architecture/infra decision, organizing code into layers, or setting up a new service or k8s app/channel.
 ---
 

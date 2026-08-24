@@ -1,4 +1,5 @@
 ---
+name: prd
 description: Use when the user wants to define a new product feature — turn a raw idea or problem into a rigorous PRD through a design-thinking process before any technical design — or invokes /prd <feature>. Facilitates the dialogue in the main loop and dispatches the product-strategist subagent for the heavy research passes.
 ---
 
