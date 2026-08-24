@@ -53,7 +53,7 @@ imports and config), routes with no traffic in the last 90 days, dependencies no
 feature flags permanently on. Every deletion is a separate revertible commit.
 
 **Then optimize** — only now is a refactor toward the `software-architecture` skill's
-`references/vite-react-conventions.md` worth doing, and only on paths actually touched by upcoming
+`${CLAUDE_PLUGIN_ROOT}/skills/software-architecture/references/vite-react-conventions.md` worth doing, and only on paths actually touched by upcoming
 work.
 
 **Explicitly not:** a rewrite. Base rate says it takes longer than estimated and reproduces the

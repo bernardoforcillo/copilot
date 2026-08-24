@@ -116,6 +116,12 @@ Skills are invoked scoped to the plugin: `/copilot:<skill-name>` — e.g. `/copi
 way, `@copilot:<agent-name>` (e.g. `@copilot:software-architect`) or via the `Agent` tool with
 `subagent_type: "<agent-name>"`.
 
+## Checks
+
+`node scripts/check-plugin.mjs` validates the plugin's structure: skill/agent frontmatter, every
+path-shaped file reference, orphaned reference files, and whether `docs/architecture.md`'s dispatch
+graph and loop-adopters table still describe what exists. No dependencies; exit 0 means consistent.
+
 ## License and contributing
 
 Free to use; not licensed for redistribution or publishing a modified copy — see

@@ -10,7 +10,11 @@ redistribute your own copy.
 1. Fork this repository and branch off `master`.
 2. Make your change (a new skill, a fix to an existing agent/skill, a reference-file
    correction, etc.) following the conventions already established in the files around it.
-3. Open a pull request against `master` describing what changed and why.
+3. Run `node scripts/check-plugin.mjs` and fix anything it reports. It checks the invariants
+   that drift silently: frontmatter, every path-shaped reference resolving, no orphaned reference
+   files, and the two hand-maintained sections of `docs/architecture.md` — the dispatch graph and
+   the loop-until-converged adopters table — still matching what's actually on disk.
+4. Open a pull request against `master` describing what changed and why.
 
 Forking to open a pull request is fine — the license restricts redistributing the software,
 not sending a patch back to its maintainer.

@@ -181,7 +181,7 @@ Every mechanism in this file is dual-use, and the line between "good design" and
 - Time-pressured decision moments (checkout urgency, countdown timers) suppress the deliberate override of affect-driven judgment — using time pressure to push a risk/benefit decision the user hasn't fully evaluated exploits this mechanism and crosses into manipulation.
 **Cite:** [EMO-SLOV-07]
 
-**See also (cross-domain):** `../cross-domain/behavioral-economics.md`, `../cross-domain/motivation-game-design.md`, `../cross-domain/social-influence-persuasion.md`, `../cross-domain/neuroaesthetics.md`
+**See also (cross-domain):** `cross-domain/behavioral-economics.md`, `cross-domain/motivation-game-design.md`, `cross-domain/social-influence-persuasion.md`, `cross-domain/neuroaesthetics.md`
 
 ## Deeper dive (v3)
 
@@ -233,4 +233,4 @@ Every mechanism in this file is dual-use, and the line between "good design" and
 - Give users tools for their own antecedent-focused regulation: preview/undo affordances, clear expectation-setting, and the ability to reframe a decision before commitment (e.g., a summary/confirm step) all support healthier emotion regulation than interfaces that spring outcomes on users and then just muffle the reaction.
 **Cite:** [EMO2-GROS-98]
 
-**See also (cross-domain):** `../cross-domain/behavioral-economics.md`, `../cross-domain/motivation-game-design.md`, `../cross-domain/social-influence-persuasion.md`, `../cross-domain/neuroaesthetics.md`
+**See also (cross-domain):** `cross-domain/behavioral-economics.md`, `cross-domain/motivation-game-design.md`, `cross-domain/social-influence-persuasion.md`, `cross-domain/neuroaesthetics.md`

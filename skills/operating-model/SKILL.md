@@ -169,13 +169,13 @@ true, and a rule taken on authority never does.
 
 | Principle | Mechanism that generates it | Voids when the mechanism is absent |
 | --- | --- | --- |
-| Radical simplicity | Interactions grow as *n(n−1)/2* while parts grow linearly; state spaces multiply; systems accrete complexity unless work is done to remove it — `foundations/complexity-and-coupling.md` | The complexity is essential rather than accidental, the system is genuinely short-lived, or interactions are capped by construction |
-| Impact only / evidence over taste | Information is worth exactly zero if it can't change the decision; base rates and power arithmetic bound what a sample can settle — `foundations/uncertainty-and-information.md` | No measurable outcome in a usable time frame, no adequate sample available, or the decision is unique with no reference class |
-| Speed on two-way doors, care on one-way | Loss on a reversible decision is bounded by the cost of undoing; irreversible outcomes remove all later decisions from the board — `foundations/irreversibility-and-optionality.md` | Nothing is reversible (safety-critical, regulated), or the undo cost is paid by someone other than you |
-| Rigor proportional to maturity | Verification cost is justified against the consequence of failure and the probability the thing survives — `foundations/uncertainty-and-information.md` and `foundations/irreversibility-and-optionality.md` together | Consequence of failure is set externally — harm, regulation, contract — in which case rigor is set by the consequence, never by the stage |
-| Ownership end to end | Agency costs appear wherever the decider doesn't bear the consequence; every handoff creates one — `foundations/incentives-and-trust.md` | Decider and consequence-bearer must be kept separate by design (audit, regulated separation of duties) |
-| Transform, don't restart; reinvest | Reinvested returns compound geometrically; learning curves track cumulative experience; shared cost divided over *k* consumers — `foundations/compounding-and-capital.md` | There is no next cycle, decay exceeds return, or *k* = 1 |
-| Decision latency and batch size | Cycle time = WIP ÷ throughput; waiting time scales as 1/(1−ρ) — `foundations/flow-and-queues.md` | The work isn't a repeating flow, or the constraint is somewhere else entirely |
+| Radical simplicity | Interactions grow as *n(n−1)/2* while parts grow linearly; state spaces multiply; systems accrete complexity unless work is done to remove it — `references/foundations/complexity-and-coupling.md` | The complexity is essential rather than accidental, the system is genuinely short-lived, or interactions are capped by construction |
+| Impact only / evidence over taste | Information is worth exactly zero if it can't change the decision; base rates and power arithmetic bound what a sample can settle — `references/foundations/uncertainty-and-information.md` | No measurable outcome in a usable time frame, no adequate sample available, or the decision is unique with no reference class |
+| Speed on two-way doors, care on one-way | Loss on a reversible decision is bounded by the cost of undoing; irreversible outcomes remove all later decisions from the board — `references/foundations/irreversibility-and-optionality.md` | Nothing is reversible (safety-critical, regulated), or the undo cost is paid by someone other than you |
+| Rigor proportional to maturity | Verification cost is justified against the consequence of failure and the probability the thing survives — `references/foundations/uncertainty-and-information.md` and `references/foundations/irreversibility-and-optionality.md` together | Consequence of failure is set externally — harm, regulation, contract — in which case rigor is set by the consequence, never by the stage |
+| Ownership end to end | Agency costs appear wherever the decider doesn't bear the consequence; every handoff creates one — `references/foundations/incentives-and-trust.md` | Decider and consequence-bearer must be kept separate by design (audit, regulated separation of duties) |
+| Transform, don't restart; reinvest | Reinvested returns compound geometrically; learning curves track cumulative experience; shared cost divided over *k* consumers — `references/foundations/compounding-and-capital.md` | There is no next cycle, decay exceeds return, or *k* = 1 |
+| Decision latency and batch size | Cycle time = WIP ÷ throughput; waiting time scales as 1/(1−ρ) — `references/foundations/flow-and-queues.md` | The work isn't a repeating flow, or the constraint is somewhere else entirely |
 
 **How to use the table.** When you're about to apply a principle in an unfamiliar context, read
 the middle column and ask whether that mechanism is actually operating here. When someone disputes
@@ -208,6 +208,25 @@ This skill sets the *standard*; the other desks do the specialist work under it.
 - `growth` / `gtm` also own the execution around value capture — positioning, lifecycle,
   channels — while `references/pricing-and-value-capture.md` sets what the capture is allowed to
   be and what evidence it needs before it moves.
+
+## Maintenance (this desk under its own rules)
+
+A reference file is a complication like any other, and this skill would flag itself if it
+exempted its own contents from the test it applies to everything else. Two rules, both derived
+from the ones above:
+
+- **Re-examination, not accumulation.** Each reference file earns its place by being *read* when
+  a decision of its kind comes up. A file that has never been opened in the course of real work
+  is speculative — the same verdict the complication ledger gives a generic abstraction with one
+  call site. When that's true of a file, the honest options are to delete it or to state plainly
+  that it's kept for a use that hasn't happened yet; what's not allowed is treating its existence
+  as evidence of its value.
+- **Mechanical instrumentation instead of none.** `scripts/check-plugin.mjs` is this desk's
+  minimum viable measurement: it fails when a reference doesn't resolve, when a file is orphaned,
+  or when `docs/architecture.md` stops describing what's on disk. It doesn't measure whether the
+  advice is any good — nothing here does yet, and that gap should be named rather than papered
+  over. It was earned the way the ledger requires: on its first run it found 38 broken paths,
+  26 of them pre-existing.
 
 ## Related agent
 

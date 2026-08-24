@@ -49,7 +49,7 @@ Then load the situational ones by detecting the signals directly rather than ask
   a decision that has been open a while, a large batch of changes, a release-cadence or review-process
   question, or a recurring meeting.
 
-`references/worked-examples.md` carries four full passes in the exact format this agent reports in —
+`${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/worked-examples.md` carries four full passes in the exact format this agent reports in —
 read it when calibrating what a verdict should look like, not as an input to a specific target.
 
 **Establish the context before anything else.** Read

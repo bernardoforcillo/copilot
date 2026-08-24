@@ -38,7 +38,7 @@ to reproduce any of that reasoning here.
   mechanics inside the product itself, dispatch `neuro-design-reviewer` or use the
   `neuro-design`/`neuro-design-audit` skills instead of this one.
 - **Evidence standard comes from the operating model.** Whatever this skill's strategy work
-  proposes is held to `operating-model`'s `references/evidence-and-experimentation.md`: a primary
+  proposes is held to `operating-model`'s `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/evidence-and-experimentation.md`: a primary
   metric with a target set in advance, guardrails, the cohort-lifetime-value frame for any spend,
   and an experiment only where one can actually settle the question.
 - **Multiple independent growth tracks get parallel dispatches**, one worktree each, rather than

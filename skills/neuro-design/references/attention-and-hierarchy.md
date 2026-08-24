@@ -146,7 +146,7 @@ Human vision cannot process a whole scene at once — a small set of pre-attenti
 
 **Cite:** [ATT-04]
 
-**See also (cross-domain):** `../cross-domain/graphical-perception-dataviz.md` (pre-attentive attributes and saliency applied to chart encoding), `../cross-domain/human-factors-safety.md` (attentional capture and signal detection in alarms and safety-critical interfaces).
+**See also (cross-domain):** `cross-domain/graphical-perception-dataviz.md` (pre-attentive attributes and saliency applied to chart encoding), `cross-domain/human-factors-safety.md` (attentional capture and signal detection in alarms and safety-critical interfaces).
 
 ## Deeper dive (v3)
 
@@ -202,4 +202,4 @@ Human vision cannot process a whole scene at once — a small set of pre-attenti
 
 **Cite:** [ATT2-04]
 
-**See also (cross-domain):** `../cross-domain/human-factors-safety.md` (Posner-style cueing and orienting underlie alarm and signal design), `../cross-domain/graphical-perception-dataviz.md` (subitizing and numerosity limits underlie chart-encoding guidance for counts and small multiples).
+**See also (cross-domain):** `cross-domain/human-factors-safety.md` (Posner-style cueing and orienting underlie alarm and signal design), `cross-domain/graphical-perception-dataviz.md` (subitizing and numerosity limits underlie chart-encoding guidance for counts and small multiples).

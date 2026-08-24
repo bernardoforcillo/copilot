@@ -168,7 +168,7 @@ Every tap, drag, click, and keystroke is a movement problem before it is a visua
 
 **Cite:** [MOT-BERGSTROM-14]
 
-**See also (cross-domain):** `../cross-domain/human-factors-safety.md`, `../cross-domain/multisensory-audio-haptics.md`
+**See also (cross-domain):** `cross-domain/human-factors-safety.md`, `cross-domain/multisensory-audio-haptics.md`
 
 ## Deeper dive (v3)
 
@@ -232,4 +232,4 @@ Every tap, drag, click, and keystroke is a movement problem before it is a visua
 
 **Cite:** [MOT2-CARD-80]
 
-**See also (cross-domain):** `../cross-domain/habit-behavior-change.md`, `../cross-domain/embodied-cognition.md`
+**See also (cross-domain):** `cross-domain/habit-behavior-change.md`, `cross-domain/embodied-cognition.md`
