@@ -20,11 +20,26 @@ cd <skill-creator path>
 python3 -m scripts.run_eval \
   --eval-set <this repo>/evals/operating-model-trigger.json \
   --skill-path <this repo>/skills/operating-model \
-  --runs-per-query 3 --num-workers 6 --timeout 90 --model <session model> --verbose
+  --runs-per-query 2 --num-workers 3 --timeout 300 --model <session model> --verbose < /dev/null
 ```
 
-Each query runs three times because triggering is stochastic; the reported rate per query is what
-matters, not a single yes/no. Add `scripts/run_loop.py` (same arguments plus `--max-iterations`) to
+Each query runs more than once because triggering is stochastic; the reported rate per query is
+what matters, not a single yes/no.
+
+**Two traps that produce a confident zero rather than an error**, both found the hard way:
+
+- **The harness reads `name` out of `SKILL.md` frontmatter.** A skill without one registers under
+  an empty name and nothing can trigger. `scripts/check-plugin.mjs` now enforces the field for
+  exactly this reason.
+- **The default timeout is far too short for a reasoning model doing real tool calls.** At
+  `--timeout 90 --num-workers 8`, runs are killed before the model reaches its first tool call and
+  every one of them records as "did not trigger". The same query that scored 0.00 there scores 1.00
+  at `--timeout 300 --num-workers 3`. Redirect stdin (`< /dev/null`) too, or each subprocess wastes
+  its first seconds waiting for input that never comes.
+
+A trigger rate of zero across *every* positive query is almost always the harness, not the
+description. Check one query by hand — run `claude -p` with the command file in place and look for
+a `Skill` tool call in the stream — before touching a description on the strength of a zero. Add `scripts/run_loop.py` (same arguments plus `--max-iterations`) to
 have it propose description rewrites and score them on a held-out split — but read the proposed
 description before applying it: an optimizer will happily produce a description that triggers well
 and describes the skill badly.
