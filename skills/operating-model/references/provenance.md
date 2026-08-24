@@ -1,0 +1,61 @@
+# Provenance
+
+The principles in this skill are distilled from the published operating model of a European
+software acquirer-operator (Bending Spoons S.p.A.) — its own culture documents and engineering
+writing, its IPO prospectus, and outside reporting including the critical kind — plus the
+generalizations needed to make them apply to a small team or a single engineer rather than to a
+portfolio company.
+
+The skill and agent are deliberately written without company branding: they state the model, not
+the case study. This file exists so that every claim in them can be traced to a source and
+checked, rather than being taken on the skill's word.
+
+## How to read the sourcing
+
+- **Primary** — the company's own published documents and posts. Reliable for what the company
+  states its practices and principles to be.
+- **Financial disclosure** — IPO prospectus and related filings. Reliable for figures and
+  strategy as disclosed to regulators.
+- **Journalism / secondary** — reporting and analysis. Reliable for outcomes the company doesn't
+  publish itself, including costs and criticism.
+
+Where primary and secondary sources disagree about effects — most sharply on post-acquisition
+layoffs and price rises — `asset-transformation.md` states both rather than resolving them in
+favour of either.
+
+## Sources
+
+**Primary — company documents and engineering writing**
+
+- *A Great Spooner* — https://bendingspoons.com/documents/Culture&Policies%E2%80%94AGreatSpooner%E2%80%94CompanyWebsite.pdf — ownership as the load-bearing trait, entrepreneurial default, speaking up, the "thorough finisher" behavior (quick to abandon an unpromising task, never to leave a high-priority one incomplete), learning orientation. Feeds `ownership-and-execution.md`.
+- *Controversial Principles* — https://bendingspoons.com/documents/Culture&Policies%E2%80%94ControversialPrinciples%E2%80%94CompanyWebsite.pdf — uncompromising excellence, and the practice of publishing the demanding parts of the model up front rather than discovering them on the job. Feeds `talent-and-standards.md`.
+- *Pay & Benefits* — https://bendingspoons.com/documents/Culture&Policies%E2%80%94Pay&Benefits%E2%80%94CompanyWebsite.pdf — compensation by impact rather than by tenure or short-term outcome; ownership stakes as long-horizon alignment. Feeds `impact-and-prioritization.md`.
+- *Our vision of a Bending Spoons software engineer* — https://medium.com/bendingspoons/our-vision-of-a-bending-spoons-software-engineer-5dd2934a21da — end-to-end problem ownership across infrastructure, database performance, and interface; generalist breadth with depth in one or two areas. Feeds `ownership-and-execution.md`.
+- *Backend engineering — The Bending Spoons way* — https://medium.com/bendingspoons/backend-engineering-the-bending-spoons-way-80a845f3c075 — clean, modular, testable code; reuse over rebuild; avoiding overengineering; strict automated checks in CI so human review spends itself on logic and architecture; shared internal libraries. Feeds `radical-simplicity.md`.
+- *Life on the Data Science & Analytics team* — https://medium.com/bendingspoons/life-on-the-bending-spoons-data-science-analytics-team-1146a708ffa6 — decisions from small product tweaks to long-term strategy settled on data. Feeds `evidence-and-experimentation.md`.
+- *The Talent formula: approaching hiring as a science* — https://medium.com/bendingspoons/the-talent-formula-approaching-hiring-as-a-science-87de8960b326 — defining the ideal profile before the search, structured tasks over unstructured interviews, evaluation as measurement. Feeds `talent-and-standards.md`.
+- *The Bending Spoons Selection Process* / *Recruiting Process* — https://jobs.bendingspoons.com/docs/Culture%20&%20Policies%E2%80%94The%20Bending%20Spoons%20Selection%20Process.pdf , https://jobs.bendingspoons.com/docs/Culture%20&%20Policies%E2%80%94The%20Bending%20Spoons%20Recruiting%20Process.pdf — the staged, test-driven filter. Feeds `talent-and-standards.md`.
+
+**Financial disclosure**
+
+- *Final IPO prospectus* — https://bendingspoons.com/documents/financials/2026/Bending%20Spoons%20Final%20Prospectus%20As%20Filed.pdf and the F-1 filings at https://www.sec.gov/Archives/edgar/data/0002004711/000110465926071170/tm2613674-7_f1.htm — the acquire → transform/optimize → reinvest Playbook, unchanged in shape since 2013; the "Platform" defined as people, proprietary technologies, and proprietary data; the shared data infrastructure, lifetime-value prediction model, and experimentation toolkit; disclosed underwriting targets (65% levered / 25% unlevered IRR on deals closed 2023–Q1 2026); disclosed scale of the measurement platform (≈3,000 experiments in 2025; ≈3.8bn data points/day in Q1 2026). Feeds `asset-transformation.md` and `evidence-and-experimentation.md`.
+
+**Journalism and secondary analysis**
+
+- *Twisting the rules of building software* (The Pragmatic Engineer) — https://newsletter.pragmaticengineer.com/p/twisting-the-rules-of-building-software — the "radically simple solution, and bring proof when adding complexity" principle, and engineering process chosen per product maturity: mature products carry more automated tests, more release stages, and more experimentation; young ones deliberately don't. Feeds `radical-simplicity.md`.
+- *The Pulse: Bending Spoons' acquisition strategy* (The Pragmatic Engineer) — https://blog.pragmaticengineer.com/the-pulse-bending-spoons-acquisition-strategy/ — the acquisition model seen from the engineering side.
+- *S-1 breakdown* (Tanay Jaipuria) — https://www.tanayj.com/p/bending-spoon-s-1-breakdown — the shared-platform economics: tooling and data each product gets that none could justify building alone, and the underwriting improving with each deal.
+- *Bending Spoons Operating Manual* (Colin Keeley) — https://www.colinkeeley.com/blog/bending-spoons-operating-manual — the "be good, not lucky" framing: designing an operating machine so outcomes depend less on luck.
+- Reporting on hiring selectivity — https://fortune.com/2026/07/15/bending-spoons-hired-0-04-of-800000-job-applicants-2025-ceo-says-hiring-unlike-useless-interviews/ — ~800,000 applications, ~0.04% hired, tests rather than unstructured interviews doing the filtering. Feeds the false-negative caveat in `talent-and-standards.md`.
+- Reporting on post-acquisition outcomes — https://techcrunch.com/2026/07/05/what-is-bending-spoons-everything-to-know-about-aols-acquirer/ and coverage of the Evernote, Meetup, and WeTransfer acquisitions — large layoffs at acquired companies, migration onto centralized infrastructure, and aggressive price increases with the resulting user backlash. Feeds the "where this does damage" section of `asset-transformation.md`.
+- Employee reviews (Glassdoor) — https://www.glassdoor.com/Reviews/Bending-Spoons-Reviews-E1164562.htm — the reported failure mode of continuous evaluation: high turnover, and feedback quality varying with the individual lead. Feeds `talent-and-standards.md`.
+
+## Caveats
+
+- Company-published material describes intent; it is not independent evidence of practice.
+- Figures are as disclosed at the dates given and go stale.
+- Several widely-repeated operational details (internal system names, exact overhead-reduction
+  percentages, per-app revenue lifts) circulate only in secondary summaries and are deliberately
+  not used in this skill.
+- The generalizations to a solo engineer or small team are this plugin's own — they're an
+  adaptation of the model, not a claim about how the company works at that scale.
