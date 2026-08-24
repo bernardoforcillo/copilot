@@ -8,7 +8,7 @@ review/audit-shaped ones use to iterate toward a converged result.
 Every peer-dispatch edge below runs synchronously (`run_in_background: false`), report-only,
 one hop at a time (a subagent never re-dispatches whoever dispatched it), under a shared
 depth cap of 5 nested dispatches. These rules are stated per-agent in each file; they apply
-uniformly to every edge in this graph, so they're stated once here instead of five times.
+uniformly to every edge in this graph, so they're stated once here instead of once per file.
 
 ```mermaid
 graph LR
@@ -19,6 +19,7 @@ graph LR
     gtm
     lollapalooza
     software-architecture
+    operating-model
     neuro-design
     neuro-design-audit
     commit
@@ -30,6 +31,7 @@ graph LR
     growth-marketer
     gtm-engineer
     software-architect
+    operating-partner
     neuro-design-reviewer
   end
 
@@ -46,7 +48,9 @@ graph LR
   lollapalooza -.router.-> growth-marketer
   lollapalooza -.router.-> neuro-design-reviewer
   lollapalooza -.router.-> product-strategist
+  lollapalooza -.router.-> operating-partner
   software-architecture -.delegate for isolated pass.-> software-architect
+  operating-model -.delegate for isolated pass.-> operating-partner
   neuro-design -.delegate for isolated pass.-> neuro-design-reviewer
   neuro-design-audit -.shares reference files with.-> neuro-design-reviewer
 
@@ -58,6 +62,9 @@ graph LR
 
   growth-marketer <-->|one-hop max, never re-dispatch caller| gtm-engineer
   gtm-engineer -->|flow/retention question| neuro-design-reviewer
+
+  operating-partner -->|architecture rule behind a complexity verdict| software-architect
+  operating-partner -->|growth mechanics behind an EV estimate| growth-marketer
 ```
 
 **Terminal nodes** — no outgoing peer-dispatch of their own: `software-architect`,
@@ -70,12 +77,20 @@ It stays safe only because both files independently state the same two rules (on
 norm; never re-dispatch whoever dispatched you) — this doc is where that mutual relationship
 is visible in one place instead of split across two files' prose.
 
+The second non-obvious edge is a **suppression** rather than a dispatch: `operating-partner`
+peer-dispatches `software-architect` and `growth-marketer`, and `lollapalooza` routes to all three
+independently. When `lollapalooza` dispatches `operating-partner` as its capital-allocation lens,
+`operating-partner` suppresses both of its own edges and says so in its report — otherwise the two
+lenses `lollapalooza` believes are independent would partly be echoes of each other. This is the
+same double-counting problem `product-strategist`'s Ideate step has, solved from the opposite side:
+`product-strategist` lets the caller de-duplicate, `operating-partner` de-duplicates itself.
+
 `commit` has no outgoing edges — it's fully self-contained.
 
 ## The loop-until-converged pattern
 
-Four skills/agents in this plugin do review or audit work where a single pass isn't always
-the end of the story: findings come back, some get fixed, and the fix should be re-checked
+Six skills/agents in this plugin do review, audit, or reduction work where a single pass isn't
+always the end of the story: findings come back, some get fixed, and the fix should be re-checked
 rather than taken on faith. Each uses the same four-step shape (the same shape
 `superpowers:subagent-driven-development`'s fix-loop already uses for reviewing implementation
 tasks, generalized here to a skill/agent looping on its own output):
@@ -98,4 +113,6 @@ back to this section — the four-step shape itself isn't restated per adopter.
 | `neuro-design-audit` skill | No lens scored `Blocking` remains | 3 rounds | Apply approved fixes for current `Blocking` findings, re-run the six-lens audit |
 | `software-architect` agent (review mode) | No rule verdict is `real gap` (only `compliant`/`premature` remain) | 3 rounds | Scaffold the approved fix for current `real gap` findings, re-review against the same rule set |
 | `capture-learnings` skill (lint mode) | `node .claude/memory/check.mjs` exits 0 and no unresolved contradiction/stale-claim/orphan/dangling-link remains | 3 rounds | Apply approved fixes, re-run the full lint pass |
-| `lollapalooza` skill (Step 3) | Two or more independent lenses agree, or every applicable lens from the lens-mapping table has been dispatched | Bounded by the lens-mapping table itself (at most ~5 lenses) rather than a separate number | Dispatch the next applicable undispatched lens, re-run the synthesis |
+| `operating-model` skill (reduction loop) | Every surviving complication has a written justification from the "What counts as proof" list, and the last removal attempt broke something real | 3 rounds | Strip the single least-justified complication, check what actually breaks against the code or a measurement rather than intuition, then remove it or record its justification |
+| `operating-partner` agent (review mode) | No verdict remains `unearned complexity` or `real gap` (only `aligned` and accepted `misapplied rigor` trade-offs) | 3 rounds | Apply the approved fixes — running the `operating-model` reduction loop for the complexity findings — then re-review against every applicable principle, re-establishing the maturity column if the fix moved it |
+| `lollapalooza` skill (Step 3) | Two or more independent lenses agree, or every applicable lens from the lens-mapping table has been dispatched | Bounded by the lens-mapping table itself (5 agent lenses plus the two gap-discipline entries) rather than a separate number | Dispatch the next applicable undispatched lens, re-run the synthesis |

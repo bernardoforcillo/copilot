@@ -55,23 +55,27 @@ which lenses actually apply:
 | Engineering/Physics | Margin of safety / redundancy / scale | `software-architect` |
 | Evidentiary reasoning | Avoiding self-deception / JTBD evidence | `product-strategist` |
 | Mathematics/probability | Compounding, expected value, base rates | `references/gap-disciplines.md` |
+| Capital allocation | Opportunity cost, earned complexity, kill criteria | `operating-partner` |
 | Biology/evolution | Competitive advantage, niches | `references/gap-disciplines.md` |
 
-Name which of the four lens agents — `neuro-design-reviewer`, `growth-marketer`,
-`software-architect`, `product-strategist` — actually apply to the decision in front of you (not
-all four by default), and which entries in `references/gap-disciplines.md` are relevant (read
-that file directly; it has no dispatchable agent behind it, so it's applied inline rather than
-dispatched). Dispatch the applicable specialist agents in parallel, report-only, synchronous
-(`run_in_background: false` — this plugin's established peer-dispatch convention; see
-`agents/product-strategist.md`'s Ideate step for the precedent). Give each dispatched agent the
-decision/problem statement plus a one-line reminder of which lens it's being asked to apply, so it
-reasons from its own discipline rather than free-associating.
+Name which of the five lens agents — `neuro-design-reviewer`, `growth-marketer`,
+`software-architect`, `product-strategist`, `operating-partner` — actually apply to the decision
+in front of you (not all five by default), and which entries in `references/gap-disciplines.md`
+are relevant (read that file directly; it has no dispatchable agent behind it, so it's applied
+inline rather than dispatched). Dispatch the applicable specialist agents in parallel,
+report-only, synchronous (`run_in_background: false` — this plugin's established peer-dispatch
+convention; see `agents/product-strategist.md`'s Ideate step for the precedent). Give each
+dispatched agent the decision/problem statement plus a one-line reminder of which lens it's being
+asked to apply, so it reasons from its own discipline rather than free-associating.
 
-Watch for one double-counting trap: that same Ideate step already peer-dispatches
+Watch for two double-counting traps. That same Ideate step already peer-dispatches
 `growth-marketer` and `neuro-design-reviewer` internally, so when `product-strategist` is among
 the dispatched lenses, don't also dispatch those two standalone in the same run — or if both do
 run alongside it, flag in Step 3 that they aren't fully independent of `product-strategist`'s own
-analysis.
+analysis. `operating-partner` has the same relationship with `software-architect` and
+`growth-marketer`, and resolves it from its own side: dispatched as this skill's capital-allocation
+lens, it suppresses both of its peer edges and says so in its report, so those two stay available
+as independent lenses here.
 
 ## Step 3 — synthesize
 
@@ -93,7 +97,7 @@ When the Convergence check finds tension rather than agreement, this doesn't hav
 one pass — see the shared loop-until-converged pattern in `../../docs/architecture.md`.
 Convergence here means two or more independent lenses agree, **or** every applicable lens
 from the lens-mapping table has already been dispatched (this adopter's cap is the mapping
-table itself — at most four agent lenses plus the two gap-discipline entries — not a
+table itself — at most five agent lenses plus the two gap-discipline entries — not a
 separately-stated round number). Each round: dispatch the next applicable lens from the table
 that hasn't run yet, then re-run the synthesis. The double-counting guard above persists across
 every round, not just the round `product-strategist` ran in: once `product-strategist` has been
