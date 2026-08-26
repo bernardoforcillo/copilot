@@ -234,9 +234,16 @@ from the ones above:
   over. It was earned the way the ledger requires: on its first run it found 38 broken paths,
   26 of them pre-existing.
 
-## Related agent
+## Related agents
 
 `agents/operating-partner.md` applies all six references at once to a plan, a diff, a roadmap, or
 an inherited codebase and returns a verdict per principle, looping on fixes until no unearned
 complexity or real gap remains. Use it for a full pass; use the reference files directly for a
 single decision while you're already working.
+
+`agents/reliability-engineer.md` takes the operational half of this desk —
+`references/reliability-and-incidents.md` plus the engineering blueprints it points at — and runs
+it against a specific system: a production-readiness review before a service carries real traffic,
+structure during a live incident, the postmortem afterwards, or an audit of service levels,
+alerting, on-call and toil. It reports over-investment as plainly as gaps, and never touches a
+running system.

@@ -48,11 +48,17 @@ dispatch the `software-architect` agent instead of applying the files yourself.
   the stable/canary two-channel pattern, naming, pod hardening, and image-tag automation. Read
   `references/kubernetes-deployment-conventions.md` for depth.
 
-## Related agent
+## Related agents
 
-`agents/software-architect.md` applies these same reference files when dispatched for a full
-architecture/PR review or to scaffold a new service, module, or deployment end to end — use it
-when the task calls for a complete pass rather than a single decision.
+Two, split by what they're pointed at rather than by how deep they go:
+
+- `agents/software-architect.md` — the **shape**. Applies these reference files when dispatched for
+  a full architecture review or to scaffold a new service, module, or deployment end to end. Use it
+  when the task calls for a complete pass rather than a single decision.
+- `agents/code-reviewer.md` — the **change**. Reviews a diff, a PR, or a working tree against
+  `references/code-review.md`: one verdict, findings separated into blocking/suggestion/nit, and
+  the fix loop when you want them applied rather than listed. It hands a finding up to the
+  architect when it stops being about this diff and starts being about the boundary.
 
 ## Related skill
 

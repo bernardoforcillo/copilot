@@ -49,9 +49,14 @@ DoorDash's experimentation platform).
   one-business-day response, what CI owns versus what a human is for, and the priors that change
   when the diff came from an agent), two concrete to Bernardo's own Go + Vite/React +
   Kubernetes/Flux stack.
-- Agent `software-architect` — reviews a design/PR against every applicable file by default,
-  holding a diff to the code-review standard rather than to a stricter one of its own; scaffolds a
-  new service, module, or k8s app/channel on request.
+- Agent `software-architect` — the *shape*: reviews a design against every applicable file, or
+  scaffolds a new service, module, or k8s app/channel on request.
+- Agent `code-reviewer` — the *change*: reviews a diff, a PR, or a working tree against the
+  code-review standard and returns one verdict (approve / approve with nits / changes requested /
+  split first), findings separated into blocking, suggestion and nit, and a fix loop when you want
+  them applied rather than listed. Hands a finding up to `software-architect` when it stops being
+  about the diff and starts being about the boundary, and to `operating-partner` when the honest
+  finding is that the change shouldn't exist yet.
 
 ### Operating model
 How work gets chosen, how much rigor it earns, who owns it end to end, what counts as evidence, and
@@ -91,6 +96,12 @@ and which practices don't transfer below a certain scale.
 - Skill `operating-model` — the six principles, the operating-loop graph they gate, a *reduction
   loop* that strips unjustified complications one at a time until each survivor has a written
   justification, and the derivation table linking each principle to the mechanism it comes from.
+- Agent `reliability-engineer` — the operational half, run against a specific system: a
+  production-readiness review before a service carries real traffic, structure during a live
+  incident (restore first, split command from hands-on-the-system from comms, keep the live doc),
+  the postmortem afterwards, or an audit of service levels, alerting, on-call and toil. Reports
+  over-investment as plainly as gaps, never runs a command that mutates a running system, and never
+  states a threshold or a cost from memory.
 - Agent `operating-partner` — a full pass over a plan, diff, roadmap, or inherited codebase: it
   establishes whether the model applies to the target's domain at all, then which maturity column
   the product is in, then a verdict per principle (`aligned` / `unearned complexity` /
