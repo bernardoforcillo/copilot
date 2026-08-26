@@ -46,6 +46,40 @@ container build → deploy to the first environment. Mechanical checks belong he
 - **Feature flags have owners and removal dates.** A flag system with permanent flags is a second
   configuration language, and every stale flag multiplies the untested state space.
 
+## Production readiness, before it carries real traffic
+
+A separate gate from the feature-launch checklist in
+[`../product/launch-readiness.md`](../product/launch-readiness.md): that one asks whether a
+*change* is ready for users, this one asks whether a *service* is ready to be depended on. Run it
+once per service — when it first takes real traffic, and again when it starts carrying something
+that matters (payment, personal data, another service's critical path).
+
+- [ ] **Someone is named as its owner**, and that person can deploy, roll back, and read its logs
+      without asking anyone.
+- [ ] **One or two SLIs with a target and an error budget** exist
+      ([`observability-and-slos.md`](observability-and-slos.md)) — or a written statement that the
+      service is below the maturity line where an SLO means anything.
+- [ ] **The pages it can produce are enumerated**, symptom-based, and at least one has been fired
+      deliberately to check that it reaches a human who can act.
+- [ ] **Dependency failure is defined behaviour**: for each thing it calls, what it does when that
+      is slow, down, or wrong — timeout, retry with a bound, degrade, or fail loudly. Unbounded
+      retries against a struggling dependency are how one outage becomes two.
+- [ ] **Limits exist**: rate limits, quotas, payload caps, and a maximum concurrency it will run
+      at. An unmetered path that fans out to a paid API is a bill anyone can write for you.
+- [ ] **Capacity is known for the expected peak**, not the average, with the constrained resource
+      named (connections, memory, a third-party quota).
+- [ ] **Rollback has been executed on this service**, not planned. Same for restore-from-backup if
+      it owns data.
+- [ ] **A one-page runbook** exists: how to roll back, how to restore, how to turn it off, what its
+      alerts mean. Written for a reader under stress.
+- [ ] **There is an off switch** — a flag or a route change that removes it from the critical path
+      without a deploy.
+- [ ] **Its cost per unit and its ceiling are known**, and an alarm exists on the ceiling.
+
+Anything unticked is either work to do before it takes traffic, or an explicitly accepted risk with
+a date to revisit — the same standard the operating model applies everywhere
+(`${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/reliability-and-incidents.md`).
+
 ## Release hygiene
 
 - Version and changelog generated from conventional commits — the `commit` skill's format exists so

@@ -14,6 +14,10 @@ row: the failures that can't be recovered from by shipping harder.
   rotatable without a redeploy of everything else.
 - **MFA on every human account that can reach production**, including the registrar, the DNS, the
   cloud console, and the CI provider — the accounts people forget are the ones attacks use.
+- **Network position is not authorization.** "Inside the VPN" and "in the cluster" are not
+  identities; every call is authenticated and authorized on its own, from wherever it comes. The
+  perimeter model fails the moment one thing inside it is compromised, and something inside it
+  eventually will be — a stolen session, a dependency, a misconfigured egress rule.
 
 ## Secrets
 
@@ -45,6 +49,23 @@ row: the failures that can't be recovered from by shipping harder.
 - Webhooks and callbacks are attacker-controlled input: verify signatures, check timestamps, and
   make handlers idempotent.
 
+## Build and supply chain
+
+The dependency you didn't audit and the build you can't reproduce are the two ways code you never
+wrote ends up in production.
+
+- **Production artifacts are built by the pipeline, from a commit, and never from a laptop.** A
+  human-built image is unattributable by construction.
+- **Pin and lock**: exact versions, a committed lockfile, and updates as reviewed changes rather
+  than as a floating range that silently moves. Verify checksums where the ecosystem provides them.
+- **Record what went in**: the commit, the build inputs, and the resulting digest, kept somewhere
+  you can query after an advisory lands. "Which of our running images contain this package?" is a
+  question you will be asked under time pressure.
+- **Deploy by digest, not by mutable tag.** A tag that can be re-pointed is a supply chain with a
+  hole in it.
+- **Treat CI as production.** It holds the credentials that can deploy; its secrets, its access,
+  and the third-party actions it runs are part of the attack surface, not part of the tooling.
+
 ## Operations
 
 - Deploys are reproducible and attributable: who deployed what, when, from which commit.
@@ -57,7 +78,8 @@ row: the failures that can't be recovered from by shipping harder.
 
 ## Checklist
 
-- [ ] AuthZ per resource, deny by default
+- [ ] AuthZ per resource, deny by default; network position grants nothing
+- [ ] Artifacts built only in CI, deployed by digest, with build inputs recorded
 - [ ] MFA on every production-reaching account, including registrar and CI
 - [ ] Secret scanning in CI; rotation rehearsed once
 - [ ] Data classified; retention set; PII excluded from logs, analytics and prompts
