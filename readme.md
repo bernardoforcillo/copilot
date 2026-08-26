@@ -43,10 +43,14 @@ DoorDash's experimentation platform).
 - In-product UX questions route to `neuro-design-reviewer` above instead of a separate agent.
 
 ### Software architecture
-- Skill `software-architecture` with four reference files: two technology-agnostic (scaling/
-  infra trigger-action rules; layered code-organization/dependency-direction rules), two
-  concrete to Bernardo's own Go + Vite/React + Kubernetes/Flux stack.
-- Agent `software-architect` — reviews a design/PR against all four by default; scaffolds a
+- Skill `software-architecture` with five reference files: three technology-agnostic (scaling/
+  infra trigger-action rules; layered code-organization/dependency-direction rules; the code-review
+  standard — approve on overall code health, why diff size decides what review catches, the
+  one-business-day response, what CI owns versus what a human is for, and the priors that change
+  when the diff came from an agent), two concrete to Bernardo's own Go + Vite/React +
+  Kubernetes/Flux stack.
+- Agent `software-architect` — reviews a design/PR against every applicable file by default,
+  holding a diff to the code-review standard rather than to a stricter one of its own; scaffolds a
   new service, module, or k8s app/channel on request.
 
 ### Operating model
@@ -62,10 +66,12 @@ scale and at codebase scale), talent and standards.
 in a shared layer, when extraction is earned, whether the platform is paying), pricing and value
 capture (the business half — packaging before price, levers ordered by reversibility, and the line
 between monetization and extraction), reliability and incidents (reliability as a budget set by
-maturity, and what an incident owes you), decision latency (one-way vs two-way doors, batch size,
-work in progress as rotting inventory), limits and failure modes (where this model does not
-transfer, and how it damages itself where it does), and worked examples (four end-to-end passes
-with real verdicts).
+maturity, the error budget as the thing that makes a target operational, a ceiling on toil, how the
+incident itself is run when one person is command, operations and communications at once, and what
+an incident owes you), decision latency (one-way vs two-way doors, batch size, work in progress as
+rotting inventory, and the four delivery measures that say whether speed was bought at the cost of
+stability), limits and failure modes (where this model does not transfer, and how it damages itself
+where it does), and worked examples (four end-to-end passes with real verdicts).
 
 *Foundations, under `references/foundations/`*: the mechanism each principle is derived from, so a
 rule can be argued with instead of obeyed — interaction combinatorics and essential-vs-accidental
@@ -77,8 +83,10 @@ also the condition under which the principle above it stops being true. The deri
 the skill maps principle → mechanism → what voids it.
 
 `references/provenance.md` traces every principle to its source — including the critical reporting
-on where the playbook does damage, the standard literature behind the foundations tier, and an
-explicit note on which files are this plugin's own construction rather than distillation.
+on where the playbook does damage, the site-reliability, engineering-practices and delivery-research
+literature behind the running-a-service half, the standard literature behind the foundations tier,
+and an explicit note on which files are this plugin's own construction rather than distillation,
+and which practices don't transfer below a certain scale.
 
 - Skill `operating-model` — the six principles, the operating-loop graph they gate, a *reduction
   loop* that strips unjustified complications one at a time until each survivor has a written
@@ -136,10 +144,12 @@ deployment — plus the step most modeling guides omit: carrying the model throu
 
 ### Project reference base
 `docs/engineering/` and `docs/product/` hold the blueprints a project copies into its own docs:
-system design and ADR templates, API and data-modeling guides, testing strategy, observability and
-SLOs, a security baseline, release and environments — and on the product side JTBD brief, PRD,
-metrics tree, experiment brief, pricing and packaging worksheet, roadmap and bets, launch
-readiness. Each is a page or two, each asks only for what changes a decision, and each points back
+system design and ADR templates, API and data-modeling guides, testing strategy (including the
+size contract that decides what a test may touch), observability and SLOs (golden signals and
+burn-rate alerting), a security baseline (identity, supply chain, build provenance), release and
+environments (with the production-readiness gate a service passes before it carries real traffic),
+and a blameless incident postmortem template — and on the product side JTBD brief, PRD, metrics
+tree, experiment brief, pricing and packaging worksheet, roadmap and bets, launch readiness. Each is a page or two, each asks only for what changes a decision, and each points back
 at the desk whose rules it applies.
 
 ## Checks
@@ -159,8 +169,11 @@ that never loads, and advice that loads reliably and is wrong.
   description actually discriminates.
 - `<skill>-tasks.json` — task prompts with objectively checkable assertions, written against the
   specific failures each desk exists to prevent (endorsing a split with no measured trigger,
-  optimising before deleting in a takeover, a sequence diagram with no failure path, a cost model
-  with rates asserted from memory).
+  optimising before deleting in a takeover, protecting a reliability target nobody is spending,
+  answering an incident with "be more careful", approving an unreviewable diff, a sequence diagram
+  with no failure path, a cost model with rates asserted from memory). `software-architecture`
+  has a task set without a trigger set, since that desk is reached by invocation rather than by
+  ambient triggering.
 
 See [evals/README.md](evals/README.md) for how to run them, what the first run measured (perfect
 precision, low recall on both new desks), what that configuration can and cannot resolve, and what

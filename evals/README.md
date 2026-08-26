@@ -84,11 +84,19 @@ the reverted attempt is recorded here rather than repeated.
 
 ## Task evals
 
-Three prompts per skill, each with assertions phrased so that a grader (or a person) can mark them
-pass/fail from the output alone. They are written to catch the specific failures these desks exist
-to prevent — endorsing a service split with no measured trigger, putting optimisation before
-deletion in a takeover, ranking everything as worth doing, a sequence diagram with no failure path,
-a cost model with rates asserted from memory, a state machine with implicit timeouts.
+A handful of prompts per skill, each with assertions phrased so that a grader (or a person) can
+mark them pass/fail from the output alone. They are written to catch the specific failures these
+desks exist to prevent — endorsing a service split with no measured trigger, putting optimisation
+before deletion in a takeover, ranking everything as worth doing, protecting a reliability target
+nobody is spending, answering an incident with "be more careful", a sequence diagram with no
+failure path, a cost model with rates asserted from memory, a state machine with implicit timeouts,
+and — on the review side — approving an unreviewable diff or blocking a good one over preferences.
+
+`software-architecture-tasks.json` is a task set with no trigger counterpart. That's deliberate:
+the structural finding above says these desks earn their keep when invoked or dispatched, and the
+code-review standard is reached through `/copilot:software-architecture` or the
+`software-architect` agent rather than by ambient triggering. Measuring its output quality is
+still worth doing; measuring a triggering rate for it is not.
 
 Running them properly means one run with the skill and one without, then grading both: the
 question is not "is the output good" but "is it better than what you'd get anyway". Without a

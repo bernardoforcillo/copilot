@@ -42,6 +42,34 @@
         "Names explicitly which items are expected to stay in the backlog permanently rather than ranking everything as worth doing",
         "Flags the flaky test as a reliability item that competes on cost of recurrence rather than silently deprioritising it"
       ]
+    },
+    {
+      "id": 4,
+      "name": "reliability-target-and-toil",
+      "prompt": "Our API has been up 99.99% for the last two quarters and my one engineer spends most Mondays restarting a stuck import job and re-running a failed nightly export by hand. Leadership wants to know why feature velocity is low. What should I tell them?",
+      "expected_output": "A read that names the untouched error budget as reliability bought with velocity, sets a target with a written consequence, identifies the manual weekly work as toil with a ceiling, and proposes automating the single largest item rather than the whole set.",
+      "files": [],
+      "assertions": [
+        "Treats the 99.99% as a signal that the reliability target may be stricter than the product needs, rather than as a success to protect",
+        "States a target as a budget with a written consequence for exhausting it, instead of a number with no decision attached",
+        "Names the recurring manual work as toil and ties its cost to the fact that it grows with usage",
+        "Recommends automating the single largest recurring item (or deliberately accepting it, once) rather than automating everything",
+        "Connects the reliability and toil load to the velocity question instead of treating them as separate topics"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "incident-aftermath",
+      "prompt": "We had a four-hour outage on Tuesday: a config change took the payment service down, and it took us 90 minutes to even notice because the alert we had was on CPU. My cofounder wants me to write up what happened and 'make sure people are more careful with config'. Draft what we should actually do.",
+      "expected_output": "A postmortem-shaped response that is blameless, separates trigger from latent condition and detection gap, insists on a regression test that fails on the old code, and replaces the 'be more careful' item with a mechanical prevention and a symptom-based alert.",
+      "files": [],
+      "assertions": [
+        "Rejects 'be more careful' as an action item and proposes a mechanical prevention or detection change in its place",
+        "Separates the trigger from the latent condition and from the detection gap rather than naming a single root cause",
+        "Requires a regression test (or equivalent check) that fails against the system as it was",
+        "Identifies the CPU alert as a cause-based alert and replaces it with a user-visible symptom",
+        "Gives every action item an owner and a date, and does not attribute the outage to a person's carelessness"
+      ]
     }
   ]
 }
