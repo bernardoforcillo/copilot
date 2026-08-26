@@ -78,6 +78,37 @@ The compounding preference is why "boring infrastructure work" often outranks a 
 and why the reverse is true when the infrastructure work serves a product that hasn't proven it
 deserves to exist yet.
 
+## Objectives, and the key results that grade them
+
+Expected-value ranking answers "what next". It doesn't answer "what is this sequence of decisions
+supposed to add up to by the end of the quarter" — and without that, ranking drifts toward whatever
+was measurable and near at hand. A lightweight goal frame fixes the horizon without turning into
+planning ceremony:
+
+- **An objective is a direction, stated qualitatively** ("new users reach the thing they came for
+  without help"). Two or three at a time, at most. The point of the number being small is what it
+  excludes.
+- **Key results are outcomes, not activities.** "Activation from 14% to 25%" is a key result;
+  "ship onboarding v2" is a milestone that may or may not produce one. Two to four per objective,
+  each with a number and a date.
+- **Separate committed from aspirational, and say which each one is.** A committed result is
+  expected to land in full, and missing it is a problem to escalate rather than to explain. An
+  aspirational one is deliberately set where you'd be pleased with roughly two thirds of it —
+  and if you keep hitting those in full, they were sandbagged, which costs more than missing them
+  would have.
+- **Grade them, and grade them honestly.** The grade exists to recalibrate the next set — to tell
+  you whether you systematically over- or under-reach — and for nothing else.
+- **Never attach the grade to a reward, a review, or anyone's judgment of the person.** The moment
+  a number decides a payout, the number gets chosen for safety rather than for ambition, and you
+  have bought yourself a quarter of conservative targets and creative accounting. This is
+  Goodhart's law with a personal incentive attached; see
+  `foundations/uncertainty-and-information.md`.
+
+**How this reconciles with EV ranking**: objectives set what kind of work is in scope, ranking
+picks inside it, and the two disagreeing is informative rather than annoying. When the
+highest-expected-value work available is repeatedly off-objective, the objective is wrong — that's
+a signal to change it deliberately, not permission to abandon the ranking.
+
 ## Reading your own throughput
 
 Once a month, look back rather than forward: of the work you actually finished, how much of it was,

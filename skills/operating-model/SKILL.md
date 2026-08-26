@@ -146,13 +146,16 @@ about its subject, not by default.
   reversibility, how to raise a price on people who already trusted you, what to measure besides
   revenue, and where the line between monetization and extraction sits.
   `references/pricing-and-value-capture.md`
-- **Reliability and incidents** — reliability as a budget set by the maturity column, alerting on
+- **Reliability and incidents** — reliability as a budget set by the maturity column, the error
+  budget as the thing that makes a target operational, a ceiling on toil, running the incident
+  itself (command, operations, communications — even when one person wears all three), alerting on
   symptoms rather than causes, the regression-test rule that converts an incident into a permanent
   improvement, and on-call for teams too small for a rotation.
   `references/reliability-and-incidents.md`
 - **Decision latency** — speed as an operating variable: two-way doors decided fast and one-way
   doors decided carefully, time-boxing the decision itself, batch size, work-in-progress as
-  rotting inventory, and the coordination tax. `references/decision-latency.md`
+  rotting inventory, the coordination tax, and the four delivery measures that show whether
+  throughput was bought at the cost of stability. `references/decision-latency.md`
 - **Limits and failure modes** — where this model does not transfer (safety-critical, regulated,
   research, community, client work, long-horizon infrastructure) and how it damages itself when it
   does apply. Read this *before* applying the model to an unfamiliar context.
@@ -186,8 +189,9 @@ is the same content read from the other end: whole contexts where several mechan
 once.
 
 `references/provenance.md` records where these principles come from — company documents,
-engineering writing, the IPO prospectus, and outside reporting including the critical kind — so
-each claim can be traced rather than taken on this file's word.
+engineering writing, the IPO prospectus, and outside reporting including the critical kind for the
+operating half; the site-reliability, engineering-practices and delivery-research literature for
+the running-a-service half — so each claim can be traced rather than taken on this file's word.
 
 ## How this fits the rest of the plugin
 
@@ -195,7 +199,8 @@ This skill sets the *standard*; the other desks do the specialist work under it.
 
 - `software-architecture` decides the shape of a system; this skill decides whether that shape's
   complications were earned. Its `scaling-and-infra.md` trigger framework is the long form of the
-  complication ledger.
+  complication ledger, and its `code-review.md` is where these standards are actually enforced on
+  a change — the review is the gate an unearned complication has to get past.
 - `prd` and `product-strategist` generate and evaluate product bets; this skill ranks them by
   expected value and writes the kill criterion.
 - `growth` / `gtm` own acquisition and retention strategy; this skill fixes the standard of

@@ -22,6 +22,37 @@ the feature, write down:
 4. **The decision each outcome triggers**: what you do if it works, if it does nothing, if it
    hurts. A measurement with no decision attached is overhead.
 
+## Derive the metric; don't pick one
+
+Most bad metrics are chosen backwards — starting from what is already logged, which is why so many
+products track events nobody can attach a decision to. The reliable order is three steps, and each
+one has to be written before the next:
+
+1. **Goal** — what success actually means here, in words, for the user and for the business.
+   "People who install it get to a finished export" is a goal; "increase engagement" is not.
+2. **Signals** — the observable behaviors that would indicate progress or failure toward that goal.
+   Include the failure-shaped ones: an abandoned flow, a retried upload, a support ticket. Signals
+   are where honesty is cheapest and most often skipped.
+3. **Metrics** — the specific ratio or count you can compute from those signals, with its window
+   and its denominator stated. Prefer rates over counts: a count rises with traffic and tells you
+   nothing about whether the thing worked.
+
+When the goal is the experience of a user-facing surface rather than a business number, five
+categories cover almost everything worth measuring, and picking *one or two* is the discipline —
+filling in all five produces a dashboard, not a decision:
+
+| Category | The question | Typical metric |
+| --- | --- | --- |
+| **Happiness** | How do they feel about it? | Satisfaction or perceived-ease rating, from a small in-product prompt |
+| **Engagement** | How much do they use it, when they use it? | Actions per active user per window |
+| **Adoption** | Are new people taking it up? | New users of the feature in a window ÷ eligible users |
+| **Retention** | Do they come back? | Share still active N weeks after first use |
+| **Task success** | Can they actually do the thing? | Completion rate, time to complete, error rate |
+
+Two rules that keep the table from becoming theatre: **every metric names its denominator and its
+window** (an "active user" is meaningless until it says which action, in what window,
+deduplicated how), and **any metric with no decision attached gets deleted** rather than displayed.
+
 ## When an experiment is the right tool
 
 A controlled experiment (A/B) is the strongest available evidence and is not always available.

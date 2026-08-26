@@ -6,6 +6,12 @@ writing, its IPO prospectus, and outside reporting including the critical kind �
 generalizations needed to make them apply to a small team or a single engineer rather than to a
 portfolio company.
 
+The parts of the desk that deal with running a service, reviewing a change, and writing a goal
+down come from a second body of published practice — site reliability engineering, engineering
+practices, and delivery research published by Google and by the DevOps research programme it
+sponsored — and are sourced separately below, under "Sources for the delivery, reliability and
+measurement material".
+
 The skill and agent are deliberately written without company branding: they state the model, not
 the case study. This file exists so that every claim in them can be traced to a source and
 checked, rather than being taken on the skill's word.
@@ -52,6 +58,92 @@ favour of either.
 - Reporting on the specific pricing moves — https://www.forbes.com/sites/iainmartin/2026/07/01/how-bending-spoons-built-a-184-billion-empire-by-buying-internet-has-beens-like-aol/ and https://discussion.evernote.com/forums/topic/145109-bending-spoons-price-increases-begin/ — Evernote's personal plan moving from roughly $100 to $249/yr (~86%), free tiers narrowed, and WeTransfer's $15 and $25 plans consolidated into a single $25 tier with free transfers capped at 10/month. These are the figures quoted in `pricing-and-value-capture.md`; they come from journalism and user forums rather than from the company, and are stated there as reported rather than as disclosed.
 - Analysis of the shared-platform components — https://www.tanayj.com/p/bending-spoon-s-1-breakdown and https://www.francescatabor.com/articles/2025/7/28/bending-spoons-a-different-kind-of-tech-company — one platform covering engineering, billing, marketing, and support, with central data infrastructure, a lifetime-value predictor, an experimentation toolkit, a payments system, and a recruiting system offered to every product team. Feeds the "what belongs in the shared layer" table in `platform-and-compounding.md`, generalized to small-team equivalents.
 - Employee reviews (Glassdoor) — https://www.glassdoor.com/Reviews/Bending-Spoons-Reviews-E1164562.htm — the reported failure mode of continuous evaluation: high turnover, and feedback quality varying with the individual lead. Feeds `talent-and-standards.md`.
+
+## Sources for the delivery, reliability and measurement material
+
+The company documents above say little about how a service is run once it exists, how a change is
+reviewed, or how a goal is written down. Those parts of this desk are distilled instead from the
+published engineering practice of a large search company — its SRE books, its internal engineering
+practices as published for external use, and the multi-year DevOps research programme it sponsored
+— generalized down to one person or a small team, which is a transformation the sources themselves
+do not make and which is this plugin's own reasoning.
+
+Read them the way the tiers above are read: **primary** for what these organizations state their
+practice to be, **research** for measured results that hold beyond one company. Neither is evidence
+that a practice transfers to a two-person product; that judgement is made against
+`limits-and-failure-modes.md` and the maturity table, and several of these practices explicitly
+don't transfer — see the caveats at the end of this section.
+
+**Primary — published engineering practice**
+
+- Betsy Beyer, Chris Jones, Jennifer Petoff and Niall Richard Murphy (eds.), *Site Reliability
+  Engineering: How Google Runs Production Systems* (O'Reilly, 2016) — service level indicators,
+  objectives and error budgets ("Embracing Risk", "Service Level Objectives"); toil and the
+  ceiling on operational work ("Eliminating Toil"); the four golden signals — latency, traffic,
+  errors, saturation ("Monitoring Distributed Systems"); incident command with separated
+  responsibilities and a live incident document ("Managing Incidents"); blameless postmortems
+  ("Postmortem Culture: Learning from Failure"); build/release practice ("Release Engineering");
+  simplicity as an operational property ("Simplicity"); and the production readiness review ("The
+  Evolving SRE Engagement Model"). Feeds `reliability-and-incidents.md`,
+  `../../../docs/engineering/observability-and-slos.md`,
+  `../../../docs/engineering/incident-postmortem-template.md` and the readiness gate in
+  `../../../docs/engineering/release-and-environments.md`.
+- Betsy Beyer, Niall Richard Murphy, David K. Rensin, Kent Kawahara and Stephen Thorne (eds.),
+  *The Site Reliability Workbook* (O'Reilly, 2018) — implementing SLOs, the error budget policy as
+  a written agreement with consequences, and multi-window multi-burn-rate alerting (the 2%/1h and
+  5%/6h page thresholds quoted in `../../../docs/engineering/observability-and-slos.md`).
+- Titus Winters, Tom Manshreck and Hyrum Wright (eds.), *Software Engineering at Google* (O'Reilly,
+  2020) — code review as a three-signal process (correctness, ownership, readability) and the
+  "improves overall code health" standard; test sizes defined by what a test may touch rather than
+  by what it covers; flakiness as a consequence of a test exceeding its size; the rule that a
+  behaviour without a test is a behaviour the system does not promise. Feeds
+  `../../../skills/software-architecture/references/code-review.md` and
+  `../../../docs/engineering/testing-strategy.md`.
+- Google, *eng-practices* (google.github.io/eng-practices, published 2019 onward) — "The Standard
+  of Code Review", "Speed of Code Reviews" (respond within one business day), "How to Write Code
+  Review Comments", and the change author's guide (small, self-contained changes; description
+  quality). Feeds `../../../skills/software-architecture/references/code-review.md`.
+- Google re:Work's published goal-setting material and John Doerr, *Measure What Matters* (2018) —
+  objectives with graded key results, the distinction between committed and aspirational goals,
+  grading as recalibration, and the rule that goals are kept away from compensation. Feeds the
+  objectives section of `impact-and-prioritization.md`.
+
+**Research**
+
+- Nicole Forsgren, Jez Humble and Gene Kim, *Accelerate* (2018), and the annual State of DevOps
+  reports — the four delivery measures (deployment frequency, lead time for change, change failure
+  rate, time to restore) and the central finding that throughput and stability move together
+  rather than trading off. Feeds `decision-latency.md`. The same work already appears in the
+  foundations tier under `foundations/flow-and-queues.md`.
+- Caitlin Sadowski, Emma Söderberg, Luke Church, Michal Sipko and Alberto Bacchelli, "Modern Code
+  Review: A Case Study at Google" (ICSE-SEIP, 2018) — the measured shape of review at scale: small
+  changes, usually one reviewer, turnaround in hours. Peter C. Rigby and Christian Bird,
+  "Convergent Contemporary Software Peer Review Practices" (FSE, 2013) — independently developed
+  review processes converging on the same shape, which is the reason to treat it as a finding
+  rather than as one company's habit.
+- Kerry Rodden, Hilary Hutchinson and Xin Fu, "Measuring the User Experience on a Large Scale:
+  User-Centered Metrics for Web Applications" (CHI, 2010) — the goals → signals → metrics
+  derivation and the five categories (happiness, engagement, adoption, retention, task success)
+  in `evidence-and-experimentation.md`.
+- Published measurements of test flakiness at scale (Google Testing Blog, 2016 onward) — the low
+  single-digit percentage of flaky runs quoted in `../../../docs/engineering/testing-strategy.md`,
+  stated there as reported rather than as measured here.
+
+**Caveats specific to this material**
+
+- These sources describe practice at a scale where a dedicated reliability discipline, a
+  monorepo-wide build system, and a full-time review culture all pay for themselves. Most of it
+  does not transfer unchanged: a formal on-call rotation, a production readiness review as a
+  staffed process, an experiment platform, and a readability certification are all unearned
+  complications below a certain size. What transfers is the *mechanism* — a target with a
+  consequence attached, a cap on operational work, a review standard that converges, a test whose
+  dependencies are declared — and the generalizations to one person or a small team are this
+  plugin's own.
+- As with the citations in the foundations tier, these are cited by title and year from standard
+  literature and published documentation; the session that wrote this section had no network access
+  and did not re-verify them against the originals. Check any citation you intend to lean on.
+- Figures (burn-rate thresholds, flakiness rates, review turnaround) are as published at their
+  dates, quoted as orders of magnitude to reason from rather than as targets.
 
 ## The foundations tier
 
@@ -107,8 +199,9 @@ claims about this operating model.
 - The generalizations to a solo engineer or small team are this plugin's own — they're an
   adaptation of the model, not a claim about how the company works at that scale.
 - Four of the applied reference files are largely this plugin's own construction rather than
-  distillation: `reliability-and-incidents.md` and `decision-latency.md` generalize from standard
-  practice (error budgets, blameless postmortems, one-way/two-way doors, batch size) because the
-  company publishes little on either; `limits-and-failure-modes.md` is a deliberate counterweight
+  distillation: `reliability-and-incidents.md` and `decision-latency.md` generalize from the
+  published practice and research in the section above (error budgets, toil, incident command,
+  blameless postmortems, the four delivery measures) plus standard practice on one-way/two-way
+  doors and batch size, because the acquirer-operator publishes little on either; `limits-and-failure-modes.md` is a deliberate counterweight
   written against the model, not from it; `worked-examples.md` is invented illustration, and its
   numbers are made up for the example rather than drawn from any real system.
