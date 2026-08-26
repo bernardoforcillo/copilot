@@ -51,6 +51,11 @@ are in the project blueprint `../../../docs/engineering/observability-and-slos.m
 fixes the operating rule: **the target is a number you chose, the budget is the permission it buys,
 and the consequence of exhausting it is written down before it happens.**
 
+Why the optimum sits below 100% at all — availability multiplying along the dependency chain, the
+correlation ceiling on what redundancy can buy, and the geometric cost of each nine against a
+bounded benefit — is derived in `foundations/reliability-and-redundancy.md`. Read it when someone
+disputes the target, or before applying any of this to a context this desk wasn't written for.
+
 ## Toil has a budget too
 
 Toil is operational work that is manual, repetitive, automatable, reactive, devoid of lasting
@@ -70,6 +75,12 @@ supports**. Restarting the stuck job every Monday is toil. Diagnosing why it sti
 - **Accepting toil is a legitimate answer**, once. "This runs every Monday, takes four minutes, and
   we are choosing to keep doing it by hand" is a decision. Doing it every Monday while calling it
   operations, and never pricing it, is not.
+
+The ceiling is not a preference: `foundations/load-and-automation.md` derives it — load that grows
+with the system against a fixed capacity saturates, and the automation that would relieve it is
+funded from the capacity being consumed, so the escape gets unaffordable exactly when it becomes
+necessary. It also carries the payback arithmetic, Amdahl's bound on what automation can reach, and
+the reason to stabilize a procedure before encoding it.
 
 ## Running the incident itself
 
@@ -117,7 +128,11 @@ deliverables, in order, and the second one is non-negotiable:
    understand is correct; understanding it while users are down is not.
 2. **A regression test that fails on the old code.** This is the mechanism that converts an
    incident into a permanent improvement, and the single highest-return habit in this file. No test
-   means the same failure is still available to you, and you've paid for it twice.
+   means the same failure is still available to you, and you've paid for it twice. The reason it's
+   the highest-return one is a base-rate argument, not a habit:
+   `foundations/defects-and-detection.md` — a defect class that has already occurred has
+   demonstrated that the path is reachable and that your process can produce it, which puts its
+   recurrence probability far above the prior for defects in general.
 3. **A written cause, blameless and specific.** What happened, what made it possible, what would
    have caught it earlier, what changes — with an owner and a date, or it isn't an action item.
    "Human error" is never a cause; the cause is the system that allowed one keystroke to do that.

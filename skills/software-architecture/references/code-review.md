@@ -22,6 +22,15 @@ few reviewers, and low latency.
 The figures below are as published by those sources and are not re-verified here; they're quoted
 as orders of magnitude to argue from, not as targets to hit.
 
+**Why these rules hold**, rather than who practises them, is derived in the operating-model desk's
+foundations tier:
+`${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/foundations/defects-and-detection.md` —
+defect cost monotone in survival time, filters composing as ∏(1−pᵢ) only where they fail
+independently, fixed reviewer attention per change (so size is the control variable), and the
+information asymmetry between an author who holds the intent and a reviewer who holds the artifact,
+which is what decides the restricted blocking list below. When a review rule is contested, argue
+from there; if the mechanism isn't present, drop the rule rather than defending it by citation.
+
 ## The standard: code health, not perfection
 
 **Approve the change once it definitely improves the overall code health of the system, even if it

@@ -38,6 +38,10 @@ reliability work can be ranked against features instead of argued about after an
   an SLO is a number in a doc.
 - **One or two SLOs per service.** More than that and none of them drive anything.
 
+Why the target belongs below 100%, why a chain of dependencies caps it before you do anything, and
+why redundancy pays less than the rollback path at small scale:
+`${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/foundations/reliability-and-redundancy.md`.
+
 ## Alerting
 
 - **Page on symptoms, never on causes.** "Checkout error rate above 2% for 5 minutes" pages;

@@ -182,6 +182,31 @@ by file:
   (1984), for repeated games and the shadow of the future; Nassim Nicholas Taleb, *Skin in the Game*
   (2018); standard results on selection under imperfect signal correlation and regression to the
   mean (Kahneman, *Thinking, Fast and Slow*, 2011, for the latter's practical treatment).
+- **reliability-and-redundancy** — standard reliability-block-diagram arithmetic for serial
+  (∏Aᵢ) and parallel (1 − ∏(1 − Aᵢ)) composition; Jim Gray, *Why Do Computers Stop and What Can Be
+  Done About It?* (Tandem TR 85.7, 1985), for the failure taxonomy and fail-fast design; Charles
+  Perrow, *Normal Accidents* (1984), for tight coupling and protection that adds interactions;
+  Richard I. Cook, *How Complex Systems Fail* (1998), for continuous degraded operation and latent
+  failure; the error-budget formulation from the SRE literature cited in the section above. The
+  correlation ceiling on redundancy, the geometric-cost/bounded-value argument for an interior
+  optimum, and the frequency × exposure × duration decomposition are this plugin's own assembly of
+  those standard results.
+- **load-and-automation** — Lisanne Bainbridge, *Ironies of Automation* (Automatica, 1983), for
+  what automation does to the operator left with the residue; Gene M. Amdahl (1967) for the bound
+  imposed by the fraction that cannot be automated, transplanted here from parallelism to
+  operations; the queueing and variability results in `flow-and-queues.md` for the interruption
+  premium; the toil definition and its ceiling from the SRE literature above. The saturation
+  arithmetic and the payback expression are this plugin's own.
+- **defects-and-detection** — Michael E. Fagan, *Design and Code Inspections to Reduce Errors in
+  Program Development* (IBM Systems Journal, 1976); Barry W. Boehm, *Software Engineering Economics*
+  (1981), for the cost-of-change curve, read alongside Laurent Bossavit, *The Leprechauns of
+  Software Engineering* (2015), which is why only monotonicity is claimed and not the multipliers;
+  Jason Cohen, *Best Kept Secrets of Peer Code Review* (2006), for the review-size result; Sadowski
+  et al. (2018) and Rigby and Bird (2013) as cited above; James Reason's defence-in-depth model
+  (*Human Error*, 1990) for layered filters; David M. Green and John A. Swets, *Signal Detection
+  Theory and Psychophysics* (1966), for the false-alarm argument that makes a flaky test's value
+  negative. The composition rule applied to a delivery pipeline, and the author/reviewer information
+  asymmetry as the derivation of what may block, are this plugin's own.
 
 These are cited by title and year from standard literature; the session that wrote this file had no
 network access to the publishers, so nothing here was re-verified against the original text at

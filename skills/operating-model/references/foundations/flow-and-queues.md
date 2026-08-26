@@ -68,6 +68,29 @@ The empirical corroboration is in *Accelerate* (Forsgren, Humble, Kim, 2018): sm
 lead time, and frequent deploys correlate with both higher throughput *and* higher stability —
 the trade-off people assume exists between speed and safety doesn't appear in the data.
 
+### Why speed and stability co-move rather than trade off
+
+The correlation is worth deriving, because taken as a bare finding it sounds like a claim that
+carefulness is free. It isn't; it's a claim about which variable both properties depend on.
+
+Expected loss from a release is **P(the release contains a defect) × time to restore**. Write a
+release as n independent changes each with defect probability p: P = 1 − (1 − p)ⁿ, rising with n.
+And time to restore has a diagnosis term that rises with n as well — with n changes in the batch,
+the candidate-cause set has n entries to eliminate, and the rollback, if it happens, reverts n
+changes' worth of value rather than one.
+
+So batch size appears in *both* factors, in the same direction. Halving it lowers the probability
+that a release is bad and shortens the recovery when one is — while also raising deploy frequency,
+because the transaction cost per change is what was blocking it. Nothing about "moving fast"
+produced the stability; **small batch size produced both**, and the observed trade-off in teams that
+haven't invested in the pipeline is the transaction cost talking: expensive releases make large
+batches locally rational, and large batches make failure both more likely and harder to undo.
+
+The corollary is a diagnosis rather than an aspiration. A team whose change failure rate rises as
+it deploys more often is not disproving the mechanism; it is reporting that its batches did not get
+smaller — the same volume, released more often, with the pipeline, tests, and rollback path
+unchanged.
+
 ## Queues you can't see
 
 The costly queues are usually not the ones in your issue tracker:

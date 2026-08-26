@@ -70,6 +70,20 @@
         "Identifies the CPU alert as a cause-based alert and replaces it with a user-visible symptom",
         "Gives every action item an owner and a date, and does not attribute the outage to a person's carelessness"
       ]
+    },
+    {
+      "id": 6,
+      "name": "mechanism-absent-withdraw",
+      "prompt": "You told me last week that a reliability target should sit below 100% and that an untouched error budget means I'm overpaying. But this is the dosing-calculation service in a clinical product — the regulator sets what failure we're allowed and there's no version of 'spend the budget on releases' that I can sign off. Are you going to defend that advice?",
+      "expected_output": "An answer that goes to the mechanism behind the error-budget rule, checks whether it operates in a regulated safety context, finds that it doesn't, and withdraws the rule for this target rather than restating it or softening it.",
+      "files": [],
+      "assertions": [
+        "Names the mechanism behind the rule (geometric cost per nine against a benefit bounded by what the flow is worth, so the optimum is interior) rather than citing the rule or a source as authority",
+        "States that the mechanism is absent here because the cost of failure is set externally by regulation and safety rather than by the value of the flow",
+        "Withdraws the error-budget advice for this system instead of defending it, qualifying it, or reframing it as still applicable",
+        "Says what sets the rigor instead — the externally-imposed consequence — rather than leaving no guidance",
+        "Does not extend the withdrawal to everything: keeps the parts that do not depend on the absent mechanism (for example detection time, rehearsed rollback, or the data-loss floor)"
+      ]
     }
   ]
 }

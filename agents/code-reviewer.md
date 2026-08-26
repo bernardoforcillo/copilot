@@ -111,6 +111,34 @@ then re-review the changed lines *and* whatever they touch — a fix that satisf
 routinely breaks another, and a re-review that only looks at the patch misses it. At the cap,
 report the blocking findings still open rather than declaring the change mergeable.
 
+## When a finding is contested
+
+If the author pushes back, do not restate the rule or cite `code-review.md` as authority. Go to the
+mechanism — the derivations are in
+`${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/foundations/defects-and-detection.md`, and
+they are what your findings are actually made of:
+
+- **"This diff is too large to review"** rests on fixed reviewer attention per change: detection
+  probability per line falls with size, so past a point a review samples rather than reads. If the
+  change is genuinely indivisible — a schema cutover, a generated file, a mechanical rename — the
+  mechanism doesn't apply the same way, and the right response is to reduce the *risk* of the batch
+  (rehearsal, staged rollout, a rollback path) rather than to demand a split that can't happen.
+- **"CI should have caught this"** rests on filter independence: two filters whose holes line up are
+  one filter that costs more. Where the project has no such check, the finding is real — but it is
+  a pipeline finding, and saying so is the point.
+- **"This is a nit, not a blocker"** rests on the information asymmetry: you hold the artifact, the
+  author holds the intent, so blocking on a class you cannot detect from the diff spends authority
+  where your detection probability is near zero. This is the mechanism that makes a review converge;
+  it is also the one you are most likely to violate yourself.
+- **"This needs a test"** rests on survival time and on the base rate for a defect class that has
+  already occurred. On a throwaway script with no next reader, that mechanism is absent and the
+  finding should be withdrawn rather than defended.
+
+**If the mechanism isn't present in this codebase, this change, this stage — withdraw the
+finding.** A blocking comment defended by precedent after its mechanism has been shown absent is
+the exact failure this discipline exists to prevent, and it costs more coming from you, because the
+author cannot appeal a reviewer who has stopped being falsifiable.
+
 ## Peer dispatch
 
 One hop, synchronously, report-only, and never re-dispatch whoever dispatched you:

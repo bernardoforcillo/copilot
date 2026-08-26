@@ -19,6 +19,11 @@ revenue path with no test at all.
 Coverage as a target is Goodhart's law with a CI job: it optimizes for tests that execute lines
 rather than tests that catch defects. Use it to *find* untested areas, never to gate.
 
+The arithmetic behind the whole table — why several cheap filters beat one thorough one, but only
+when they fail independently; why a flaky test's information value can go negative; why the test
+that follows an incident is the highest-value one in the codebase — is in
+`${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/foundations/defects-and-detection.md`.
+
 ## Size, not layer: the contract a test signs
 
 The unit/integration/end-to-end vocabulary describes *what a test covers*, which is why arguments

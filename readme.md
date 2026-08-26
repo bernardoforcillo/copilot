@@ -60,7 +60,7 @@ DoorDash's experimentation platform).
 
 ### Operating model
 How work gets chosen, how much rigor it earns, who owns it end to end, what counts as evidence, and
-what happens to a system you inherit rather than start. Twelve reference files in two tiers.
+what happens to a system you inherit rather than start. Twenty-one reference files in three tiers.
 
 *Core, one per principle*: radical simplicity (the burden of proof sits on every complication, not
 on the simple version), ownership and execution, impact and prioritization by expected value,
@@ -81,9 +81,16 @@ where it does), and worked examples (four end-to-end passes with real verdicts).
 *Foundations, under `references/foundations/`*: the mechanism each principle is derived from, so a
 rule can be argued with instead of obeyed — interaction combinatorics and essential-vs-accidental
 complexity; value of information, base rates and the sample-size arithmetic that says what a small
-product can and can't settle; reversibility as the axis decisions actually sort on; Little's Law
-and the 1/(1−ρ) latency curve; compounding, learning curves and transaction costs; agency costs and
-repeated games. Each file ends with the condition under which its mechanism is absent — which is
+product can and can't settle; reversibility as the axis decisions actually sort on; Little's Law,
+the 1/(1−ρ) latency curve, and why batch size puts speed and stability on the same side rather than
+opposite ones; compounding, learning curves and transaction costs; agency costs and repeated games.
+Three of the nine cover the operational half: availability composing along a dependency chain and
+the correlation ceiling that decides what redundancy is actually worth (so the optimum sits below
+100% by arithmetic, not resignation); operational load that scales with the system against a fixed
+capacity, which saturates and then locks, plus Amdahl's bound on what automation can reach; and
+defect filters composing as ∏(1−pᵢ) only where they fail independently, with fixed reviewer
+attention making diff size the control variable and the author/reviewer information gap deciding
+what a review is allowed to block. Each file ends with the condition under which its mechanism is absent — which is
 also the condition under which the principle above it stops being true. The derivation table in
 the skill maps principle → mechanism → what voids it.
 

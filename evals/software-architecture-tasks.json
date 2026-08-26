@@ -28,6 +28,20 @@
         "Names the three-day latency itself as a cost — to the author's context and to everything queued behind it",
         "Distinguishes a preference from a principle grounded in a technical fact, a measurement, or a written convention"
       ]
+    },
+    {
+      "id": 3,
+      "name": "indivisible-change-pushback",
+      "prompt": "You told me to split my 1,100-line PR. I can't: it's a single storage-format migration — the writer, the reader, the backfill job and the generated schema types all have to change in one commit or the service can't start. What now?",
+      "expected_output": "A response that goes to the mechanism behind the size rule, accepts that this change is genuinely indivisible, and switches from splitting to reducing the risk of the batch — while separating the parts of the diff that are still separable.",
+      "files": [],
+      "assertions": [
+        "Names why size matters (reviewer attention per change is roughly fixed, so detection per line falls and a large review becomes sampling) rather than repeating the rule",
+        "Accepts the indivisibility instead of insisting on a split, and does not treat the pushback as non-compliance",
+        "Proposes reducing the risk of the batch instead — rehearsal, staged rollout, an expand/contract migration, a tested rollback, or a dry run on real data",
+        "Separates what is still separable: generated files, mechanical renames, or a preparatory refactor that could land first, so the reviewable surface shrinks even if the cutover cannot",
+        "Says what the review should concentrate its remaining attention on given that it cannot read every line with equal care"
+      ]
     }
   ]
 }

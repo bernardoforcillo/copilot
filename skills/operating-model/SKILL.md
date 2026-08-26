@@ -7,9 +7,9 @@ description: Apply a high-performance operating model to how work gets chosen, b
 
 A distilled operating model for building and running software products at a high standard with a
 small number of people: how work gets chosen, how much ceremony it earns, who owns it end to end,
-what counts as evidence, and what happens to an asset you inherit rather than start. Eighteen
+what counts as evidence, and what happens to an asset you inherit rather than start. Twenty-one
 self-contained reference files in three tiers — six core (one per principle), six applied (the
-depth behind a specific kind of call), and six foundations (the mechanism each principle is
+depth behind a specific kind of call), and nine foundations (the mechanism each principle is
 derived from, and the condition under which it stops holding). Read the one that matches the
 decision in front of you rather than loading the set.
 
@@ -164,7 +164,7 @@ about its subject, not by default.
   legacy takeover, a price rise at small scale, and an over-elaborate agent-produced PR.
   `references/worked-examples.md`
 
-**Foundations — why the principles hold at all.** Six files under `references/foundations/`,
+**Foundations — why the principles hold at all.** Nine files under `references/foundations/`,
 each deriving a principle from a mechanism rather than from anyone's practice. Read one when a
 rule is contested, when adapting the model to a context it wasn't written for, or when deciding
 whether a principle applies here at all. The point of a first-principles tier isn't depth for its
@@ -179,7 +179,10 @@ true, and a rule taken on authority never does.
 | Rigor proportional to maturity | Verification cost is justified against the consequence of failure and the probability the thing survives — `references/foundations/uncertainty-and-information.md` and `references/foundations/irreversibility-and-optionality.md` together | Consequence of failure is set externally — harm, regulation, contract — in which case rigor is set by the consequence, never by the stage |
 | Ownership end to end | Agency costs appear wherever the decider doesn't bear the consequence; every handoff creates one — `references/foundations/incentives-and-trust.md` | Decider and consequence-bearer must be kept separate by design (audit, regulated separation of duties) |
 | Transform, don't restart; reinvest | Reinvested returns compound geometrically; learning curves track cumulative experience; shared cost divided over *k* consumers — `references/foundations/compounding-and-capital.md` | There is no next cycle, decay exceeds return, or *k* = 1 |
-| Decision latency and batch size | Cycle time = WIP ÷ throughput; waiting time scales as 1/(1−ρ) — `references/foundations/flow-and-queues.md` | The work isn't a repeating flow, or the constraint is somewhere else entirely |
+| Decision latency and batch size | Cycle time = WIP ÷ throughput; waiting time scales as 1/(1−ρ); batch size raises both P(bad release) and time to restore, which is why speed and stability co-move — `references/foundations/flow-and-queues.md` | The work isn't a repeating flow, or the constraint is somewhere else entirely |
+| Reliability as a budget; the error budget's consequence | Availability multiplies along a dependency chain and improves only through redundancy capped by failure correlation, while each nine costs geometrically more and buys less — so the optimum is interior — `references/foundations/reliability-and-redundancy.md` | No usable denominator (too little traffic), failure cost set externally (safety, regulation, contract), or the chain is dominated by a dependency you don't control |
+| The toil ceiling; automate the top item | Load that scales with the system consumes a fixed capacity, and the work that removes it is drawn from the same pool — saturation is self-locking, and Amdahl bounds what automation can reach — `references/foundations/load-and-automation.md` | Frequency × horizon is small, each instance is irregular, or the manual step *is* the control on an irreversible action |
+| The review standard, diff size, and what may block | Defect cost is monotone in survival time; filters compose as ∏(1−pᵢ) only when independent; reviewer attention per change is fixed, and the reviewer holds the artifact while the author holds the intent — `references/foundations/defects-and-detection.md` | The defect class isn't visible in the artifact (performance, load, real usage), there is no next reader, or another filter already has p ≈ 1 |
 
 **How to use the table.** When you're about to apply a principle in an unfamiliar context, read
 the middle column and ask whether that mechanism is actually operating here. When someone disputes
@@ -226,7 +229,11 @@ from the ones above:
   is speculative — the same verdict the complication ledger gives a generic abstraction with one
   call site. When that's true of a file, the honest options are to delete it or to state plainly
   that it's kept for a use that hasn't happened yet; what's not allowed is treating its existence
-  as evidence of its value.
+  as evidence of its value. Stated plainly for the newest three: the foundations files on
+  reliability, operational load, and defect detection were written alongside the practice files
+  they support, not in response to a contested verdict — so they are, for now, in the "kept for a
+  use that hasn't happened yet" category, and the first real dispute they fail to settle is the
+  evidence that should shrink or delete them.
 - **Mechanical instrumentation instead of none.** `scripts/check-plugin.mjs` is this desk's
   minimum viable measurement: it fails when a reference doesn't resolve, when a file is orphaned,
   or when `docs/architecture.md` stops describing what's on disk. It doesn't measure whether the
