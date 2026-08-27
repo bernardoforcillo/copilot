@@ -109,12 +109,21 @@ deleted. Each file ends with the condition under which its mechanism is absent �
 also the condition under which the principle above it stops being true. The derivation table in
 the skill maps principle → mechanism → what voids it.
 
-One file in the tier is about the tier: `references/foundations/how-to-argue.md` — the ladder of
+Two files in the tier are about the tier rather than in it. `conflicting-mechanisms.md` handles the
+case a derivation table cannot: two mechanisms both present and predicting opposite actions — delete
+the fallback or keep it, small batches or an atomic cutover, automate the toil or keep the operator
+sharp. A conflict isn't a contradiction, since each side prices a different cost, so the procedure
+is to put both in the same units, compare magnitudes before directions (most conflicts are lopsided
+by 10× and only look balanced because both sides were argued qualitatively), find the crossover
+point instead of a winner, break a genuine tie with reversibility, and otherwise admit the decision
+is under-determined by mechanism and hand it to whoever owns the outcome. It tabulates the nine
+standing conflicts inside this plugin and what each side of them is pricing.
+
+And `references/foundations/how-to-argue.md` — the ladder of
 grounds (measured here > measured elsewhere > derived from a model whose assumptions hold here >
 published practice > analogy > authority), the four parts a derivation must contain, "hard to vary"
 as the working test, and the three ways a mechanism argument fails (theatre, over-transfer, and
-picking the mechanism that gives you the answer you wanted). It carries the case that justifies the
-calculator: a Hick's-law claim repeated in nearly every summary of that law — group 30 options into
+picking the mechanism that gives you the answer you wanted). It carries the case that justifies the calculator: a Hick's-law claim repeated in nearly every summary of that law — group 30 options into
 5 groups of 6 and the choice gets faster — turned out to be false the first time the arithmetic was
 actually executed, and the design desk's file now derives grouping from search cost instead.
 

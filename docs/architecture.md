@@ -88,6 +88,14 @@ graph LR
 **Terminal nodes** — no outgoing peer-dispatch of their own: `software-architect`,
 `neuro-design-reviewer`, `librarian`.
 
+**The External nodes are not guaranteed to exist.** `superpowers:brainstorming`,
+`superpowers:systematic-debugging` and `feature-dev:code-architect` belong to other plugins, and a
+session without them installed hits a dangling instruction at the worst moment — after a PRD has
+been approved. The fallbacks are stated where the hand-off happens (`skills/prd/SKILL.md` has the
+table; `agents/product-strategist.md` states its own for the Prototype step), and they route to
+this plugin's own `software-architect` rather than to nothing. Check availability before promising
+a hand-off.
+
 **The one non-obvious edge**: `growth-marketer` and `gtm-engineer` dispatch each other —
 `growth-marketer` treats `gtm-engineer` as its "primary chain" for build work; `gtm-engineer`
 dispatches `growth-marketer` for a strategy pass before building. This isn't a clean DAG edge.

@@ -1,5 +1,12 @@
 # Ownership and execution
 
+**The mechanism under this file.** End-to-end ownership is derived in
+`foundations/incentives-and-trust.md`: agency costs appear wherever the decider doesn't bear the
+consequence, and every handoff creates one. The finisher rule and the WIP argument come from
+`foundations/flow-and-queues.md` (cycle time = WIP ÷ throughput). It voids where decider and
+consequence-bearer must be kept apart by design — audit, regulated separation of duties — in which
+case the handoff is the control, not the failure.
+
 Ownership is the trait the rest of this operating model depends on. Every other principle —
 simplicity, impact ranking, evidence, transformation — describes a judgment call, and a judgment
 call only has force if someone is on the hook for the outcome rather than for their slice of the

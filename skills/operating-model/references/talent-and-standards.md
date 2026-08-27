@@ -1,5 +1,12 @@
 # Talent and standards
 
+**The mechanism under this file.** Evaluation-as-measurement rests on
+`foundations/uncertainty-and-information.md` (a signal correlates imperfectly with the thing you
+care about, so selection on it regresses to the mean and produces false negatives at a rate you
+should state) and on `foundations/incentives-and-trust.md` for what a standard does to behaviour
+once people optimise against it. It voids where the signal is nearly perfect, where the sample of
+candidates is too small for a rubric to discriminate, or where the relationship isn't repeated.
+
 Evaluation of people and of work is treated as measurement, not impression. The claim behind it:
 unstructured judgment — an interview that goes wherever the conversation goes, a review that
 reports how the code felt — has poor predictive validity and excellent confidence, which is the

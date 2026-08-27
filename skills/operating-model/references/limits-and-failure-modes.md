@@ -1,5 +1,13 @@
 # Limits and failure modes
 
+**The mechanism under this file.** This is the foundations tier read from the other end: each
+context below is one where several mechanisms are simultaneously absent, and the "When this
+mechanism is absent" section of each file in `foundations/` is the per-mechanism version of the
+same content. When a context here is disputed, argue it with
+`foundations/how-to-argue.md`'s test — name the mechanism, name the assumption, check whether it
+holds here — and where two mechanisms both apply and disagree, use
+`foundations/conflicting-mechanisms.md` rather than picking the one you prefer.
+
 Every operating model is tuned for a context, and this one is tuned for a specific and narrow one:
 **consumer or prosumer software, iterated continuously, where mistakes are cheap and reversible,
 demand is measurable, and the operator is small and fast.** Inside that context it's very strong.

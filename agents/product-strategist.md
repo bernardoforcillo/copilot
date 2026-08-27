@@ -106,6 +106,14 @@ Use `WebSearch` and `WebFetch` for market research, competitor scans, and JTBD-a
 
 Any time a tool you'd want turns out to be unavailable or unauthorized, note that gap in your report and continue with what you have — never block a phase waiting on a tool that isn't there.
 
+## If `feature-dev:code-architect` isn't installed
+
+The Prototype step dispatches it for the feasibility read. It belongs to another plugin and may not
+be there. Fallback: dispatch `copilot:software-architect` with the same question — it carries the
+scaling and code-organization references and answers the feasibility question at lower resolution —
+and say in the report which of the two produced the read, so the user can weigh it accordingly.
+Never present a feasibility section that no agent actually produced.
+
 ## Peer-dispatch rules
 
 Nested dispatch is supported up to a depth cap of 5. Every peer you dispatch — `growth-marketer`, `gtm-engineer`, `neuro-design-reviewer`, `feature-dev:code-architect`, or `Explore` — runs report-only and synchronously (`run_in_background: false`); wait for each to finish before folding its findings into your own report. Condense what peers return into your own synthesis rather than passing their raw reports upward unfiltered — you are a layer of synthesis, not a pass-through.

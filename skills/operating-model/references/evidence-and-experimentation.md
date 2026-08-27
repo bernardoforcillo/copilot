@@ -1,5 +1,13 @@
 # Evidence and experimentation
 
+**The mechanism under this file.** Everything here rests on
+`foundations/uncertainty-and-information.md`: information is worth exactly zero if it can't change
+a decision, and the sample-size arithmetic (n ≈ 16σ²/δ² per arm) bounds what your scale can settle
+— run it with `node scripts/mechanisms.mjs sampleSizePerArm 1 0.2`. It voids where no outcome is
+measurable in a usable time frame, where no adequate sample exists, or where the decision is unique
+with no reference class; there, stated assumptions replace measurement rather than being dressed as
+it.
+
 Decisions get settled by measurement wherever measurement is available and honest — from a copy
 change to a pricing move to a multi-year strategy. Where it isn't available, the decision is made
 on stated assumptions that are written down as assumptions, not laundered into confidence.

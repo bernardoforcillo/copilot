@@ -1,5 +1,12 @@
 # Asset transformation
 
+**The mechanism under this file.** Transform-don't-restart comes from two places:
+`foundations/compounding-and-capital.md` (reinvested returns compound; a rewrite spends the
+accumulated corrections to buy back only implementation) and
+`foundations/irreversibility-and-optionality.md` (the incremental path preserves the option to
+stop, which is its entire advantage). It voids where there is no next cycle, where decay exceeds
+return, or where the inherited asset carries no proven demand — then there is nothing to transform.
+
 The highest-leverage version of this operating model isn't applied to things you start. It's
 applied to things that already exist and already have demand — a product with users, a codebase
 you inherited, a system someone else built and left. The core claim: **the value of an existing

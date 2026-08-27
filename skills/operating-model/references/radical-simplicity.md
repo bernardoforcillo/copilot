@@ -1,5 +1,13 @@
 # Radical simplicity
 
+**The mechanism under this file.** The burden of proof is not a preference for minimalism: it comes
+from `foundations/complexity-and-coupling.md` — interactions grow as *n(n−1)/2* while parts grow
+linearly, state spaces multiply, and systems accrete complexity unless work is done to remove it —
+and from `foundations/uncertainty-and-information.md`, which fixes what counts as proof. It voids
+where the complexity is essential rather than accidental, where the system is genuinely
+short-lived, or where interactions are capped by construction; there, the default flips and this
+file's ledger stops applying.
+
 The default solution is the simplest one that satisfies the requirement as stated today. It does
 not have to argue for itself. Every departure from it does — and the argument has to be made
 *before* the departure ships, with evidence that exists now rather than evidence you expect to

@@ -29,7 +29,7 @@ the change-level standard in
 | Skills with a trigger eval set | 2 of 11 |
 | Skills with a task eval set | 3 of 11 |
 | External plugin dependencies | 4 (`superpowers:brainstorming`, `superpowers:subagent-driven-development`, `superpowers:systematic-debugging`, `feature-dev:code-architect`) |
-| Mechanical checks in `check-plugin.mjs` | 11 groups, one of which runs 38 arithmetic assertions |
+| Mechanical checks in `check-plugin.mjs` | 12 groups, one of which runs 55 arithmetic assertions |
 
 **None of the figures in this table is mechanically checked.** The checker verifies counts stated
 in the forms it knows (§6), and these aren't among them — they are statistics over the tree rather
@@ -60,7 +60,7 @@ The plugin's "production" is a session that has it installed. Running the gate f
 | Named owner who can change and revert it | **met** | Single maintainer, git history, no release process to route around |
 | Service level, or a written statement it's below the line | **waived, stated** | The failure mode is silent under-triggering, and there is no denominator: no telemetry on how often a skill loads or is followed. An SLO here would be invented, which `reliability-and-redundancy.md` says not to do |
 | Detection: something fires when it breaks | **partly met** | `scripts/check-plugin.mjs` catches structural breakage on every run; the eval sets catch triggering and advice-property regressions on 2–3 desks of 11. Nothing catches wrong advice on the other 8 |
-| Dependency failure is defined behaviour | **gap** | Four external plugin references. If `superpowers:brainstorming` isn't installed, `prd`'s hand-off dead-ends with no stated fallback; same for `feature-dev:code-architect` in `product-strategist`'s Prototype step |
+| Dependency failure is defined behaviour | **met** | Was a gap. Each external plugin reference now has a stated fallback that routes to this plugin's own agents (`skills/prd/SKILL.md` carries the table, `agents/product-strategist.md` its own, `docs/architecture.md` the summary), and both say to check availability before promising a hand-off |
 | Limits and quotas | **n/a** | No runtime, no fan-out, no bill |
 | Capacity at expected peak | **met, trivially** | The constrained resource is the reader's context window, quantified in §1 |
 | Rehearsed rollback | **met** | `git revert`, and `/plugin` disable; both exercised |
@@ -68,10 +68,9 @@ The plugin's "production" is a session that has it installed. Running the gate f
 | Off switch | **met** | Uninstall or disable the plugin |
 | Cost ceiling known | **met, newly** | See §1 |
 
-**Action from this section:** state the fallback for each external dependency where it's used, so a
-missing plugin degrades to "do it inline" rather than to a dangling instruction. Owner: maintainer.
-Not yet done — recorded in §7 rather than silently fixed, because it touches three files whose
-behaviour a reader may be relying on.
+**Action from this section:** done in the pass that added the argument-chain check — each external
+dependency degrades to a named local agent rather than to a dangling instruction, and the hand-off
+is checked before it is promised rather than after a PRD is approved.
 
 ## 3. The filters, and whether they are independent
 
@@ -81,7 +80,8 @@ independently**, and that overlapping filters are cost without coverage. This re
 | Filter | Catches | Detection | Independent of the others? |
 | --- | --- | --- | --- |
 | `check-plugin.mjs` | Frontmatter, broken internal paths, orphaned references, dispatch-graph and adopter-table drift, mermaid fences, eval JSON shape, marketplace sync, stated counts, and the foundations tier's own contract (a derivation must name its mechanism and its voiding condition) | High, mechanical | Yes — it reads the filesystem, not the prose |
-| `mechanisms.mjs --test`, run by the checker | Divergence between a figure quoted in prose and the model it claims to follow from | High, mechanical, and it has already caught a substantive error (below) | Yes — it computes rather than reads |
+| `mechanisms.mjs --test`, run by the checker | Divergence between a figure quoted in prose and the model it claims to follow from | High, mechanical, and it has already caught two substantive errors (below) | Yes — it computes rather than reads |
+| Argument-chain check | A reference file that states a rule without naming the mechanism under it — the case where progressive disclosure delivers a reader straight to an assertion | High, mechanical | Yes — it reads structure, not argument quality |
 | Trigger evals | A description that stopped discriminating | Measured, noisy (see `evals/README.md` on what a 20×2 configuration can resolve) | Yes |
 | Task evals | Advice that lost a property it claims | Only on the 3 desks that have a set | Yes |
 | Maintainer reading the diff | Everything else | Falls with diff size, per §5 | **No** |
@@ -104,6 +104,12 @@ executed, it returned the opposite (two-stage choice pays the fixed intercept tw
 against ~943 ms), and the real mechanism behind grouping turned out to be search cost, which is
 linear rather than logarithmic. A correlated human filter could not have caught that; running the
 arithmetic caught it in one command.
+
+The second catch is smaller and of the same kind. `pricing-and-value-capture.md` carried "$100 to
+$249/yr, about an 86% increase" — figures and percentage that cannot both be right (that pair is
++149%). It had been read several times. The file now states the endpoint and says the percentage
+depends on which base you take, because the honest answer is that both bases circulate and this
+repo cannot verify either.
 
 ## 4. The complication ledger, applied to the plugin's own files
 
@@ -164,7 +170,8 @@ Recurring manual work, from this session's own history:
 | Updating the dispatch graph and adopters table when an agent is added | Enforced by the checker since an earlier change | Automated |
 | Keeping numbers in prose true ("six references", "eleven foundations", "seven worked examples", "ten loop adopters") | **Went stale 4 times in this session alone** | **Automated** — check (8) in `scripts/check-plugin.mjs`, verified by breaking each of the four claims and watching it fail |
 | Keeping the foundations tier's shape (mechanism named, voiding condition present, reachable from the derivation table) | Two files drifted from the tier's own phrasing while being written | **Automated** — check (9), verified by removing a voiding-condition section and a table reference and watching both fail |
-| Keeping quoted arithmetic true to the models | One substantive error found the first time the models were run | **Automated** — check (10) runs `mechanisms.mjs --test`, verified by perturbing a model constant and watching four figures diverge |
+| Keeping quoted arithmetic true to the models | Two substantive errors found once the models were run | **Automated** — check (11) runs `mechanisms.mjs --test` over 55 pinned figures, verified by perturbing a model constant and watching four diverge |
+| Keeping every rule connected to its mechanism | 8 of 12 core/applied files named no foundation at all — a reader arriving directly got an assertion | **Automated** — check (10), verified by removing the references from one file and watching it fail |
 | Keeping readme prose descriptions in step with the desks | Manual, drifts slowly | Accepted, with a reason: the text is judgement, not a count |
 | Keeping `provenance.md` in step with the claims it sources | Manual | Accepted; a mechanical version would check that a source exists, not that it supports the claim |
 | Rendering mermaid to catch syntax errors the fence check can't see | Manual, per `contributing.md` | Accepted — a real renderer needs a browser dependency this repo doesn't want |
@@ -185,10 +192,11 @@ caught several during this work, immediately, at zero cost.
 | # | Item | Type | Status |
 | --- | --- | --- | --- |
 | 1 | Stated-count drift | prevent | **Done** — checker rule (8), test-verified |
-| 2 | External plugin dependencies have no stated fallback | prevent | Open — maintainer |
+| 2 | External plugin dependencies have no stated fallback | prevent | **Done** — fallbacks routing to local agents, stated where each hand-off happens |
 | 3 | 8 of 11 desks have no eval set of any kind | detect | Open; the honest cost is that their advice is unmeasured, and `evals/README.md` already says what a small eval configuration can and can't resolve |
 | 4 | Author and reviewer are the same process for most prose | detect | Structural; mitigated by pushing invariants into the checker — three more went in during this pass, and the arithmetic one immediately caught an error two human-equivalent reads had missed |
-| 6 | Quantitative claims that are *not* in `mechanisms.mjs` are still unchecked prose | detect | Open — the tier's arithmetic is covered, the applied and core files' figures are not |
+| 6 | Quantitative claims that are *not* in `mechanisms.mjs` are still unchecked prose | detect | **Mostly closed** — the core and applied files' arithmetic (EV, sample size, price moves, compounding, shared-cost amortization, learning curve) is now pinned too. What remains unchecked is prose arithmetic in the other desks, and any figure quoted from a source rather than computed |
+| 7 | The `neuro-design` cross-domain files (20 of them) are outside the argument-chain check | detect | Open, deliberately: they are a subdirectory of applied evidence rather than rules, and forcing each to cite a constant would produce boilerplate rather than connection |
 | 5 | No evidence any reference file has been read in real work | — | Accepted and stated; the deletion bias in the maintenance rule is the only available correction |
 
 ## 8. When to re-run this

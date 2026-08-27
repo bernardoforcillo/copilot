@@ -28,6 +28,21 @@ defined by the signal it can produce rather than by a feature count. It also nam
 where none of this applies — contracted work, a legal requirement, one known internal user — in
 which case run the requirement, not the discovery.
 
+## If the plugins this skill hands off to aren't installed
+
+This skill routes work to `superpowers:brainstorming` (technical spec), `feature-dev:code-architect`
+(feasibility read), and `superpowers:systematic-debugging` (the bug case). None of them is
+guaranteed to be present, and a dangling instruction is worse than no instruction — so each has a
+stated fallback, and the report says which path was taken:
+
+| Missing | Fallback |
+| --- | --- |
+| `superpowers:brainstorming` | Write the technical spec inline from the approved PRD, and dispatch `copilot:software-architect` for the shape review that brainstorming would otherwise have driven |
+| `feature-dev:code-architect` | Dispatch `copilot:software-architect` for the feasibility read instead; it carries the scaling and code-organization references and can answer the same question at lower resolution |
+| `superpowers:systematic-debugging` | Handle the bug case directly — reproduce, isolate, fix, add the regression test — and record it per `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/reliability-and-incidents.md` |
+
+Check availability before promising a hand-off, not after the PRD is approved.
+
 ## When NOT to use this
 
 - **A bug or a purely technical change** — no new product surface, just fixing or refactoring

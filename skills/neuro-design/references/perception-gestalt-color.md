@@ -1,5 +1,10 @@
 # Perception, Gestalt & color
 
+**The constants under this lens.** Foveal acuity, peripheral detection without recognition, and
+contrast sensitivity as a population statistic that degrades in the tail are in
+`foundations/perceptual-limits.md`. The consequence that file draws, and that this one applies: "it
+looks fine to me" is a sample of one drawn from the best case.
+
 The visual system does not register a scene as a grid of independent pixels — it actively organizes raw retinal input into grouped objects, figures against grounds, and stable surface colors, using rules that were mapped out by Gestalt psychology a century ago and have since been confirmed down to the level of single cortical neurons. Two design consequences follow directly. First, layout structure (spacing, shared containers, alignment) *is* the grouping signal users perceive — borders and dividers are a blunt, late-added substitute for cues the brain already reads for free. Second, color is not a fixed, absolute property of a swatch: it is computed relative to its neighbors, relative to a small set of opponent channels, and relative to an observer's photopigments, which is why hue alone is never a safe way to carry meaning. This file covers Gestalt grouping and figure-ground organization, the opponent-process basis of color vision and color-vision deficiency, contrast standards (WCAG and APCA), simultaneous contrast and color constancy, and the von Restorff isolation effect.
 
 ## Gestalt grouping & common region (Wertheimer, 1923)
