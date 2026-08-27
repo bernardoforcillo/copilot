@@ -29,7 +29,7 @@ the change-level standard in
 | Skills with a trigger eval set | 2 of 11 |
 | Skills with a task eval set | 3 of 11 |
 | External plugin dependencies | 4 (`superpowers:brainstorming`, `superpowers:subagent-driven-development`, `superpowers:systematic-debugging`, `feature-dev:code-architect`) |
-| Mechanical checks in `check-plugin.mjs` | 12 groups, one of which runs 55 arithmetic assertions |
+| Mechanical checks in `check-plugin.mjs` | 12 groups, one of which runs 70 arithmetic assertions |
 
 **None of the figures in this table is mechanically checked.** The checker verifies counts stated
 in the forms it knows (§6), and these aren't among them — they are statistics over the tree rather
@@ -82,6 +82,8 @@ independently**, and that overlapping filters are cost without coverage. This re
 | `check-plugin.mjs` | Frontmatter, broken internal paths, orphaned references, dispatch-graph and adopter-table drift, mermaid fences, eval JSON shape, marketplace sync, stated counts, and the foundations tier's own contract (a derivation must name its mechanism and its voiding condition) | High, mechanical | Yes — it reads the filesystem, not the prose |
 | `mechanisms.mjs --test`, run by the checker | Divergence between a figure quoted in prose and the model it claims to follow from | High, mechanical, and it has already caught two substantive errors (below) | Yes — it computes rather than reads |
 | Argument-chain check | A reference file that states a rule without naming the mechanism under it — the case where progressive disclosure delivers a reader straight to an assertion | High, mechanical | Yes — it reads structure, not argument quality |
+| Dead-model check | A model in `mechanisms.mjs` that no reference file names — a complication whose only call site is its own test | High, mechanical | Yes |
+| The red-team pass ([red-team.md](red-team.md)) | Claims that are true only within a range nobody stated | It found nine, all of which needed the range or a correction | **Partly** — its arithmetic half is independent, its choice of what to attack is not |
 | Trigger evals | A description that stopped discriminating | Measured, noisy (see `evals/README.md` on what a 20×2 configuration can resolve) | Yes |
 | Task evals | Advice that lost a property it claims | Only on the 3 desks that have a set | Yes |
 | Maintainer reading the diff | Everything else | Falls with diff size, per §5 | **No** |
@@ -91,9 +93,19 @@ independently**, and that overlapping filters are cost without coverage. This re
 process — an agent writes it, and the review is performed in the same session by the same model
 that wrote it. Those two filters are strongly correlated: their holes are in the same place, which
 is exactly the configuration `defects-and-detection.md` says provides less coverage than it
-appears to. The two mitigations that actually are independent are the mechanical checker and the
-maintainer's own reading; the correct response is therefore to **push as many invariants as
-possible into the checker** rather than to promise more careful review.
+appears to. The correct response is to **push as many invariants as possible into the checker**
+rather than to promise more careful review.
+
+**And a correction to the version of this claim that stood here before.** The checker was described
+as independent of the author. Half of that is false, and the distinction matters: its *execution*
+is independent — it cannot be talked into a wrong answer, and it has caught four count drifts, two
+tier-contract drifts and two arithmetic errors that survived multiple readings — but its *rule
+selection* is not, because every invariant it enforces was chosen by the same process that wrote
+the prose. A blind spot in the author is a blind spot in the rule set. That is why both arithmetic
+errors were found by *computing something* rather than by checking something: a model written to
+answer a question answers it truthfully whether or not you wanted that answer, which is the only
+part of this repo's filter set that is genuinely uncorrelated with its author's opinion. See
+[red-team.md](red-team.md) §9.
 
 That is what happened during this audit, and the mechanisms added since have earned the claim
 rather than illustrated it. **The clearest evidence that a mechanical filter catches what
@@ -183,6 +195,11 @@ everything.
 
 ## 7. Where this got lucky, and what's still open
 
+**Lucky:** the structural checker existed before the foundations tier was written, and the models
+were written before anyone leaned on the claims they encode — two of which turned out to be wrong.
+Both errors were cheap to fix at the moment they were found and would have been expensive to find
+by being contradicted by a real system later.
+
 **Lucky:** the structural checker existed before the foundations tier was written. Without it, the
 same session that added ten cross-referenced files would have produced broken paths silently — it
 caught several during this work, immediately, at zero cost.
@@ -196,6 +213,7 @@ caught several during this work, immediately, at zero cost.
 | 3 | 8 of 11 desks have no eval set of any kind | detect | Open; the honest cost is that their advice is unmeasured, and `evals/README.md` already says what a small eval configuration can and can't resolve |
 | 4 | Author and reviewer are the same process for most prose | detect | Structural; mitigated by pushing invariants into the checker — three more went in during this pass, and the arithmetic one immediately caught an error two human-equivalent reads had missed |
 | 6 | Quantitative claims that are *not* in `mechanisms.mjs` are still unchecked prose | detect | **Mostly closed** — the core and applied files' arithmetic (EV, sample size, price moves, compounding, shared-cost amortization, learning curve) is now pinned too. What remains unchecked is prose arithmetic in the other desks, and any figure quoted from a source rather than computed |
+| 8 | No claim in this plugin has been attacked by anyone outside the process that wrote it | detect | Open, and structural. `red-team.md` says so in its own conclusion: a red team sharing the author's blind spots finds what arithmetic makes visible and misses what needs a different mind |
 | 7 | The `neuro-design` cross-domain files (20 of them) are outside the argument-chain check | detect | Open, deliberately: they are a subdirectory of applied evidence rather than rules, and forcing each to cite a constant would produce boilerplate rather than connection |
 | 5 | No evidence any reference file has been read in real work | — | Accepted and stated; the deletion bias in the maintenance rule is the only available correction |
 

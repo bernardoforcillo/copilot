@@ -232,6 +232,26 @@ own reference files, this branch measured against its own diff-size rule, and th
 work with the one item that was automated as a result. It is dated, and it says what to do when it
 goes stale.
 
+## Red team
+
+[`docs/red-team.md`](docs/red-team.md) is the pass that tries to break the plugin's own claims,
+using arithmetic, internal counterexamples and the repo's own history. Nine claims were attacked
+and none survived in its original form: two mediocre filters beat one good one *only while their
+misses are less than ~52% correlated*; small batches do **not** reduce how often something breaks
+(holding volume fixed, the number of defect-carrying releases rises toward volume × p — what falls
+is per-release rate, blast radius and time to restore); "every dependency is availability spent"
+counts hard dependencies only, since a degradable one leaves the serial product; the replica-versus
+rollback rule flips when fewer than half your incidents are self-inflicted; the toil ceiling's
+urgency swings from ~29 months to ~7 with the growth rate; LTV = revenue ÷ churn assumes a constant
+hazard and can be a third of the truth on a real cohort; "a stale document is worse than none" holds
+only when the reader can't tell it's stale, which makes dating the fix and deletion the exception;
+and the self-audit's own claim that the checker is independent of its author was half wrong — its
+execution is, its rule selection isn't.
+
+Each verdict changed the source file rather than being defended in the document, and every number is
+reproducible with `node scripts/mechanisms.mjs` — including `sweep`, which shows where a conclusion
+flips as a parameter moves.
+
 ## Evals
 
 `evals/` holds two kinds of measurement, because a skill fails in two independent ways — good advice

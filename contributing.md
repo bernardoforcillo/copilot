@@ -29,10 +29,15 @@ redistribute your own copy.
 5. If you changed a skill's description or its advice, consider running the matching eval set in
    `evals/` — the trigger set catches a description that stopped discriminating, and the task set
    catches advice that lost a property it claims.
-6. If your change adds a desk, an agent, or a checker rule, update
+6. If your claim carries a number, add the model to `scripts/mechanisms.mjs`, pin the figure in
+   its self-test, and attack it in [docs/red-team.md](docs/red-team.md) before trusting it — that
+   file's standing instruction is that a claim with a number is untested until someone has tried to
+   compute it wrong. `node scripts/mechanisms.mjs sweep <fn> <argIndex> <from> <to> <steps> <args>`
+   is the fastest way to find the parameter range where a conclusion flips.
+7. If your change adds a desk, an agent, or a checker rule, update
    [docs/self-audit.md](docs/self-audit.md) — its numbers and its open-items table are what stop
    the plugin from holding other projects to a standard it doesn't apply to itself.
-7. Open a pull request against `master` describing what changed and why.
+8. Open a pull request against `master` describing what changed and why.
 
 Forking to open a pull request is fine — the license restricts redistributing the software,
 not sending a patch back to its maintainer.
