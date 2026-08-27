@@ -7,9 +7,9 @@ description: Apply a high-performance operating model to how work gets chosen, b
 
 A distilled operating model for building and running software products at a high standard with a
 small number of people: how work gets chosen, how much ceremony it earns, who owns it end to end,
-what counts as evidence, and what happens to an asset you inherit rather than start. Twenty-three
+what counts as evidence, and what happens to an asset you inherit rather than start. Twenty-four
 self-contained reference files in three tiers — six core (one per principle), six applied (the
-depth behind a specific kind of call), and eleven foundations (the mechanism each principle is
+depth behind a specific kind of call), and twelve foundations (the mechanism each principle is
 derived from, and the condition under which it stops holding). Read the one that matches the
 decision in front of you rather than loading the set.
 
@@ -164,7 +164,7 @@ about its subject, not by default.
   legacy takeover, a price rise at small scale, and an over-elaborate agent-produced PR.
   `references/worked-examples.md`
 
-**Foundations — why the principles hold at all.** Eleven files under `references/foundations/`,
+**Foundations — why the principles hold at all.** Twelve files under `references/foundations/`,
 each deriving a principle from a mechanism rather than from anyone's practice. Read one when a
 rule is contested, when adapting the model to a context it wasn't written for, or when deciding
 whether a principle applies here at all. The point of a first-principles tier isn't depth for its
@@ -185,8 +185,18 @@ true, and a rule taken on authority never does.
 | Write the decision down; capture what generalizes | Code is checked continuously and documents are checked by nobody, so a document's error rate rises with the rate of change of what it describes while belief in it doesn't decay at all — `references/foundations/knowledge-and-decay.md` | The subject doesn't change, nobody will read it, the knowledge is single-use, or a machine already derives it from the source |
 | The review standard, diff size, and what may block | Defect cost is monotone in survival time; filters compose as ∏(1−pᵢ) only when independent; reviewer attention per change is fixed, and the reviewer holds the artifact while the author holds the intent — `references/foundations/defects-and-detection.md` | The defect class isn't visible in the artifact (performance, load, real usage), there is no next reader, or another filter already has p ≈ 1 |
 
-**One file in the tier isn't a row in this table.** `references/foundations/how-to-argue.md` is the
-standard the tier holds itself to: the ladder of grounds (measured here > measured elsewhere >
+**Two files in the tier aren't rows in this table**, because they are about the table rather than
+in it. `references/foundations/conflicting-mechanisms.md` handles the case the table cannot: two
+mechanisms both present and predicting opposite actions. A conflict isn't a contradiction — each
+mechanism prices a different cost — so the resolution is to put both in the same units, compare
+magnitudes (most conflicts are lopsided by 10× and only look balanced because both sides were
+stated qualitatively), find the crossover point rather than a winner, check whether one is the
+other's carved-out special case, break a genuine tie with reversibility, and otherwise admit the
+decision is under-determined by mechanism and send it to whoever owns the outcome. It carries the
+nine standing conflicts inside this plugin and what each side of them prices.
+
+And the second: `references/foundations/how-to-argue.md` is the standard the tier holds itself
+to — the ladder of grounds (measured here > measured elsewhere >
 derived from a model whose assumptions hold here > published practice > analogy > authority), the
 four parts a derivation must contain (mechanism, assumptions, a prediction that could come out
 otherwise, and the condition that voids it), "hard to vary" as the working test, and the three ways

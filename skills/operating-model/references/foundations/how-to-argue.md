@@ -100,6 +100,12 @@ sophisticated version of having no argument. The correction is procedural: enume
 that apply, name the one that argues *against* you, and say why it loses here. (`lollapalooza`'s
 multiple independent lenses are this same correction, run as a process rather than as a habit.)
 
+The honest version of that case — both mechanisms genuinely present, genuinely disagreeing — is not
+a failure at all, and it has its own procedure: `conflicting-mechanisms.md`. Put both in the same
+units, compare magnitudes before directions, look for the crossover rather than the winner, and
+when it is genuinely tied, say the decision is under-determined by mechanism instead of
+manufacturing a derivation for the answer you were going to pick anyway.
+
 ## The burden sits with whoever imports the rule
 
 A practice imported from another context carries that context's assumptions with it, invisibly. So

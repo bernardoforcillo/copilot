@@ -84,6 +84,20 @@
         "Says what sets the rigor instead — the externally-imposed consequence — rather than leaving no guidance",
         "Does not extend the withdrawal to everything: keeps the parts that do not depend on the absent mechanism (for example detection time, rehearsed rollback, or the data-loss floor)"
       ]
+    },
+    {
+      "id": 7,
+      "name": "two-mechanisms-in-conflict",
+      "prompt": "My cofounder wants to delete the fallback path to our secondary payment provider — 'complexity we've never used, it's dead code'. I want to keep it because payments going down is the worst thing that can happen to us. We've been live 14 months and the primary provider has had one 40-minute outage in that time. Settle this.",
+      "expected_output": "A resolution that names both mechanisms as genuinely present, converts them into a shared unit, compares magnitudes with the numbers given, states the crossover condition, and reaches a decision that is neither a slogan nor a split-the-difference compromise.",
+      "files": [],
+      "assertions": [
+        "Names both mechanisms explicitly — the interaction/complexity cost of the extra path and the duration-of-outage cost it removes — and treats both as real rather than declaring one more fundamental",
+        "Converts them into a comparable unit (expected minutes of failed payments or money per period against the carrying cost of the branch) using the 40 minutes in 14 months given in the prompt",
+        "Raises the fact that an untested fallback may not work when needed, or asks whether it has ever been exercised, rather than assuming the path is a functioning control",
+        "States a crossover or trigger — what would have to change for the answer to flip — instead of only issuing a verdict",
+        "Does not resolve it by splitting the difference or by asserting that simplicity or reliability always wins"
+      ]
     }
   ]
 }
