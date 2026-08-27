@@ -1,8 +1,13 @@
 # Worked examples
 
-Four end-to-end applications of the operating loop, written as the verdicts an
-`operating-partner` pass would actually produce. They exist because the principles are easy to
-agree with in the abstract and hard to apply against something you want to build.
+Seven end-to-end applications of the operating loop, written as the verdicts an
+`operating-partner` pass — or, for the last three, a `reliability-engineer` or `code-reviewer`
+pass — would actually produce. They exist because the principles are easy to agree with in the
+abstract and hard to apply against something you want to build.
+
+**The numbers below are invented for the examples.** They are there because the mechanisms in
+`foundations/` are arithmetic, and arithmetic with no numbers in it is a slogan; none of them come
+from a real system, and none should be reused as a benchmark.
 
 ---
 
@@ -109,3 +114,135 @@ packaging question turns into a positioning question.
 **What the loop caught:** the generated shape was the elaborate one, and elaborate is the default
 failure mode of generated code — not because it's wrong, but because nothing in its production
 required it to be justified.
+
+---
+
+## 5. "What should our SLO be?" — a first error budget
+
+*Two services and a managed database, ~1,200 paying users, checkout is the flow that matters.*
+
+**Mode:** `reliability-engineer`, audit. **Maturity column:** mature (revenue-bearing), small scale.
+
+**Step 1 — what the chain already costs you.** Availability multiplies
+(`foundations/reliability-and-redundancy.md`), so the ceiling is set before any engineering:
+
+| Component | Assumed availability | Notes |
+| --- | --- | --- |
+| CDN / edge | 99.99% | Managed, not yours |
+| App service | 99.9% | Yours |
+| Database (managed) | 99.95% | Their SLA, not your promise |
+| Payment provider | 99.9% | Yours in the user's eyes, theirs in fact |
+| **Serial product** | **≈ 99.74%** | ≈ 1 h 52 min of failure per 30 days |
+
+The first finding writes itself: **a 99.9% target is not available to you at all** without changing
+the chain, because two of the four terms belong to somebody else. Publishing 99.9% would be
+promising something you cannot deliver even with perfect code.
+
+**Step 2 — pick the indicator and the target you can hold.** SLI: share of checkout attempts that
+complete without a server-side error, measured at the edge. Target: **99.5% monthly**, which is
+~3 h 36 min of budget — above the chain's floor with room for your own releases, and honestly
+achievable. The 99.9% option isn't reachable without changing the chain at all — and doing so (removing
+single-instance failure, degrading gracefully when the payment provider is down, multi-region for
+the database) costs an order of magnitude more to buy ~2 h 50 min of additional uptime a month on
+a flow that earns what this one earns.
+
+**Step 3 — the consequence, written now.** Budget above 25% remaining → ship normally. Budget
+exhausted → reliability work outranks features until the next window opens, and the ranking is not
+renegotiated during the incident that caused it. Without this line the SLO is a number with no
+decision attached, which `foundations/uncertainty-and-information.md` values at exactly zero.
+
+**Step 4 — where the money goes.** Last quarter's failures: 6 incidents, 5 of them caused by
+their own deploys, 1 by the payment provider. Redundancy only attacks the independent fraction, and
+5/6 of these arrive through the pipeline that keeps every replica identical. So:
+
+| Candidate | Attacks | Verdict |
+| --- | --- | --- |
+| Second app replica | Independent instance failure (~1/6 of incidents) | **misapplied rigor** — buys little here |
+| Automatic rollback on canary error rate | Duration on 5/6 of incidents | **do this first** |
+| Symptom alert on checkout success rate | Detection time — currently ~35 min of a ~70 min mean | **do this second** |
+| Degrade gracefully when payments are down | Exposure on the remaining incident class | Third, if the budget says so |
+
+**What the loop caught:** the team was about to buy availability in the one form that their own
+failure data said would not deliver it.
+
+---
+
+## 6. A week of toil, measured
+
+*Solo maintainer, four products, "no time for anything" for two months.*
+
+**Mode:** `reliability-engineer`, audit. One week logged honestly:
+
+| Recurring item | Frequency | Time each | Weekly cost |
+| --- | --- | --- | --- |
+| Restarting a stuck import job | ~3× / week | 25 min | 1 h 15 |
+| Re-running the failed nightly export by hand | ~4× / week | 20 min | 1 h 20 |
+| Answering "did my file upload?" support pings | ~6× / week | 10 min | 1 h 00 |
+| Manual invoice correction | 1× / week | 45 min | 0 h 45 |
+| Rotating a certificate that won't auto-renew | 1× / month | 90 min | ≈ 0 h 22 |
+| Reading a report nobody has asked about since March | 1× / week | 20 min | 0 h 20 |
+| **Total** | | | **≈ 5 h** |
+
+Five hours out of a ~35-hour working week is 14% — under the usual half-of-operational-time
+ceiling, so the finding is *not* "you are drowning". It is what the trend says: usage roughly
+doubled in six months and four of these six items scale with usage
+(`foundations/load-and-automation.md`), so at the same growth the number is ~10 h/week by Q2 and
+~20 h by the end of the year — at which point the capacity to fix it is the capacity being eaten.
+
+**The head of the distribution.** The import job and the export are 2 h 35 of the 5 h, and both
+have the same root: a retry that gives up silently. Payback for fixing it properly — roughly 10 h
+of build, ~30 min a month of maintenance, against 2 h 35 a week saved — is about four weeks, and
+the horizon is safe because the import path is the product.
+
+**The rest of the list, decided rather than accumulated:**
+
+- Support pings (1 h) — not automation, *product*: a status the user can see removes the question.
+  This is toil that a feature deletes, which is the cheapest kind.
+- Invoice correction (0 h 45) — the judgement is irreducible; this is the Amdahl floor. Accept it
+  explicitly, write down that it's accepted, stop re-deciding it every week.
+- Certificate rotation (0 h 22) — automate only if the existing tooling makes it an afternoon;
+  otherwise a dated runbook entry, because the failure is loud and rare.
+- The unread report (0 h 20) — **delete**. The cheapest reliability work available is removing the
+  thing, and nobody proposes it because deletion doesn't look like engineering.
+
+**What the loop caught:** the load was inside the ceiling *today*, and on a curve that reaches it
+in three quarters — which is the moment to act, because the escape gets unaffordable exactly when
+it becomes urgent.
+
+---
+
+## 7. An 1,100-line agent PR that genuinely can't be split
+
+*A storage-format migration: writer, reader, backfill job, generated types.*
+
+**Mode:** `code-reviewer`. The first pass says **split first** — reviewer attention per change is
+fixed, so a diff this size gets sampled rather than read
+(`foundations/defects-and-detection.md`). The author replies that the service will not start
+unless all four move together.
+
+**Check the mechanism before repeating the rule.** The size rule rests on attention, not on line
+count as a virtue, and its remedy assumes divisibility. Here divisibility is partly absent — so the
+verdict changes shape rather than being restated:
+
+- **What is still separable, and lands first:** the generated types (mechanical, reviewed by
+  diffing the generator's input), and a preparatory rename that touches 300 of the 1,100 lines
+  without changing behaviour. Reviewable surface drops to ~500 lines of real logic.
+- **What the cutover becomes:** expand → migrate → contract
+  (`../../software-architecture/references/change-over-time.md`). Write both formats, read the new
+  one behind a flag, backfill, then delete the old writer — four small changes with a rollback at
+  each step, instead of one atomic change with none.
+- **If it truly must land at once** (it doesn't here), the rule is `foundations/flow-and-queues.md`'s
+  indivisible-batch case: stop trying to shrink it and attack its *risk* — a dry run against a
+  production copy, a rehearsed rollback including the backfill, a staged rollout by tenant.
+- **Where the remaining attention goes**, stated in the report because it cannot be spent evenly:
+  the read path's behaviour on rows written by the old writer, the backfill's idempotency on
+  re-run, and what happens if the process dies halfway through. The nits in the generated file do
+  not get read at all, and saying so is more honest than pretending they were.
+
+**Blocking vs not.** Blocking: no test for a half-completed backfill; the rollback path reverts
+code but not the flag, so a rollback lands the old reader on new-format rows. Nits (non-blocking):
+naming in the migration helper, a comment that restates the code.
+
+**What the loop caught:** the mechanism said the review could not be thorough, so the review
+declared where it was thin instead of implying uniform coverage — and the fix turned out to be a
+sequencing change, not a reviewing one.
