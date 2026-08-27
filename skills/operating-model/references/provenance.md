@@ -197,6 +197,13 @@ by file:
   operations; the queueing and variability results in `flow-and-queues.md` for the interruption
   premium; the toil definition and its ceiling from the SRE literature above. The saturation
   arithmetic and the payback expression are this plugin's own.
+- **knowledge-and-decay** — this file is largely this plugin's own derivation. It leans on the
+  detection-probability argument in `defects-and-detection.md` (a document is a filter with p ≈ 0
+  because nothing forces it to encounter the change that invalidated it), on the compounding and
+  learning-curve results in `compounding-and-capital.md`, and on the standard practice of
+  append-only decision records (Michael Nygard, "Documenting Architecture Decisions", 2011). The
+  half-life table, the placement rule (write the durable half, generate or delete the volatile
+  half), and the re-litigation arithmetic are not quoted from anyone.
 - **defects-and-detection** — Michael E. Fagan, *Design and Code Inspections to Reduce Errors in
   Program Development* (IBM Systems Journal, 1976); Barry W. Boehm, *Software Engineering Economics*
   (1981), for the cost-of-change curve, read alongside Laurent Bossavit, *The Leprechauns of

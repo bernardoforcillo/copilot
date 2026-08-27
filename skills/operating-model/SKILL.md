@@ -7,9 +7,9 @@ description: Apply a high-performance operating model to how work gets chosen, b
 
 A distilled operating model for building and running software products at a high standard with a
 small number of people: how work gets chosen, how much ceremony it earns, who owns it end to end,
-what counts as evidence, and what happens to an asset you inherit rather than start. Twenty-one
+what counts as evidence, and what happens to an asset you inherit rather than start. Twenty-two
 self-contained reference files in three tiers — six core (one per principle), six applied (the
-depth behind a specific kind of call), and nine foundations (the mechanism each principle is
+depth behind a specific kind of call), and ten foundations (the mechanism each principle is
 derived from, and the condition under which it stops holding). Read the one that matches the
 decision in front of you rather than loading the set.
 
@@ -164,7 +164,7 @@ about its subject, not by default.
   legacy takeover, a price rise at small scale, and an over-elaborate agent-produced PR.
   `references/worked-examples.md`
 
-**Foundations — why the principles hold at all.** Nine files under `references/foundations/`,
+**Foundations — why the principles hold at all.** Ten files under `references/foundations/`,
 each deriving a principle from a mechanism rather than from anyone's practice. Read one when a
 rule is contested, when adapting the model to a context it wasn't written for, or when deciding
 whether a principle applies here at all. The point of a first-principles tier isn't depth for its
@@ -182,6 +182,7 @@ true, and a rule taken on authority never does.
 | Decision latency and batch size | Cycle time = WIP ÷ throughput; waiting time scales as 1/(1−ρ); batch size raises both P(bad release) and time to restore, which is why speed and stability co-move — `references/foundations/flow-and-queues.md` | The work isn't a repeating flow, or the constraint is somewhere else entirely |
 | Reliability as a budget; the error budget's consequence | Availability multiplies along a dependency chain and improves only through redundancy capped by failure correlation, while each nine costs geometrically more and buys less — so the optimum is interior — `references/foundations/reliability-and-redundancy.md` | No usable denominator (too little traffic), failure cost set externally (safety, regulation, contract), or the chain is dominated by a dependency you don't control |
 | The toil ceiling; automate the top item | Load that scales with the system consumes a fixed capacity, and the work that removes it is drawn from the same pool — saturation is self-locking, and Amdahl bounds what automation can reach — `references/foundations/load-and-automation.md` | Frequency × horizon is small, each instance is irregular, or the manual step *is* the control on an irreversible action |
+| Write the decision down; capture what generalizes | Code is checked continuously and documents are checked by nobody, so a document's error rate rises with the rate of change of what it describes while belief in it doesn't decay at all — `references/foundations/knowledge-and-decay.md` | The subject doesn't change, nobody will read it, the knowledge is single-use, or a machine already derives it from the source |
 | The review standard, diff size, and what may block | Defect cost is monotone in survival time; filters compose as ∏(1−pᵢ) only when independent; reviewer attention per change is fixed, and the reviewer holds the artifact while the author holds the intent — `references/foundations/defects-and-detection.md` | The defect class isn't visible in the artifact (performance, load, real usage), there is no next reader, or another filter already has p ≈ 1 |
 
 **How to use the table.** When you're about to apply a principle in an unfamiliar context, read
