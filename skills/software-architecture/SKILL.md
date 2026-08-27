@@ -1,6 +1,6 @@
 ---
 name: software-architecture
-description: Apply scaling, code-organization, code-review, and Bernardo's concrete Go + Vite/React + Kubernetes stack conventions when designing, reviewing, or scaffolding a service, module, or deployment. Use when making an architecture/infra decision, organizing code into layers, setting the standard for reviewing a change (including an agent-written one), or setting up a new service or k8s app/channel.
+description: Apply scaling, code-organization, code-review, change-over-time, and Bernardo's concrete Go + Vite/React + Kubernetes stack conventions when designing, reviewing, or scaffolding a service, module, or deployment. Use when making an architecture/infra decision, organizing code into layers, setting the standard for reviewing a change (including an agent-written one), planning a wide migration or a deprecation, or setting up a new service or k8s app/channel.
 ---
 
 # Software Architecture
@@ -10,7 +10,7 @@ for scaling/infra choices, a layered dependency-direction framework for organizi
 standard a change is reviewed against before it becomes permanent, and Bernardo's own structural
 defaults for Vite/React frontends and Kubernetes/Flux deployments. Each reference file is
 self-contained — read the one that matches the decision in front of you rather than loading all
-five.
+six.
 
 ## When to use
 
@@ -19,12 +19,14 @@ five.
 - Organizing new code into layers, or deciding which layer a piece of logic belongs in.
 - Scaffolding a new service, a new Vite/React app or module, or a new Kubernetes app/channel.
 - Reviewing a change — yours, someone else's, or an agent's — and deciding what blocks a merge.
+- Planning a change that touches many call sites, an upgrade you've been deferring, a deprecation,
+  or a convention you want to hold for longer than the next month.
 
-These five references are for self-guided decisions while building. For a full design or PR
+These six references are for self-guided decisions while building. For a full design or PR
 review instead — checking existing code or a deploy manifest against all of them at once —
 dispatch the `software-architect` agent instead of applying the files yourself.
 
-## The five references
+## The six references
 
 - **Scaling and infrastructure** — a trigger→action framework: the concrete signal that should
   make you reach for a cache, split a service, add a gateway, introduce async fan-out, or similar,
@@ -39,6 +41,11 @@ dispatch the `software-architect` agent instead of applying the files yourself.
   one-business-day response rule, the split between what CI owns and what a human is for, comment
   discipline, and the priors that change when the diff was written by an agent. Read
   `references/code-review.md` for depth.
+- **Change over time** — sustainability as a priced question (what would each upgrade you know is
+  coming cost today), behaviour hardening into contract with use, one version per repository,
+  branch age as inventory, the expand → mechanical migrate → contract shape for any wide change,
+  the rule that a convention is only real if a machine enforces it, and deprecation as a process
+  with a closed door and a date. Read `references/change-over-time.md` for depth.
 - **Vite/React conventions** — Bernardo's structural defaults for a Vite/React source tree: the
   `~` alias, module-as-folder with an `index.ts(x)` entry point, feature-first component
   organization, hook placement, vertical slices, and state placement. Read

@@ -41,6 +41,13 @@ what is a suggestion or a nit, and say plainly when the change improves the syst
 despite not being what you would have written. On a design proposal, skip it — there is no diff to
 hold to that standard.
 
+When the proposal is about a change *over time* rather than a change to the shape — a wide
+migration, a deferred upgrade, a deprecation, a versioning question at a boundary, or a convention
+someone wants enforced — also read
+`${CLAUDE_PLUGIN_ROOT}/skills/software-architecture/references/change-over-time.md`, and judge the
+sequencing (expand → mechanical migrate → contract), the door-closing step of a deprecation, and
+whether each stated convention has a mechanical enforcer or is guidance wearing a rule's clothes.
+
 Then check whether the target project touches either half of Bernardo's stack-specific
 conventions — a Vite/React frontend, a Kubernetes/Flux-style deploy — by looking for the signals
 directly rather than asking: a Vite config (`vite.config.ts`/`vite.config.js`, or a `vite`
