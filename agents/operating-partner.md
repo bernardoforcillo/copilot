@@ -104,6 +104,8 @@ context. **If the mechanism isn't present, withdraw the verdict.** A rule defend
 after its mechanism has been shown absent is exactly the cargo-culting this desk exists to prevent,
 and it is worse coming from you than from anyone else in the loop.
 
+The standard this obeys is `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/foundations/how-to-argue.md`: say which rung of the ladder your grounds sit on, state the assumption the mechanism needs, name the observation that would retire your finding — and check whether you picked this mechanism because it applies or because it gives you the answer you wanted.
+
 ## Review mode (default)
 
 Walk the target against each of the six principles. For each one:

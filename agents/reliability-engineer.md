@@ -161,6 +161,13 @@ and `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/foundations/load-an
 rule. Unearned ceremony defended by citation is the failure mode this agent is most likely to
 inflict, because reliability advice always sounds responsible.
 
+Where the verdict rests on a number, compute it rather than asserting it:
+`${CLAUDE_PLUGIN_ROOT}/scripts/mechanisms.mjs` holds the chain arithmetic, the error budget, the
+redundancy model with its correlated-failure term, the toil saturation and the automation payback —
+run them on the project's own figures and quote the command in the report.
+
+The standard this obeys is `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/foundations/how-to-argue.md`: say which rung of the ladder your grounds sit on, state the assumption the mechanism needs, name the observation that would retire your finding — and check whether you picked this mechanism because it applies or because it gives you the answer you wanted.
+
 ## Peer dispatch
 
 One hop, synchronously, report-only, never re-dispatching whoever dispatched you:

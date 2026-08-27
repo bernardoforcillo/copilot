@@ -7,9 +7,9 @@ description: Apply a high-performance operating model to how work gets chosen, b
 
 A distilled operating model for building and running software products at a high standard with a
 small number of people: how work gets chosen, how much ceremony it earns, who owns it end to end,
-what counts as evidence, and what happens to an asset you inherit rather than start. Twenty-two
+what counts as evidence, and what happens to an asset you inherit rather than start. Twenty-three
 self-contained reference files in three tiers — six core (one per principle), six applied (the
-depth behind a specific kind of call), and ten foundations (the mechanism each principle is
+depth behind a specific kind of call), and eleven foundations (the mechanism each principle is
 derived from, and the condition under which it stops holding). Read the one that matches the
 decision in front of you rather than loading the set.
 
@@ -164,7 +164,7 @@ about its subject, not by default.
   legacy takeover, a price rise at small scale, and an over-elaborate agent-produced PR.
   `references/worked-examples.md`
 
-**Foundations — why the principles hold at all.** Ten files under `references/foundations/`,
+**Foundations — why the principles hold at all.** Eleven files under `references/foundations/`,
 each deriving a principle from a mechanism rather than from anyone's practice. Read one when a
 rule is contested, when adapting the model to a context it wasn't written for, or when deciding
 whether a principle applies here at all. The point of a first-principles tier isn't depth for its
@@ -184,6 +184,20 @@ true, and a rule taken on authority never does.
 | The toil ceiling; automate the top item | Load that scales with the system consumes a fixed capacity, and the work that removes it is drawn from the same pool — saturation is self-locking, and Amdahl bounds what automation can reach — `references/foundations/load-and-automation.md` | Frequency × horizon is small, each instance is irregular, or the manual step *is* the control on an irreversible action |
 | Write the decision down; capture what generalizes | Code is checked continuously and documents are checked by nobody, so a document's error rate rises with the rate of change of what it describes while belief in it doesn't decay at all — `references/foundations/knowledge-and-decay.md` | The subject doesn't change, nobody will read it, the knowledge is single-use, or a machine already derives it from the source |
 | The review standard, diff size, and what may block | Defect cost is monotone in survival time; filters compose as ∏(1−pᵢ) only when independent; reviewer attention per change is fixed, and the reviewer holds the artifact while the author holds the intent — `references/foundations/defects-and-detection.md` | The defect class isn't visible in the artifact (performance, load, real usage), there is no next reader, or another filter already has p ≈ 1 |
+
+**One file in the tier isn't a row in this table.** `references/foundations/how-to-argue.md` is the
+standard the tier holds itself to: the ladder of grounds (measured here > measured elsewhere >
+derived from a model whose assumptions hold here > published practice > analogy > authority), the
+four parts a derivation must contain (mechanism, assumptions, a prediction that could come out
+otherwise, and the condition that voids it), "hard to vary" as the working test, and the three ways
+a mechanism argument goes wrong — theatre, over-transfer, and picking the mechanism that gives you
+what you wanted. Read it when an argument about a rule is going badly, or before importing a
+practice from a context that isn't yours.
+
+**The quantitative half is runnable.** Every mechanism in this tier that makes an arithmetic claim
+is also a function in `../../scripts/mechanisms.mjs`, whose `--test` mode pins the figures used in
+the reference files and worked examples. Argue from the mechanism, then run it on your own numbers:
+`node scripts/mechanisms.mjs serialAvailability 0.9999 0.999 0.9995`.
 
 **How to use the table.** When you're about to apply a principle in an unfamiliar context, read
 the middle column and ask whether that mechanism is actually operating here. When someone disputes

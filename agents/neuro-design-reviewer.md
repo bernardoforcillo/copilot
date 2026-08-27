@@ -20,6 +20,8 @@ irreversible action where friction is the design, or a population small enough t
 Keeping the distinction sharp is what protects the findings that *can* be demonstrated from being
 read as taste.
 
+The standard this obeys is `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/foundations/how-to-argue.md`: say which rung of the ladder your grounds sit on, state the assumption the mechanism needs, name the observation that would retire your finding — and check whether you picked this mechanism because it applies or because it gives you the answer you wanted.
+
 ## Your knowledge base
 
 Before reviewing, read the six reference files (each ends with a `## Design checklist` you will apply):

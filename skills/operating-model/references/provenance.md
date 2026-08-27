@@ -197,6 +197,14 @@ by file:
   operations; the queueing and variability results in `flow-and-queues.md` for the interruption
   premium; the toil definition and its ceiling from the SRE literature above. The saturation
   arithmetic and the payback expression are this plugin's own.
+- **how-to-argue** — Stephen E. Toulmin, *The Uses of Argument* (1958), for the claim / grounds /
+  warrant / rebuttal structure, with the rebuttal promoted here from an afterthought to a required
+  field; Karl Popper, *Conjectures and Refutations* (1963), for the falsifiability criterion behind
+  "a prediction that could come out otherwise"; David Deutsch, *The Beginning of Infinity* (2011),
+  for "hard to vary" as the test of a good explanation; Richard P. Feynman, *Cargo Cult Science*
+  (Caltech commencement address, 1974), for the form of imitation that reproduces the artifacts of
+  a practice without the mechanism that made them work. The ladder of grounds, the three failure
+  modes, and the rule that the burden sits with whoever imports a practice are this plugin's own.
 - **knowledge-and-decay** — this file is largely this plugin's own derivation. It leans on the
   detection-probability argument in `defects-and-detection.md` (a document is a filter with p ≈ 0
   because nothing forces it to encounter the change that invalidated it), on the compounding and
@@ -220,6 +228,16 @@ network access to the publishers, so nothing here was re-verified against the or
 writing time. Check any citation you intend to lean on. The *derivations* — which principle follows
 from which mechanism, and when it voids — are this plugin's own reasoning, not the cited authors'
 claims about this operating model.
+
+## The arithmetic
+
+Every quantitative claim in the foundations tier is implemented in `../../../scripts/mechanisms.mjs`
+and its figures are pinned by that file's self-test, which `scripts/check-plugin.mjs` runs. This is
+a deliberate demotion of prose: where a source is cited for a *number*, the number is recomputed
+from the model rather than trusted to survive editing. Where the model itself is a simplification —
+the correlated-failure term in `redundantAvailability`, the linear search term in `visualSearchMs` —
+the code says so in a comment next to it, because a simplification that isn't labelled is the
+over-transfer failure in `foundations/how-to-argue.md` waiting to happen.
 
 ## Caveats
 

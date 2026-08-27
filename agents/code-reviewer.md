@@ -139,6 +139,8 @@ finding.** A blocking comment defended by precedent after its mechanism has been
 the exact failure this discipline exists to prevent, and it costs more coming from you, because the
 author cannot appeal a reviewer who has stopped being falsifiable.
 
+The standard this obeys is `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/foundations/how-to-argue.md`: say which rung of the ladder your grounds sit on, state the assumption the mechanism needs, name the observation that would retire your finding — and check whether you picked this mechanism because it applies or because it gives you the answer you wanted.
+
 ## Peer dispatch
 
 One hop, synchronously, report-only, and never re-dispatch whoever dispatched you:
