@@ -1,5 +1,13 @@
 # Platform and compounding
 
+**The mechanism under this file.** The shared layer is priced by
+`foundations/compounding-and-capital.md` — cost divided over *k* consumers, and returns that
+compound only if they're reinvested — against the maintenance and coupling cost that
+`foundations/complexity-and-coupling.md` charges for every component that acquires dependents. It
+voids at *k* = 1, where the arithmetic never applies, and wherever the platform's saving is
+cancelled by its own upkeep (a component saving 20% and costing 20% to maintain compounds at zero:
+`node scripts/mechanisms.mjs compounded 0 10`).
+
 The reinvestment edge of the operating loop is where the model stops being a set of good habits
 and starts being a machine: each cycle should leave behind something that makes the next one
 cheaper. A platform, in this sense, isn't infrastructure — it's **the set of things you only had to
@@ -35,6 +43,15 @@ Extraction is a complication like any other and takes the same burden of proof
 
 - **The third consumer, not the second.** Two implementations tell you what varies; three tell you
   what's stable. Extract at the third — earlier and you're generalizing from a sample of two.
+  **This rule is epistemic, not economic, and the arithmetic makes that visible.** Run the cost
+  comparison — `sharedVsLocal(buildCost, perConsumerAdaptation, localCost, k)` in
+  `../../../scripts/mechanisms.mjs` — with a shared component that costs 3× a local one to build
+  and 30% of it to adapt per consumer: at k = 3 the shared version is still more expensive, and it
+  only wins around k = 5. So cost amortization alone would tell you to wait longer. The reason to
+  extract at three anyway is information — three implementations are the smallest sample that
+  distinguishes what varies from what is stable — and the reason not to extract at two is the same
+  one, read from the other side. Cite the mechanism you actually mean when someone disputes the
+  number.
 - **Extract from working code, never toward it.** A shared component distilled from three shipped
   implementations is a summary of reality; one designed in advance is a specification of your
   assumptions.

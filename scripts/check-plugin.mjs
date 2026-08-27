@@ -310,7 +310,27 @@ for (const skill of skills) {
   }
 }
 
-// --- (10) the arithmetic in the references still follows from the models ----
+// --- (10) the argument chain is connected ---------------------------------
+// A reader reaches a reference file directly — that is what progressive disclosure means —
+// so a rule whose mechanism is only named in SKILL.md's derivation table is, from where they
+// are standing, taken on authority. Where a skill has a foundations tier, every top-level
+// reference file has to name at least one file in it. Indexes are exempt: they point at
+// everything by construction and derive nothing.
+const CHAIN_EXEMPT = new Set(['provenance.md', 'bibliography.md']);
+for (const skill of skills) {
+  const refDir = join('skills', skill, 'references');
+  const foundDir = join(refDir, 'foundations');
+  if (!existsSync(join(root, foundDir))) continue;
+  for (const entry of readdirSync(join(root, refDir))) {
+    if (!entry.endsWith('.md') || CHAIN_EXEMPT.has(entry)) continue;
+    const file = join(refDir, entry);
+    const text = readFileSync(join(root, file), 'utf8');
+    if (!/foundations\/[a-z0-9-]+\.md/.test(text))
+      p(`${file}: names no file in foundations/ — the rule it states is reachable only as an assertion`);
+  }
+}
+
+// --- (11) the arithmetic in the references still follows from the models ----
 // The figures quoted in the foundations and the worked examples are computed, not asserted.
 // mechanisms.mjs holds the models and pins those figures; if either side moves alone, this fails.
 try {
@@ -322,7 +342,7 @@ try {
   p(`scripts/mechanisms.mjs: self-test could not run (${err.message})`);
 }
 
-// --- (11) plugin.json and marketplace.json stay in sync --------------------
+// --- (12) plugin.json and marketplace.json stay in sync --------------------
 const plugin = JSON.parse(readFileSync(join(root, '.claude-plugin/plugin.json'), 'utf8'));
 const market = JSON.parse(readFileSync(join(root, '.claude-plugin/marketplace.json'), 'utf8'));
 const entry = (market.plugins || []).find((x) => x.name === plugin.name);

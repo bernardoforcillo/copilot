@@ -81,6 +81,45 @@ export const automationPaybackWeeks = (buildHours, maintHoursPerMonth, savedHour
 // Amdahl's bound: with an irreducibly manual fraction s, total load can fall at most 1/s.
 export const amdahlMaxReduction = (manualFraction) => 1 / manualFraction;
 
+// --- decisions, evidence, capital -----------------------------------------
+
+// Expected-value ranking, in the form the desk states it: what it's worth if it works,
+// times the chance it does, over what it costs to find out. Assumes the three are
+// independent estimates and that the bet repeats — a single irreversible bet with ruin
+// on the table is not priced by its average (see foundations/compounding-and-capital.md).
+export const expectedValue = (effectIfItWorks, probability, costToFindOut) =>
+  (effectIfItWorks * probability) / costToFindOut;
+
+// Two-sample rule of thumb at 80% power, alpha = 0.05: n per arm to detect a difference
+// delta on a measure with standard deviation sigma. Assumes independent observations and
+// roughly normal behaviour of the mean.
+export const sampleSizePerArm = (sigma, delta) => (16 * sigma * sigma) / (delta * delta);
+
+// The same relation read the other way: the smallest effect a given sample can resolve.
+export const detectableDelta = (n, sigma) => Math.sqrt((16 * sigma * sigma) / n);
+
+// Revenue multiplier of a price move that costs some conversion: (1+p)(1-c) - 1.
+// Assumes retention is unaffected, which is the assumption that makes aggressive pricing
+// look free — see pricing-and-value-capture.md for what that hides.
+export const priceMoveRevenueChange = (pricePct, conversionLossPct) =>
+  (1 + pricePct) * (1 - conversionLossPct) - 1;
+
+// Reinvested returns compound; consumed returns add. Same rate, different function.
+export const compounded = (rate, cycles) => Math.pow(1 + rate, cycles);
+export const consumed = (rate, cycles) => 1 + rate * cycles;
+
+// Shared component economics: build once at buildCost, adapt per consumer, versus each
+// consumer building locally. Returns the total cost each way for k consumers.
+export const sharedVsLocal = (buildCost, perConsumerAdaptation, localCost, k) => ({
+  shared: buildCost + k * perConsumerAdaptation,
+  local: k * localCost,
+});
+
+// Wright's learning curve: unit cost falls by a constant fraction per doubling of
+// cumulative volume. rate = 0.85 means each doubling costs 85% of the previous one.
+export const learningCurveUnitCost = (firstUnitCost, cumulativeUnits, rate = 0.85) =>
+  firstUnitCost * Math.pow(cumulativeUnits, Math.log2(rate));
+
 // --- growth ----------------------------------------------------------------
 
 // Steady state of N(t+1) = N(t) + a + k*N - c*N. Infinite when the loop beats churn.
@@ -168,6 +207,46 @@ export const selfTest = () => {
   check('LTV = revenue / churn', ltv(10, 0.05), 200, 0.001);
   check('halving churn doubles LTV', ltv(10, 0.025), 2 * ltv(10, 0.05), 0.001);
 
+  // impact-and-prioritization.md — the EV form, and what it ranks
+  check('a cheap probe outranks an expensive build at the same effect and odds',
+    Number(expectedValue(100, 0.5, 2) > expectedValue(100, 0.5, 30)), 1, 0);
+  check('EV of 100 x 0.5 over a 2-day probe', expectedValue(100, 0.5, 2), 25, 0.001);
+
+  // foundations/uncertainty-and-information.md — n = 16 sigma^2 / delta^2
+  check('sample per arm, sigma 1, delta 0.2', sampleSizePerArm(1, 0.2), 400, 0.001);
+  check('halving the effect quadruples the sample',
+    sampleSizePerArm(1, 0.1) / sampleSizePerArm(1, 0.2), 4, 0.001);
+  check('what 400 per arm can resolve at sigma 1', detectableDelta(400, 1), 0.2, 0.0001);
+
+  // pricing-and-value-capture.md — +10% price at -5% conversion
+  check('10% price rise costing 5% of conversions', priceMoveRevenueChange(0.1, 0.05) * 100, 4.5, 0.01);
+  check('10% price rise costing 15% of conversions is a loss',
+    Number(priceMoveRevenueChange(0.1, 0.15) < 0), 1, 0);
+  // The reported Evernote pair, computed rather than asserted (see provenance.md).
+  check('100 -> 249 is a 149% increase', (249 / 100 - 1) * 100, 149, 0.5);
+
+  // foundations/compounding-and-capital.md — the 20% table
+  check('reinvested at 20% over 10 cycles', compounded(0.2, 10), 6.19, 0.01);
+  check('consumed at 20% over 10 cycles', consumed(0.2, 10), 3, 0.001);
+  check('reinvested at 20% over 20 cycles', compounded(0.2, 20), 38.34, 0.05);
+  check('consumed at 20% over 20 cycles', consumed(0.2, 20), 5, 0.001);
+  check('a platform saving 20% and costing 20% to maintain compounds at zero',
+    compounded(0.2 - 0.2, 10), 1, 0.001);
+
+  // platform-and-compounding.md — why the third consumer, not the second
+  const two = sharedVsLocal(30, 3, 10, 2);
+  const three = sharedVsLocal(30, 3, 10, 3);
+  check('at k=2 the shared component costs more than building locally',
+    Number(two.shared > two.local), 1, 0);
+  check('at k=3 it is still not cheaper on cost alone',
+    Number(three.shared > three.local), 1, 0);
+  check('at k=6 the shared component wins',
+    Number(sharedVsLocal(30, 3, 10, 6).shared < sharedVsLocal(30, 3, 10, 6).local), 1, 0);
+
+  // Wright's learning curve at an 85% rate
+  check('85% learning curve: 8th cumulative doubling-unit cost',
+    learningCurveUnitCost(100, 8, 0.85), 61.4, 0.5);
+
   // perceptual-limits.md — the shape, not the constants
   check('doubling distance adds one bit of Fitts time', fittsMs(200, 40) - fittsMs(100, 40), 150, 0.001);
   check('halving target width adds one bit', fittsMs(100, 20) - fittsMs(100, 40), 150, 0.001);
@@ -187,7 +266,8 @@ const api = {
   serialAvailability, downtimeMinutes, errorBudgetMinutes, redundantAvailability, burnRate,
   expectedLoss, littlesLaw, queueMultiplier, batchDefectProbability, escapeProbability,
   periodsToThreshold, automationPaybackWeeks, amdahlMaxReduction, plateau, ltv, fittsMs, hickMs,
-  visualSearchMs,
+  visualSearchMs, expectedValue, sampleSizePerArm, detectableDelta, priceMoveRevenueChange,
+  compounded, consumed, sharedVsLocal, learningCurveUnitCost,
 };
 
 const isMain = process.argv[1] && process.argv[1].endsWith('mechanisms.mjs');
