@@ -11,7 +11,12 @@ operating model that decides what's worth building at all. Single-maintainer, so
 Design decisions and reviews grounded in cited neuroscience/cognitive-science research
 (attention, cognitive load, perception & color, motor interaction, emotion, typography).
 
-- Skill `neuro-design` — apply the six lenses while building a UI.
+- Skill `neuro-design` — apply the six lenses while building a UI, over
+  `references/foundations/perceptual-limits.md`: the fixed constants the lenses are guidance for
+  (acuity window, working-memory chunks, serial attention, Fitts's and Hick–Hyman's logarithms, the
+  100 ms / 1 s / 10 s thresholds) and the signal-detection argument that makes an
+  attention-claiming element which is usually not worth attending to a negative for the whole
+  interface.
 - Skill `neuro-design-audit` — review an existing UI against the same lenses, inline.
 - Agent `neuro-design-reviewer` — delegate an isolated, structured second-opinion critique.
 
@@ -35,10 +40,18 @@ definition) plus concrete company case studies (Amazon's PRFAQ, Superhuman's PMF
 DoorDash's experimentation platform).
 
 - Skill `prd` — facilitates a five-phase design-thinking dialogue, writes a PRD, hands off to
-  `superpowers:brainstorming` for the technical spec.
+  `superpowers:brainstorming` for the technical spec. Its
+  `references/foundations/demand-and-discovery.md` derives the shape from the mechanism: demand is
+  revealed by behaviour rather than statement, the base rate says most changes move nothing, and a
+  document inherits the accuracy of its evidence rather than of its detail — plus the contexts
+  where discovery doesn't apply because the requirement is already fixed.
 - Agent `product-strategist` — the research engine `prd` dispatches per phase; peer-dispatches
   the three lenses below for Ideate.
-- Agent `growth-marketer` / skill `growth` — network-based growth strategy and metrics diagnosis.
+- Agent `growth-marketer` / skill `growth` — network-based growth strategy and metrics diagnosis,
+  under `growth/references/foundations/loops-and-saturation.md`: the stock equation and its two
+  regimes (a constant-flow channel plateaus at a/c; a loop compounds only when k beats churn), churn
+  in the denominator of both the plateau and lifetime value, cost per acquisition as a rising curve
+  rather than a number, and payback horizon as a financing constraint.
 - Agent `gtm-engineer` / skill `gtm` — the doer: copy, SEO, analytics, signal-based GTM automation.
 - In-product UX questions route to `neuro-design-reviewer` above instead of a separate agent.
 
@@ -84,13 +97,15 @@ complexity; value of information, base rates and the sample-size arithmetic that
 product can and can't settle; reversibility as the axis decisions actually sort on; Little's Law,
 the 1/(1−ρ) latency curve, and why batch size puts speed and stability on the same side rather than
 opposite ones; compounding, learning curves and transaction costs; agency costs and repeated games.
-Three of the nine cover the operational half: availability composing along a dependency chain and
+Four of the ten cover the operational half: availability composing along a dependency chain and
 the correlation ceiling that decides what redundancy is actually worth (so the optimum sits below
 100% by arithmetic, not resignation); operational load that scales with the system against a fixed
 capacity, which saturates and then locks, plus Amdahl's bound on what automation can reach; and
 defect filters composing as ∏(1−pᵢ) only where they fail independently, with fixed reviewer
 attention making diff size the control variable and the author/reviewer information gap deciding
-what a review is allowed to block. Each file ends with the condition under which its mechanism is absent — which is
+what a review is allowed to block; and knowledge decay — code is checked continuously, documents
+are checked by nobody, so the durable half gets written and the volatile half gets generated or
+deleted. Each file ends with the condition under which its mechanism is absent — which is
 also the condition under which the principle above it stops being true. The derivation table in
 the skill maps principle → mechanism → what voids it.
 
@@ -174,8 +189,21 @@ at the desk whose rules it applies.
 
 `node scripts/check-plugin.mjs` validates the plugin's structure: skill/agent frontmatter, every
 path-shaped file reference, orphaned reference files, mermaid blocks (closed, and declaring a known
-diagram type), and whether `docs/architecture.md`'s dispatch graph and loop-adopters table still
-describe what exists. No dependencies; exit 0 means consistent.
+diagram type), whether `docs/architecture.md`'s dispatch graph and loop-adopters table still
+describe what exists, and whether the counts written in prose ("the six references", "ten
+foundations files", "seven end-to-end applications", "ten loop adopters") still match the
+filesystem — that last one earned its place by going stale four times in a single session. No
+dependencies; exit 0 means consistent.
+
+## Self-audit
+
+[`docs/self-audit.md`](docs/self-audit.md) runs the plugin's own rules against the plugin: the
+production-readiness gate applied to the artifact, the filter-composition analysis (which of this
+repo's checks are actually independent of each other — the answer is uncomfortable, since most of
+the prose is written and reviewed inside the same process), the complication ledger applied to its
+own reference files, this branch measured against its own diff-size rule, and the recurring manual
+work with the one item that was automated as a result. It is dated, and it says what to do when it
+goes stale.
 
 ## Evals
 

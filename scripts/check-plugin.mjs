@@ -228,7 +228,61 @@ if (existsSync(join(root, 'evals'))) {
   }
 }
 
-// --- (8) plugin.json and marketplace.json stay in sync ---------------------
+// --- (8) counts stated in prose match what's on disk -----------------------
+// Written numbers drift silently: a file gets added and the sentence that counts
+// them keeps its old word. Every number checked here is one that has actually gone
+// stale in this repo, which is what earns the check.
+const WORDS = {
+  zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8,
+  nine: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15,
+  sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20,
+  'twenty-one': 21, 'twenty-two': 22, 'twenty-three': 23, 'twenty-four': 24, 'twenty-five': 25,
+};
+const asNumber = (token) => {
+  const t = token.toLowerCase();
+  if (/^\d+$/.test(t)) return Number(t);
+  return Object.prototype.hasOwnProperty.call(WORDS, t) ? WORDS[t] : null;
+};
+const countMd = (dir, recursive = false) => {
+  if (!existsSync(join(root, dir))) return 0;
+  return readdirSync(join(root, dir)).reduce((n, entry) => {
+    const rel = join(dir, entry);
+    if (statSync(join(root, rel)).isDirectory()) return n + (recursive ? countMd(rel, true) : 0);
+    return n + (entry.endsWith('.md') ? 1 : 0);
+  }, 0);
+};
+const claim = (file, label, stated, actual) => {
+  const n = asNumber(stated);
+  if (n === null) return; // not a number word we know — leave it alone
+  if (n !== actual) p(`${file}: says ${stated} ${label}, but ${actual} exist on disk`);
+};
+
+for (const skill of skills) {
+  const file = join('skills', skill, 'SKILL.md');
+  if (!existsSync(join(root, file))) continue;
+  const text = readFileSync(join(root, file), 'utf8');
+  const heading = text.match(/^##\s+The\s+([A-Za-z-]+|\d+)\s+references\s*$/m);
+  if (heading) claim(file, 'reference files', heading[1], countMd(join('skills', skill, 'references')));
+  for (const m of text.matchAll(/([A-Za-z-]+|\d+)\s+files under `references\/foundations\/`/g)) {
+    claim(file, 'foundations files', m[1], countMd(join('skills', skill, 'references', 'foundations')));
+  }
+  for (const m of text.matchAll(/and\s+([a-z-]+|\d+)\s+foundations\s+\(/g)) {
+    claim(file, 'foundations files', m[1], countMd(join('skills', skill, 'references', 'foundations')));
+  }
+}
+
+const adopterClaim = arch.match(/^([A-Za-z-]+|\d+)\s+skills\/agents in this plugin do review/m);
+if (adopterClaim)
+  claim('docs/architecture.md', 'loop adopters', adopterClaim[1], new Set(adopterRows).size);
+
+for (const file of docFiles) {
+  const text = readFileSync(join(root, file), 'utf8');
+  const worked = text.match(/^([A-Za-z-]+|\d+)\s+end-to-end applications/m);
+  if (worked)
+    claim(file, 'worked examples', worked[1], [...text.matchAll(/^##\s+\d+\.\s/gm)].length);
+}
+
+// --- (9) plugin.json and marketplace.json stay in sync ---------------------
 const plugin = JSON.parse(readFileSync(join(root, '.claude-plugin/plugin.json'), 'utf8'));
 const market = JSON.parse(readFileSync(join(root, '.claude-plugin/marketplace.json'), 'utf8'));
 const entry = (market.plugins || []).find((x) => x.name === plugin.name);

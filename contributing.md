@@ -20,7 +20,10 @@ redistribute your own copy.
 4. If you changed a skill's description or its advice, consider running the matching eval set in
    `evals/` — the trigger set catches a description that stopped discriminating, and the task set
    catches advice that lost a property it claims.
-5. Open a pull request against `master` describing what changed and why.
+5. If your change adds a desk, an agent, or a checker rule, update
+   [docs/self-audit.md](docs/self-audit.md) — its numbers and its open-items table are what stop
+   the plugin from holding other projects to a standard it doesn't apply to itself.
+6. Open a pull request against `master` describing what changed and why.
 
 Forking to open a pull request is fine — the license restricts redistributing the software,
 not sending a patch back to its maintainer.
