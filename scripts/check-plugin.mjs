@@ -282,7 +282,47 @@ for (const file of docFiles) {
     claim(file, 'worked examples', worked[1], [...text.matchAll(/^##\s+\d+\.\s/gm)].length);
 }
 
-// --- (9) plugin.json and marketplace.json stay in sync ---------------------
+// --- (9) the foundations tier keeps its own contract -----------------------
+// A file in this tier claims to derive a rule from a mechanism. That claim has a shape:
+// what it generates, the mechanism itself, and the condition under which the mechanism is
+// absent — the last one being the part that makes the rest usable in a context nobody
+// wrote it for. A file missing it is an assertion wearing a derivation's title.
+for (const skill of skills) {
+  const dir = join('skills', skill, 'references', 'foundations');
+  if (!existsSync(join(root, dir))) continue;
+  for (const entry of readdirSync(join(root, dir)).filter((f) => f.endsWith('.md'))) {
+    const file = join(dir, entry);
+    const text = readFileSync(join(root, file), 'utf8');
+    if (!/^# Foundation: /m.test(text)) p(`${file}: does not open with '# Foundation: <topic>'`);
+    if (!/\*\*The principles? it generates:\*\*/.test(text))
+      p(`${file}: no '**The principle(s) it generates:**' line — a foundation has to say which rule it is under`);
+    if (!/\*\*The mechanism:\*\*/.test(text))
+      p(`${file}: no '**The mechanism:**' line`);
+    if (!/^##\s+When th(is|ese)\b.*absent/m.test(text))
+      p(`${file}: no '## When this mechanism is absent' section — a rule with no voiding condition is taken on authority`);
+    // The operating-model tier is indexed by that skill's derivation table; a foundation it
+    // doesn't reach is unreachable from the desk it belongs to, whatever else mentions it.
+    if (skill === 'operating-model') {
+      const skillText = readFileSync(join(root, 'skills', skill, 'SKILL.md'), 'utf8');
+      if (!skillText.includes(entry))
+        p(`${file}: not referenced from skills/${skill}/SKILL.md (the derivation table is the tier's index)`);
+    }
+  }
+}
+
+// --- (10) the arithmetic in the references still follows from the models ----
+// The figures quoted in the foundations and the worked examples are computed, not asserted.
+// mechanisms.mjs holds the models and pins those figures; if either side moves alone, this fails.
+try {
+  const mech = await import('./mechanisms.mjs');
+  const { checks: mechChecks, failed } = mech.selfTest();
+  for (const c of failed) p(`scripts/mechanisms.mjs: ${c.label} — got ${c.actual}, expected ${c.expected}`);
+  if (!mechChecks.length) p('scripts/mechanisms.mjs: self-test ran no checks');
+} catch (err) {
+  p(`scripts/mechanisms.mjs: self-test could not run (${err.message})`);
+}
+
+// --- (11) plugin.json and marketplace.json stay in sync --------------------
 const plugin = JSON.parse(readFileSync(join(root, '.claude-plugin/plugin.json'), 'utf8'));
 const market = JSON.parse(readFileSync(join(root, '.claude-plugin/marketplace.json'), 'utf8'));
 const entry = (market.plugins || []).find((x) => x.name === plugin.name);
