@@ -16,6 +16,18 @@ The output is a single file, `docs/superpowers/prd/YYYY-MM-DD-<feature>.md`, wri
 template below. Once the user approves it, this skill hands off to `superpowers:brainstorming`
 to turn the approved PRD into a technical spec, which then feeds `writing-plans`.
 
+## Why this shape (the mechanism, not the ritual)
+
+Before defending any step of the procedure below, read
+`references/foundations/demand-and-discovery.md`. It derives the whole shape from one asymmetry:
+demand is private information revealed by behaviour, not by statement, so a specification's
+accuracy is inherited from its evidence and never from its detail — which is why the problem-lock
+gate exists, why interviews reconstruct past switching instead of forecasting, why the base rate
+(most changes move nothing) makes cost-to-find-out the term worth optimising, and why an MVP is
+defined by the signal it can produce rather than by a feature count. It also names the contexts
+where none of this applies — contracted work, a legal requirement, one known internal user — in
+which case run the requirement, not the discovery.
+
 ## When NOT to use this
 
 - **A bug or a purely technical change** — no new product surface, just fixing or refactoring

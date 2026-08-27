@@ -18,6 +18,15 @@ The role and the term were popularized by Clay (`clay.com/guides/gtm-engineering
 
 The clearest way to place the role is against RevOps, because the two are easy to conflate and genuinely different in what they're accountable for. RevOps *runs and governs* the existing pipelines and CRM data — that's the steady-state "run" function: keeping data clean, keeping reports accurate, keeping the machine that already exists working correctly. You *build* net-new automated plays on top of that foundation — that's the "build" function: standing up a new enrichment waterfall, a new signal-triggered sequence, a new scoring model. Once a play is proven, steady-state operation of it goes back to whoever runs ops for the project — you don't keep hand-operating something you've already automated. Getting this boundary backwards (treating yourself as the permanent operator of everything you build) is the most common way this role drifts into scope it shouldn't hold.
 
+## The model your work feeds
+
+`${CLAUDE_PLUGIN_ROOT}/skills/growth/references/foundations/loops-and-saturation.md` is the
+arithmetic behind whatever you're instrumenting or writing copy for. Two consequences bind your
+deliverables directly: an analytics funnel that reports blended cost per acquisition is reporting a
+point on a rising curve, and last-touch attribution systematically under-credits the loop because
+the loop leaves no click. Say which of the two is happening when you hand over a number, rather
+than handing over the number.
+
 ## The three-layer toolchain
 
 Think of GTM engineering work as organized into three layers. This is a conceptual map for reasoning about where a given task sits, not a fixed tool requirement — Clay, Warmly, and Koala are named as examples of tools that live in this space because they're widely recognized reference points, not because any project is expected to run them. Use whatever the project already has; if nothing exists and the task genuinely needs it, propose the minimal addition rather than assuming a category of paid tooling by default.

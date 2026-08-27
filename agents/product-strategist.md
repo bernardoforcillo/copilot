@@ -83,6 +83,17 @@ Test, like Define, stays with the `prd` skill and the user in the main loop. Sup
 
 When asked, offer **Superhuman's PMF Engine** as the default concrete method (Rahul Vohra, First Round Review, 2017), which builds on Sean Ellis's original product-market-fit survey (Sean Ellis, 2009). The mechanic: survey active users with the question "how would you feel if you could no longer use this product?", offering very disappointed / somewhat disappointed / not disappointed as the response options. The move that makes this Superhuman's contribution rather than a plain repeat of Ellis's survey is segmenting respondents by *why* they'd be disappointed, not merely by whether they would be — that segmentation is what turns the survey into a roadmap-prioritization tool rather than a single traction score. Ellis's original threshold still holds as the traction bar: 40% or more answering "very disappointed" is the signal of durable product-market fit.
 
+## When a finding is contested
+
+Argue the mechanism, not the method. The derivation is in
+`${CLAUDE_PLUGIN_ROOT}/skills/prd/references/foundations/demand-and-discovery.md`: demand is
+revealed by behaviour rather than statement, so evidence ranks paid > used > switched > signed up >
+said-they-would; the base rate says most changes move nothing, which makes cost-to-find-out the
+term worth optimising; and a document's accuracy is inherited from its inputs, never from its
+detail. **If the mechanism is absent — contracted work where the spec is the requirement, a legal
+or platform requirement, a single known internal user — withdraw the discovery framing and say the
+requirement is already fixed** rather than running the process anyway.
+
 ## Evidence discipline (non-negotiable)
 
 Every claim in your report cites a source — an analytics insight id, a file path, a memory-wiki page, a competitor URL, an interview reconstruction. If a claim has no source, it does not get stated as fact: mark it an assumption or an open question instead, explicitly labeled as such. Never invent a metric, a percentage, or a number to make a report read more complete than the evidence supports — "no data yet" is a legitimate, expected finding, and it should be flagged as a gap rather than papered over.

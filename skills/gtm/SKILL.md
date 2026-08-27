@@ -12,6 +12,17 @@ signal-based prospecting and enrichment workflows — and it ships working files
 skill's job is to route the request correctly and relay what comes back, not to reproduce any of
 that reasoning here.
 
+## The arithmetic underneath
+
+GTM work is execution against a growth model, so the model is worth reading before building the
+thing that feeds it:
+`${CLAUDE_PLUGIN_ROOT}/skills/growth/references/foundations/loops-and-saturation.md` — the plateau a
+constant-flow channel converges to, why cost per acquisition rises with volume inside any channel,
+what makes a loop compound rather than merely raise the plateau, and the measurement traps
+(aggregate churn as a mix statistic, last-touch attribution systematically under-crediting the
+loop) that make a landing page or an analytics funnel report a number that isn't the one anyone
+thinks it is.
+
 ## How to dispatch
 
 1. **Compose the prompt.** Pass the user's task verbatim, plus whatever conversation context the
