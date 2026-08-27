@@ -11,7 +11,8 @@ For each candidate piece of work, state three things and multiply:
 
 **EV ≈ (size of the effect if it works) × (probability it works) ÷ (cost to find out)**
 
-None of the three needs to be precise; they need to be *explicit*. The value of writing them down
+(`node scripts/mechanisms.mjs expectedValue 100 0.5 2` against the same effect and odds behind a
+30-day build.) None of the three needs to be precise; they need to be *explicit*. The value of writing them down
 isn't the arithmetic, it's that unstated assumptions become arguable. A candidate whose "effect if
 it works" nobody can name is not a candidate — it's a preference.
 

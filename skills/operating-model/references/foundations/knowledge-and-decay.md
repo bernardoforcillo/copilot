@@ -31,9 +31,13 @@ years ago reads exactly like a confident sentence written yesterday.
 
 Two consequences follow immediately, and they are the ones people resist:
 
-- **A stale document is worse than no document**, because it is acted on. The cost of not having
-  the information is a question someone asks; the cost of having wrong information is a decision
-  someone makes.
+- **A stale document is worse than no document *when the reader cannot tell it is stale*.** That
+  qualification is the whole claim, and dropping it produces the wrong action. The cost of not
+  having the information is a question someone asks; the cost of having wrong information that
+  *looks* current is a decision someone makes. A runbook whose steps are 70% still valid, clearly
+  dated and marked unverified, beats an empty page at 3 a.m. — so the correction for staleness is
+  dating, ownership and a visible last-checked marker first, and deletion only when the content is
+  wrong rather than merely old.
 - **Volume is a liability, not an asset.** Every additional page dilutes the average freshness and
   raises the chance the reader lands on a rotten one. A knowledge base is judged by its worst
   believed page, not by its coverage.

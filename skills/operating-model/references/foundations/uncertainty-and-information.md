@@ -72,6 +72,8 @@ that same rate (δ = 0.005): ≈ **30,000 per arm**. A product with a few hundre
 not underpowered by a little — it is off by orders of magnitude, and every "experiment" it runs is
 a coin flip wearing a p-value.
 
+Read the same relation backwards to size your ambition instead of your test:
+`node scripts/mechanisms.mjs detectableDelta 400 1` says what 400 observations per arm can resolve.
 The quadratic in the denominator is the important part: **halving the effect you want to detect
 quadruples the sample you need.** It is why big, coarse changes are measurable and fine-tuning
 isn't, and why the honest move at small scale is to prefer changes whose expected effect is large

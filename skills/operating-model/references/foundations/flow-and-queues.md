@@ -13,7 +13,9 @@ John Little's 1961 result, which holds for any stable queue regardless of distri
 
 **L = λW** — items in the system = arrival rate × time in system
 
-Rearranged for the version that matters: **cycle time = WIP ÷ throughput.**
+Rearranged for the version that matters: **cycle time = WIP ÷ throughput**
+(`node scripts/mechanisms.mjs littlesLaw 6 2` — six open items at two finished a week is a
+three-week cycle time, and no amount of effort changes that arithmetic while WIP stays at six).
 
 Throughput is hard to change quickly; it's your actual capacity. WIP is trivially changeable — it's
 just how many things you allow to be open at once. So the fastest available lever on how long
@@ -93,6 +95,26 @@ The corollary is a diagnosis rather than an aspiration. A team whose change fail
 it deploys more often is not disproving the mechanism; it is reporting that its batches did not get
 smaller — the same volume, released more often, with the pipeline, tests, and rollback path
 unchanged.
+
+**What this argument does not say, and what a careless version of it claims.** Hold total change
+volume fixed and split it across more releases; the number of releases that carry a defect goes
+*up*, not down:
+
+| Releases for 100 changes at p = 0.05 | Releases carrying a defect |
+| --- | --- |
+| 1 | 0.99 |
+| 5 | 3.21 |
+| 10 | 4.01 |
+| 25 | 4.64 |
+| 100 | 5.00 |
+
+(`node scripts/mechanisms.mjs defectsPerPeriod 100 10 0.05`.) The limit is V·p — the defects were
+in the changes, and slicing the releases neither creates nor removes them. So small batches do not
+reduce how often something breaks. What they reduce is **per-release** failure probability (which
+is what the change-failure-rate metric measures), the candidate set during diagnosis, the blast
+radius of any one release, and therefore time to restore. The co-movement result is about *rate and
+recovery*, not about the count of incidents, and stating it as "you'll have fewer incidents" is an
+over-claim that the arithmetic refuses.
 
 ## Queues you can't see
 

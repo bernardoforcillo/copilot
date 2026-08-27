@@ -50,6 +50,26 @@ which is the derivation of "CI owns the mechanical, review owns what CI cannot s
 argument James Reason's defence-in-depth model makes in reverse: layers help because their holes
 are in different places, and layers whose holes line up are one layer that costs more.
 
+**How much correlation kills the claim — computed, because "two mediocre filters beat one good
+one" is exactly the kind of slogan this tier exists to bound.** With correlation ρ between the two
+filters' misses, escape is `q₁q₂ + ρ·√(p₁q₁p₂q₂)`:
+
+| ρ between the misses | Escape, two filters at p = 0.7 | Versus one filter at p = 0.8 |
+| --- | --- | --- |
+| 0 (independent) | 9.0% | better |
+| 0.2 | 13.2% | better |
+| 0.5 | 19.5% | barely better |
+| **0.52** | **20.0%** | **break-even** |
+| 0.8 | 25.8% | worse |
+| 1.0 | 30.0% | much worse |
+
+`node scripts/mechanisms.mjs escapeCorrelated 0.7 0.7 0.5`. So the pair wins only while their
+misses are less than about half correlated — and the pairs teams actually build (a reviewer and a
+linter checking the same convention; two reviewers from the same team reading the same diff with
+the same assumptions) sit well above that line. Two filters do not compose by being two; they
+compose by looking at different things, and a redundant one is worse than dropping it, because it
+also spends attention.
+
 ## Attention is the scarce input, so size is the control variable
 
 A reviewer brings roughly fixed attention to a change. Detection probability per line therefore

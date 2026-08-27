@@ -40,6 +40,22 @@ ceiling a mechanism rather than an aesthetic preference:
 The standard rule of thumb — no more than about half of operational time on toil — is one choice of
 threshold on this curve. The threshold is arguable; the shape isn't.
 
+**How urgent this is depends entirely on one parameter, and the honest version says so.** Starting
+from 5 hours a week against a 35-hour week, the time until toil takes half the week:
+
+| Usage growth per 6 months | Months until toil is half the week |
+| --- | --- |
+| +30% | ~29 |
+| +50% | ~18 |
+| +100% | ~11 |
+| +200% | ~7 |
+
+(`node scripts/mechanisms.mjs periodsToThreshold 5 17.5 1` returns periods; multiply by the period
+length.) At +30% you have two and a half years and the correct answer may well be "note it and
+carry on"; at +200% you have two quarters. The mechanism is the same in both rows — what changes is
+whether it is a finding or a fire, and a reliability review that reports urgency without the growth
+rate has skipped the only input that decides it.
+
 ## What the automation actually buys, and what it costs
 
 Net saving over a horizon H, with frequency f:
@@ -82,6 +98,9 @@ If a fraction **s** of the operational work is irreducibly human — a judgement
 phone call, a decision someone must own — then no amount of automation reduces total load below
 s·L. The achievable reduction is bounded by **1/s**, which is Amdahl's 1967 argument transplanted
 from parallelism to operations.
+
+(`node scripts/mechanisms.mjs amdahlMaxReduction 0.4` — with 40% of the work irreducibly human,
+total load cannot fall below 2.5× less than it is now, whatever you automate.)
 
 The practical consequence is that the honest target is never zero, and that the highest-value
 automation is often not the one that removes the most minutes but the one that removes the most

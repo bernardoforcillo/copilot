@@ -56,7 +56,8 @@ why redundancy pays less than the rollback path at small scale:
 ### Burn-rate windows
 
 Burn rate is "how many times faster than the budget allows": 1× exactly exhausts a monthly budget
-in a month. The published recipe pairs a short window with a long one — the short one makes the
+in a month (`node scripts/mechanisms.mjs burnRate 0.02 0.995` — a 2% error rate against a 99.5%
+target burns at 4×). The published recipe pairs a short window with a long one — the short one makes the
 page fast, the long one keeps it from firing on a blip:
 
 | Window | Burn rate | Budget consumed | Consequence |

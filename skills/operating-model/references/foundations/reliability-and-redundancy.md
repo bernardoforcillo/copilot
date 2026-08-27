@@ -31,9 +31,15 @@ says, not to zero.
 
 Two consequences follow directly, and neither is a matter of taste:
 
-- **Every dependency added is availability spent**, before it has delivered anything. That is the
-  reliability half of the burden of proof in `complexity-and-coupling.md`: a new service, a new
-  queue, a new third-party call each subtract from a budget you were already inside.
+- **Every *hard* dependency added is availability spent**, before it has delivered anything. That is
+  the reliability half of the burden of proof in `complexity-and-coupling.md`: a new service, a new
+  queue, a new third-party call each subtract from a budget you were already inside. The
+  qualification matters and is usually dropped: the product term counts dependencies whose failure
+  fails the request. A dependency with a *defined degradation path* — a cache you can miss, an
+  enrichment you can skip, a provider you can fall back from — leaves the serial product and enters
+  a different term, which is precisely why "make the dependency optional" is often cheaper than any
+  amount of hardening. Sort your dependencies into hard and degradable before computing anything;
+  the sort itself is usually the finding.
 - **The reliability of a system is bounded by its worst link**, so effort spent hardening the
   second-worst is close to wasted. Find the term dominating the product before optimizing anything.
 
@@ -61,9 +67,16 @@ against:
 With a correlated fraction c of failures, redundancy can only attack the (1 − c) part: effective
 unavailability floors at roughly c × (1 − A). If most of your failures come from your own changes —
 and at small scale most do — then **the deploy pipeline is the shared-fate dependency**, and a
-second replica buys almost nothing while a rehearsed rollback buys almost everything. That is a
-derivation, not a preference: it says where the money goes at each stage, and it says why
-`release-and-environments.md` puts rollback ahead of replication.
+second replica buys almost nothing while a rehearsed rollback buys almost everything.
+
+**The crossover, stated so the claim can be checked rather than believed.** A replica removes
+roughly the (1 − c) share of unavailability; halving time-to-restore removes roughly half of the
+duration term across *all* incidents, correlated or not. So replication wins when **c < 0.5** —
+when fewer than half your incidents come through your own changes and shared configuration — and
+recovery work wins above it. Count last quarter's incidents by cause before spending on either;
+"most outages are self-inflicted" is the usual case, not a law, and a team whose failures are
+genuinely hardware or single-zone should buy the replica.
+`node scripts/mechanisms.mjs redundantAvailability 0.99 2 0.5` against the same call with 0.2.
 
 Perrow's *Normal Accidents* (1984) names the general form: tight coupling plus interactive
 complexity means added protection introduces new interactions, so past some point each defensive
@@ -104,8 +117,9 @@ is a rule about a moment when nobody will want to obey it.
 
 ## Impact is three multiplied terms, not one
 
-Expected loss from failures is **frequency × exposure × duration**, and duration decomposes further
-into detect + diagnose + mitigate. Each term has a different, cheap lever:
+Expected loss from failures is **frequency × exposure × duration**
+(`node scripts/mechanisms.mjs expectedLoss 2 0.3 60` — two incidents a month, 30% of users, an hour
+each), and duration decomposes further into detect + diagnose + mitigate. Each term has a different, cheap lever:
 
 | Term | The lever | Typical small-team state |
 | --- | --- | --- |

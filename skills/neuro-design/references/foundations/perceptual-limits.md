@@ -40,7 +40,8 @@ What it derives:
 - **Screen edges and corners are effectively infinite in one dimension**, because the pointer stops
   there. A control at the edge is faster than a larger control near it.
 - **Halving a target costs a fixed increment of time**, every time — small controls are not a
-  neutral aesthetic choice, they are a permanent tax on every use.
+  neutral aesthetic choice, they are a permanent tax on every use
+  (`node scripts/mechanisms.mjs fittsMs 100 20` against `fittsMs 100 40`).
 - **Frequently paired actions belong near each other**, since D is what you control most cheaply.
 - **Touch changes W, not the law.** The finger's contact area sets the effective minimum, which is
   why platform guidelines converge on similar minimum sizes from different directions.

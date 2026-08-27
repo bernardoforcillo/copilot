@@ -61,7 +61,21 @@ The lifetime-value form of the same geometric series: with revenue R per period 
 
 Churn appears in the denominator of both LTV and the plateau, which is why it is the single lever
 with two large effects — halving it doubles the value of every user you already paid for *and*
-doubles the size the business settles at. `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/foundations/compounding-and-capital.md`
+doubles the size the business settles at.
+
+**The assumption inside that expression, which is where most LTV estimates go wrong.** R/c assumes
+a *constant hazard*: the same fraction leaves every period, forever. Real cohorts almost never do —
+early churn is high and the survivors are progressively more committed, so the hazard declines. Take
+a cohort whose monthly churn starts at 12% and decays toward 2%: its true lifetime value is ~25.5
+months of revenue, while R/c computed on the first month's churn says 8.3 and R/c on the 12-month
+average churn (6.7%) says 14.9. The naive number is not slightly off, it is a third of the truth —
+and it is biased in the direction that makes you underspend on acquiring users who would have paid
+back.
+
+Use the closed form only as a sanity check on a mature, flat cohort. Where you have a retention
+curve, sum it: `ltvFromSurvival(revenuePerPeriod, survival[])` in
+`../../../../scripts/mechanisms.mjs`. The same assumption sits inside the plateau expression
+above — with a declining hazard, N\* is higher than a/c and takes longer to reach. `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/foundations/compounding-and-capital.md`
 is the general form: a rate improvement compounds, a one-time addition doesn't.
 
 The corollary is a ranking rule the acquisition-first instinct gets backwards: below a certain
