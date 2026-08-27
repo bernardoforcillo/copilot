@@ -31,6 +31,7 @@ early"; you need only the direction.
 With filters of detection probability p₁ … pₙ, the escape probability is **∏ (1 − pᵢ)**. Two
 mediocre filters beat one good one — 0.7 and 0.7 leave 9% escaping, against 20% for a single 0.8 —
 **provided they fail independently**.
+(`node scripts/mechanisms.mjs escapeProbability 0.7 0.7` against `escapeProbability 0.8`.)
 
 That proviso is the entire design rule for a pipeline:
 

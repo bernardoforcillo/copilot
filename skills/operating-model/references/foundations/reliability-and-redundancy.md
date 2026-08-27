@@ -24,6 +24,11 @@ adjustable by effort.
 | 6 components | 99.9% | 99.4% | ~4 h 20 min |
 | 10 components | 99.9% | 99.0% | ~7 h 10 min |
 
+Run it on your own chain: `node scripts/mechanisms.mjs serialAvailability 0.999 0.999 0.999`, then
+`node scripts/mechanisms.mjs downtimeMinutes <result>`. The same file holds `redundantAvailability`,
+which takes the correlated fraction as its third argument — set it to what your own incident history
+says, not to zero.
+
 Two consequences follow directly, and neither is a matter of taste:
 
 - **Every dependency added is availability spent**, before it has delivered anything. That is the

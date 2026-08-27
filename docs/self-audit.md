@@ -22,13 +22,14 @@ the change-level standard in
 | --- | --- |
 | Skills | 11 |
 | Agents | 10 |
-| Markdown files under `skills/` | 79 |
-| Words across `skills/`, `agents/`, `docs/` | ~212,000 |
+| Markdown files under `skills/` | 80 |
+| Words across `skills/`, `agents/`, `docs/` | ~215,000 |
 | Words in the largest desk (`neuro-design`) | ~119,000 (56% of the plugin) |
 | Words in the second (`operating-model`) | ~33,000 |
 | Skills with a trigger eval set | 2 of 11 |
 | Skills with a task eval set | 3 of 11 |
 | External plugin dependencies | 4 (`superpowers:brainstorming`, `superpowers:subagent-driven-development`, `superpowers:systematic-debugging`, `feature-dev:code-architect`) |
+| Mechanical checks in `check-plugin.mjs` | 11 groups, one of which runs 38 arithmetic assertions |
 
 **None of the figures in this table is mechanically checked.** The checker verifies counts stated
 in the forms it knows (§6), and these aren't among them — they are statistics over the tree rather
@@ -79,7 +80,8 @@ independently**, and that overlapping filters are cost without coverage. This re
 
 | Filter | Catches | Detection | Independent of the others? |
 | --- | --- | --- | --- |
-| `check-plugin.mjs` | Frontmatter, broken internal paths, orphaned references, dispatch-graph and adopter-table drift, mermaid fences, eval JSON shape, marketplace sync, stated counts | High, mechanical | Yes — it reads the filesystem, not the prose |
+| `check-plugin.mjs` | Frontmatter, broken internal paths, orphaned references, dispatch-graph and adopter-table drift, mermaid fences, eval JSON shape, marketplace sync, stated counts, and the foundations tier's own contract (a derivation must name its mechanism and its voiding condition) | High, mechanical | Yes — it reads the filesystem, not the prose |
+| `mechanisms.mjs --test`, run by the checker | Divergence between a figure quoted in prose and the model it claims to follow from | High, mechanical, and it has already caught a substantive error (below) | Yes — it computes rather than reads |
 | Trigger evals | A description that stopped discriminating | Measured, noisy (see `evals/README.md` on what a 20×2 configuration can resolve) | Yes |
 | Task evals | Advice that lost a property it claims | Only on the 3 desks that have a set | Yes |
 | Maintainer reading the diff | Everything else | Falls with diff size, per §5 | **No** |
@@ -93,8 +95,15 @@ appears to. The two mitigations that actually are independent are the mechanical
 maintainer's own reading; the correct response is therefore to **push as many invariants as
 possible into the checker** rather than to promise more careful review.
 
-That is what happened during this audit, and it is the only finding here that was converted into a
-mechanism on the spot (§6).
+That is what happened during this audit, and the mechanisms added since have earned the claim
+rather than illustrated it. **The clearest evidence that a mechanical filter catches what
+same-process review does not:** the design desk's foundations file repeated the standard summary of
+Hick's law — split 30 options into 5 groups of 6 and the choice gets faster, because two small
+logarithms beat one big one. It survived writing and re-reading. The first time the model was
+executed, it returned the opposite (two-stage choice pays the fixed intercept twice: ~1,209 ms
+against ~943 ms), and the real mechanism behind grouping turned out to be search cost, which is
+linear rather than logarithmic. A correlated human filter could not have caught that; running the
+arithmetic caught it in one command.
 
 ## 4. The complication ledger, applied to the plugin's own files
 
@@ -153,7 +162,9 @@ Recurring manual work, from this session's own history:
 | Item | Observed | Status |
 | --- | --- | --- |
 | Updating the dispatch graph and adopters table when an agent is added | Enforced by the checker since an earlier change | Automated |
-| Keeping numbers in prose true ("six references", "ten foundations", "seven worked examples", "ten loop adopters") | **Went stale 4 times in this session alone** | **Automated during this audit** — check (8) in `scripts/check-plugin.mjs`, verified by breaking each of the four claims and watching it fail |
+| Keeping numbers in prose true ("six references", "eleven foundations", "seven worked examples", "ten loop adopters") | **Went stale 4 times in this session alone** | **Automated** — check (8) in `scripts/check-plugin.mjs`, verified by breaking each of the four claims and watching it fail |
+| Keeping the foundations tier's shape (mechanism named, voiding condition present, reachable from the derivation table) | Two files drifted from the tier's own phrasing while being written | **Automated** — check (9), verified by removing a voiding-condition section and a table reference and watching both fail |
+| Keeping quoted arithmetic true to the models | One substantive error found the first time the models were run | **Automated** — check (10) runs `mechanisms.mjs --test`, verified by perturbing a model constant and watching four figures diverge |
 | Keeping readme prose descriptions in step with the desks | Manual, drifts slowly | Accepted, with a reason: the text is judgement, not a count |
 | Keeping `provenance.md` in step with the claims it sources | Manual | Accepted; a mechanical version would check that a source exists, not that it supports the claim |
 | Rendering mermaid to catch syntax errors the fence check can't see | Manual, per `contributing.md` | Accepted — a real renderer needs a browser dependency this repo doesn't want |
@@ -176,7 +187,8 @@ caught several during this work, immediately, at zero cost.
 | 1 | Stated-count drift | prevent | **Done** — checker rule (8), test-verified |
 | 2 | External plugin dependencies have no stated fallback | prevent | Open — maintainer |
 | 3 | 8 of 11 desks have no eval set of any kind | detect | Open; the honest cost is that their advice is unmeasured, and `evals/README.md` already says what a small eval configuration can and can't resolve |
-| 4 | Author and reviewer are the same process for most prose | detect | Structural; mitigated by pushing invariants into the checker, not solvable inside the repo |
+| 4 | Author and reviewer are the same process for most prose | detect | Structural; mitigated by pushing invariants into the checker — three more went in during this pass, and the arithmetic one immediately caught an error two human-equivalent reads had missed |
+| 6 | Quantitative claims that are *not* in `mechanisms.mjs` are still unchecked prose | detect | Open — the tier's arithmetic is covered, the applied and core files' figures are not |
 | 5 | No evidence any reference file has been read in real work | — | Accepted and stated; the deletion bias in the maintenance rule is the only available correction |
 
 ## 8. When to re-run this

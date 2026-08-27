@@ -134,6 +134,9 @@ required it to be justified.
 | Payment provider | 99.9% | Yours in the user's eyes, theirs in fact |
 | **Serial product** | **≈ 99.74%** | ≈ 1 h 52 min of failure per 30 days |
 
+Reproduce: `node scripts/mechanisms.mjs serialAvailability 0.9999 0.999 0.9995 0.999`, then
+`node scripts/mechanisms.mjs downtimeMinutes 0.997402`.
+
 The first finding writes itself: **a 99.9% target is not available to you at all** without changing
 the chain, because two of the four terms belong to somebody else. Publishing 99.9% would be
 promising something you cannot deliver even with perfect code.
@@ -145,6 +148,9 @@ achievable. The 99.9% option isn't reachable without changing the chain at all �
 single-instance failure, degrading gracefully when the payment provider is down, multi-region for
 the database) costs an order of magnitude more to buy ~2 h 50 min of additional uptime a month on
 a flow that earns what this one earns.
+
+Reproduce the budget figures: `node scripts/mechanisms.mjs errorBudgetMinutes 0.995` (216 min)
+against `errorBudgetMinutes 0.999` (43.2 min).
 
 **Step 3 — the consequence, written now.** Budget above 25% remaining → ship normally. Budget
 exhausted → reliability work outranks features until the next window opens, and the ranking is not
@@ -186,13 +192,16 @@ failure data said would not deliver it.
 Five hours out of a ~35-hour working week is 14% — under the usual half-of-operational-time
 ceiling, so the finding is *not* "you are drowning". It is what the trend says: usage roughly
 doubled in six months and four of these six items scale with usage
-(`foundations/load-and-automation.md`), so at the same growth the number is ~10 h/week by Q2 and
-~20 h by the end of the year — at which point the capacity to fix it is the capacity being eaten.
+(`foundations/load-and-automation.md`), so at the same growth the load crosses half the week in
+about **ten months** — at which point the capacity to fix it is the capacity being eaten.
+Reproduce: `node scripts/mechanisms.mjs periodsToThreshold 5 17.5 1` returns 1.81 six-month
+periods.
 
 **The head of the distribution.** The import job and the export are 2 h 35 of the 5 h, and both
 have the same root: a retry that gives up silently. Payback for fixing it properly — roughly 10 h
-of build, ~30 min a month of maintenance, against 2 h 35 a week saved — is about four weeks, and
-the horizon is safe because the import path is the product.
+of build, ~30 min a month of maintenance, against 2 h 35 a week saved — is about four weeks
+(`node scripts/mechanisms.mjs automationPaybackWeeks 10 0.5 2.583`), and the horizon is safe
+because the import path is the product.
 
 **The rest of the list, decided rather than accumulated:**
 

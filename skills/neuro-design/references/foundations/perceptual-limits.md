@@ -47,13 +47,30 @@ What it derives:
 
 ## Hick–Hyman: choice time grows with the logarithm of the alternatives
 
-**RT = a + b · log₂(n + 1)** for undifferentiated alternatives. The important part is the
-qualification: the logarithm applies to a *flat* set of equally-plausible options. Categorising the
-set resets the term — choosing among 5 groups and then among 6 items is faster than choosing among
-30, which is the derivation of **group rather than trim** when the items genuinely have to exist.
+**RT = a + b · log₂(n + 1)** for a flat set of equally-plausible options, where a is a fixed
+overhead per decision and b the cost per bit.
 
-It also explains why the "reduce the number of options" advice misfires when applied literally:
-removing an option a user needs converts a two-second decision into a support ticket.
+**A correction worth keeping, because it is the kind of error this tier exists to catch.** The
+usual next sentence — "so group 30 items into 5 groups of 6, because two small logarithms beat one
+big one" — does not follow from this law. Two-stage choice pays the intercept *twice*: with
+a = 200 ms and b = 150 ms/bit, one choice among 30 costs ≈ 943 ms, while choosing among 5 and then
+among 6 costs ≈ 1,209 ms. Grouping is *slower* on Hick's terms alone. Run it:
+`node scripts/mechanisms.mjs hickMs 30` against `hickMs 5` plus `hickMs 6`.
+
+The mechanism that actually makes grouping win is a different one: **Hick's law prices a decision
+among alternatives you already know; finding an item you have to look for is visual search, and
+serial search is roughly linear in the number of items scanned.** Grouping cuts the scanned set —
+30 items at ~40 ms each is ~1,200 ms, while scanning 5 group labels and then 6 items is ~440 ms.
+Linear beats logarithmic here because linear is the term you are removing.
+
+Two consequences follow, and they differ from the folk version:
+
+- **Group to reduce search, not to reduce choice.** The grouping has to be *visible and
+  predictable* — labels the user can rule out at a glance — or it adds a stage without removing a
+  search.
+- **"Reduce the number of options" misfires when applied literally.** Removing an option a user
+  needs converts a sub-second decision into a support ticket; the log term was never the expensive
+  part.
 
 ## The interface is a signal-detection problem
 

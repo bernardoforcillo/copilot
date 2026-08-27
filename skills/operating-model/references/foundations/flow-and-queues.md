@@ -33,6 +33,9 @@ waiting is ρ/(1−ρ), and time in system is 1/(μ(1−ρ)). The shape of 1/(1�
 | 90% | 10× |
 | 95% | 20× |
 
+`node scripts/mechanisms.mjs queueMultiplier 0.9`. The batch arithmetic below is
+`batchDefectProbability n p`.
+
 Nothing dramatic happens at 80%; everything happens between 90% and 100%. A person or system
 planned to be fully busy is not efficient, it is a queue with unbounded wait — and the first
 symptom isn't less output, it's that everything suddenly takes much longer. **Slack is the price of

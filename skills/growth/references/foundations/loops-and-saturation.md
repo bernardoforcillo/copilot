@@ -31,6 +31,9 @@ Everything below is that line read carefully.
 | 100 / month | 2% | 5,000 |
 | 200 / month | 5% | 4,000 |
 
+Run it: `node scripts/mechanisms.mjs plateau 100 0.05` and, with a loop,
+`node scripts/mechanisms.mjs plateau 100 0.05 0.025` — the third argument is k.
+
 Three readings, and the first one surprises people every time:
 
 - **A paid channel run at constant intensity has a ceiling**, and consistency does not raise it.

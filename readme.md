@@ -109,6 +109,15 @@ deleted. Each file ends with the condition under which its mechanism is absent �
 also the condition under which the principle above it stops being true. The derivation table in
 the skill maps principle → mechanism → what voids it.
 
+One file in the tier is about the tier: `references/foundations/how-to-argue.md` — the ladder of
+grounds (measured here > measured elsewhere > derived from a model whose assumptions hold here >
+published practice > analogy > authority), the four parts a derivation must contain, "hard to vary"
+as the working test, and the three ways a mechanism argument fails (theatre, over-transfer, and
+picking the mechanism that gives you the answer you wanted). It carries the case that justifies the
+calculator: a Hick's-law claim repeated in nearly every summary of that law — group 30 options into
+5 groups of 6 and the choice gets faster — turned out to be false the first time the arithmetic was
+actually executed, and the design desk's file now derives grouping from search cost instead.
+
 `references/provenance.md` traces every principle to its source — including the critical reporting
 on where the playbook does damage, the site-reliability, engineering-practices and delivery-research
 literature behind the running-a-service half, the standard literature behind the foundations tier,
@@ -190,10 +199,19 @@ at the desk whose rules it applies.
 `node scripts/check-plugin.mjs` validates the plugin's structure: skill/agent frontmatter, every
 path-shaped file reference, orphaned reference files, mermaid blocks (closed, and declaring a known
 diagram type), whether `docs/architecture.md`'s dispatch graph and loop-adopters table still
-describe what exists, and whether the counts written in prose ("the six references", "ten
-foundations files", "seven end-to-end applications", "ten loop adopters") still match the
-filesystem — that last one earned its place by going stale four times in a single session. No
-dependencies; exit 0 means consistent.
+describe what exists, whether the counts written in prose ("the six references", "eleven
+foundations files", "seven end-to-end applications") still match the filesystem — that one earned
+its place by going stale four times in a single session — and whether every file in a
+`references/foundations/` directory keeps the tier's contract: it opens as a foundation, names the
+principle it generates and the mechanism, and ends with the condition that voids it.
+
+It also runs `scripts/mechanisms.mjs --test`. That file is the arithmetic of the foundations tier as
+runnable functions — serial and redundant availability, error budgets, queue multipliers, batch
+defect probability, filter escape probability, toil saturation and automation payback, growth
+plateau and lifetime value, Fitts and Hick — with a self-test pinning every figure quoted in the
+references and worked examples, so prose and model cannot drift apart. Use it directly on your own
+numbers: `node scripts/mechanisms.mjs serialAvailability 0.9999 0.999 0.9995`, or
+`node scripts/mechanisms.mjs list`. Both scripts have no dependencies; exit 0 means consistent.
 
 ## Self-audit
 

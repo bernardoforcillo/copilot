@@ -10,20 +10,29 @@ redistribute your own copy.
 1. Fork this repository and branch off `master`.
 2. Make your change (a new skill, a fix to an existing agent/skill, a reference-file
    correction, etc.) following the conventions already established in the files around it.
-3. Run `node scripts/check-plugin.mjs` and fix anything it reports. It checks the invariants
+3. Run `node scripts/check-plugin.mjs` and fix anything it reports. It now also runs
+   `scripts/mechanisms.mjs --test`, which recomputes every figure quoted in the foundations tier
+   and the worked examples from the models they claim to follow from — so editing a number in
+   prose without editing the model (or the reverse) fails the check rather than drifting. It checks the invariants
    that drift silently: frontmatter, every path-shaped reference resolving, no orphaned reference
    files, mermaid blocks declaring a known diagram type, and the two hand-maintained sections of
    `docs/architecture.md` — the dispatch graph and the loop-until-converged adopters table — still
    matching what's actually on disk. It has no dependencies; if you're adding diagrams, also render
    them once (any mermaid renderer) before opening the PR, since the checker validates structure
    rather than syntax.
-4. If you changed a skill's description or its advice, consider running the matching eval set in
+4. If you're adding a file to a `references/foundations/` directory, it has to keep the tier's
+   contract — open with `# Foundation: <topic>`, state `**The principle(s) it generates:**` and
+   `**The mechanism:**`, and end with a `## When this mechanism is absent` section. The checker
+   enforces all four, because a derivation with no voiding condition is an assertion with a
+   better title. If the file makes an arithmetic claim, add the model to `scripts/mechanisms.mjs`
+   and pin the figure in its self-test.
+5. If you changed a skill's description or its advice, consider running the matching eval set in
    `evals/` — the trigger set catches a description that stopped discriminating, and the task set
    catches advice that lost a property it claims.
-5. If your change adds a desk, an agent, or a checker rule, update
+6. If your change adds a desk, an agent, or a checker rule, update
    [docs/self-audit.md](docs/self-audit.md) — its numbers and its open-items table are what stop
    the plugin from holding other projects to a standard it doesn't apply to itself.
-6. Open a pull request against `master` describing what changed and why.
+7. Open a pull request against `master` describing what changed and why.
 
 Forking to open a pull request is fine — the license restricts redistributing the software,
 not sending a patch back to its maintainer.
