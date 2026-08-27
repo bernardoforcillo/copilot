@@ -338,6 +338,13 @@ try {
   const { checks: mechChecks, failed } = mech.selfTest();
   for (const c of failed) p(`scripts/mechanisms.mjs: ${c.label} — got ${c.actual}, expected ${c.expected}`);
   if (!mechChecks.length) p('scripts/mechanisms.mjs: self-test ran no checks');
+  // A model no reference file names is a complication with one call site — its own test.
+  // Either the prose that needs it is missing, or the model is.
+  const prose = [...docFiles].map((f) => readFileSync(join(root, f), 'utf8')).join('\n');
+  for (const name of Object.keys(mech).filter((k) => k !== 'selfTest')) {
+    if (!prose.includes(name))
+      p(`scripts/mechanisms.mjs: model '${name}' is named in no reference file — dead model, or missing prose`);
+  }
 } catch (err) {
   p(`scripts/mechanisms.mjs: self-test could not run (${err.message})`);
 }

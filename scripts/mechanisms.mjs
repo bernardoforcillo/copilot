@@ -64,6 +64,22 @@ export const batchDefectProbability = (n, perChangeProbability) =>
 export const escapeProbability = (...detectionProbabilities) =>
   detectionProbabilities.flat().reduce((esc, p) => esc * (1 - p), 1);
 
+// Escape probability through two filters that are NOT independent. rho is the correlation
+// between their misses: 0 is independence (the textbook case), 1 means the second filter
+// misses exactly what the first misses and adds nothing. Real pairs sit in between, and the
+// textbook product overstates coverage by however much rho is above zero.
+export const escapeCorrelated = (p1, p2, rho = 0) => {
+  const q1 = 1 - p1;
+  const q2 = 1 - p2;
+  return q1 * q2 + rho * Math.sqrt(p1 * q1 * p2 * q2);
+};
+
+// Expected defective changes reaching users per period, holding total change volume fixed
+// while varying how many releases it is split across. This is the fleet-level question that
+// per-release probability does not answer.
+export const defectsPerPeriod = (volume, releases, perChangeProbability) =>
+  releases * (1 - Math.pow(1 - perChangeProbability, volume / releases));
+
 // --- operational load ------------------------------------------------------
 
 // Periods until operational load reaches a threshold, given per-period growth.
@@ -127,7 +143,15 @@ export const plateau = (acquisitionPerPeriod, churnPerPeriod, loopK = 0) =>
   loopK >= churnPerPeriod ? Infinity : acquisitionPerPeriod / (churnPerPeriod - loopK);
 
 // Lifetime value as the geometric sum: revenue per period over churn per period.
+// ASSUMES A CONSTANT HAZARD — the same fraction churns every period forever. Real cohorts
+// usually have a declining hazard (the survivors are the committed ones), and this expression
+// then understates LTV. Use ltvFromSurvival when you have the curve.
 export const ltv = (revenuePerPeriod, churnPerPeriod) => revenuePerPeriod / churnPerPeriod;
+
+// LTV from an actual survival curve: survival[i] is the fraction still active in period i.
+// No hazard-shape assumption; it is just the sum of what each period is worth.
+export const ltvFromSurvival = (revenuePerPeriod, survival) =>
+  revenuePerPeriod * survival.reduce((a, b) => a + b, 0);
 
 // --- perceptual and motor limits -------------------------------------------
 
@@ -247,6 +271,40 @@ export const selfTest = () => {
   check('85% learning curve: 8th cumulative doubling-unit cost',
     learningCurveUnitCost(100, 8, 0.85), 61.4, 0.5);
 
+  // uncertainty-and-information.md — the conversion-rate figures quoted in the file
+  check('1pp lift on a 5% rate', sampleSizePerArm(Math.sqrt(0.05 * 0.95), 0.01), 7600, 1);
+  check('relative 10% lift on a 5% rate', sampleSizePerArm(Math.sqrt(0.05 * 0.95), 0.005), 30400, 1);
+
+  // defects-and-detection.md — where correlated filters stop being worth it
+  check('two 0.7 filters, independent', escapeCorrelated(0.7, 0.7, 0), 0.09, 0.001);
+  check('two 0.7 filters at rho 0.5', escapeCorrelated(0.7, 0.7, 0.5), 0.195, 0.001);
+  check('two 0.7 filters at rho 0.8 are worse than one 0.8 filter',
+    Number(escapeCorrelated(0.7, 0.7, 0.8) > escapeProbability(0.8)), 1, 0);
+  check('break-even correlation is about 0.52', (0.2 - 0.09) / 0.21, 0.524, 0.005);
+
+  // flow-and-queues.md — splitting a fixed volume raises the count of defective releases
+  check('100 changes in 1 release', defectsPerPeriod(100, 1, 0.05), 0.99, 0.01);
+  check('100 changes in 10 releases', defectsPerPeriod(100, 10, 0.05), 4.01, 0.01);
+  check('100 changes in 100 releases approaches volume x p', defectsPerPeriod(100, 100, 0.05), 5, 0.01);
+  check('more releases never reduces the count',
+    Number(defectsPerPeriod(100, 25, 0.05) > defectsPerPeriod(100, 5, 0.05)), 1, 0);
+
+  // load-and-automation.md — the urgency depends entirely on the growth rate
+  check('toil reaches half the week in ~29 months at +30%/6mo', periodsToThreshold(5, 17.5, 0.3) * 6, 28.6, 0.3);
+  check('...and in ~11 months at +100%/6mo', periodsToThreshold(5, 17.5, 1) * 6, 10.8, 0.2);
+
+  // loops-and-saturation.md — R/c assumes a constant hazard, and cohorts do not have one
+  const geometric = Array.from({ length: 120 }, (_, i) => Math.pow(0.95, i));
+  let alive = 1;
+  const declining = Array.from({ length: 120 }, (_, i) => {
+    const v = alive;
+    alive *= 1 - (0.02 + 0.1 * Math.exp(-i / 6));
+    return v;
+  });
+  check('constant hazard: summing the curve matches R/c', ltvFromSurvival(1, geometric), ltv(1, 0.05), 0.1);
+  check('declining hazard LTV', ltvFromSurvival(1, declining), 25.46, 0.1);
+  check('R/c on first-month churn understates it by ~3x', ltv(1, 0.12), 8.33, 0.01);
+
   // perceptual-limits.md — the shape, not the constants
   check('doubling distance adds one bit of Fitts time', fittsMs(200, 40) - fittsMs(100, 40), 150, 0.001);
   check('halving target width adds one bit', fittsMs(100, 20) - fittsMs(100, 40), 150, 0.001);
@@ -267,7 +325,8 @@ const api = {
   expectedLoss, littlesLaw, queueMultiplier, batchDefectProbability, escapeProbability,
   periodsToThreshold, automationPaybackWeeks, amdahlMaxReduction, plateau, ltv, fittsMs, hickMs,
   visualSearchMs, expectedValue, sampleSizePerArm, detectableDelta, priceMoveRevenueChange,
-  compounded, consumed, sharedVsLocal, learningCurveUnitCost,
+  compounded, consumed, sharedVsLocal, learningCurveUnitCost, escapeCorrelated, defectsPerPeriod,
+  ltvFromSurvival,
 };
 
 const isMain = process.argv[1] && process.argv[1].endsWith('mechanisms.mjs');
@@ -281,6 +340,22 @@ if (isMain) {
       process.exit(1);
     }
     console.log(`mechanisms OK: ${all.length} checks — the figures in the references still follow from the models`);
+  } else if (cmd === 'sweep') {
+    // sweep <fn> <argIndex> <from> <to> <steps> <args...> — where does the conclusion flip?
+    const [fn, idxRaw, fromRaw, toRaw, stepsRaw, ...rest] = args;
+    const [idx, from, to, steps] = [idxRaw, fromRaw, toRaw, stepsRaw].map(Number);
+    if (!api[fn] || Number.isNaN(idx)) {
+      console.error('usage: sweep <fn> <argIndex> <from> <to> <steps> <args...>');
+      process.exit(1);
+    }
+    const base = rest.map(Number);
+    for (let i = 0; i <= steps; i += 1) {
+      const v = from + ((to - from) * i) / steps;
+      const argv = [...base];
+      argv.splice(idx, 0, v);
+      const out = api[fn](...argv);
+      console.log(`${round(v, 4)}\t${typeof out === 'number' ? round(out, 6) : JSON.stringify(out)}`);
+    }
   } else if (cmd === 'list') {
     for (const name of Object.keys(api)) console.log(name);
   } else if (api[cmd]) {
