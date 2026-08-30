@@ -7,9 +7,9 @@ description: Apply a high-performance operating model to how work gets chosen, b
 
 A distilled operating model for building and running software products at a high standard with a
 small number of people: how work gets chosen, how much ceremony it earns, who owns it end to end,
-what counts as evidence, and what happens to an asset you inherit rather than start. Eighteen
+what counts as evidence, and what happens to an asset you inherit rather than start. Twenty-four
 self-contained reference files in three tiers — six core (one per principle), six applied (the
-depth behind a specific kind of call), and six foundations (the mechanism each principle is
+depth behind a specific kind of call), and twelve foundations (the mechanism each principle is
 derived from, and the condition under which it stops holding). Read the one that matches the
 decision in front of you rather than loading the set.
 
@@ -146,13 +146,16 @@ about its subject, not by default.
   reversibility, how to raise a price on people who already trusted you, what to measure besides
   revenue, and where the line between monetization and extraction sits.
   `references/pricing-and-value-capture.md`
-- **Reliability and incidents** — reliability as a budget set by the maturity column, alerting on
+- **Reliability and incidents** — reliability as a budget set by the maturity column, the error
+  budget as the thing that makes a target operational, a ceiling on toil, running the incident
+  itself (command, operations, communications — even when one person wears all three), alerting on
   symptoms rather than causes, the regression-test rule that converts an incident into a permanent
   improvement, and on-call for teams too small for a rotation.
   `references/reliability-and-incidents.md`
 - **Decision latency** — speed as an operating variable: two-way doors decided fast and one-way
   doors decided carefully, time-boxing the decision itself, batch size, work-in-progress as
-  rotting inventory, and the coordination tax. `references/decision-latency.md`
+  rotting inventory, the coordination tax, and the four delivery measures that show whether
+  throughput was bought at the cost of stability. `references/decision-latency.md`
 - **Limits and failure modes** — where this model does not transfer (safety-critical, regulated,
   research, community, client work, long-horizon infrastructure) and how it damages itself when it
   does apply. Read this *before* applying the model to an unfamiliar context.
@@ -161,7 +164,7 @@ about its subject, not by default.
   legacy takeover, a price rise at small scale, and an over-elaborate agent-produced PR.
   `references/worked-examples.md`
 
-**Foundations — why the principles hold at all.** Six files under `references/foundations/`,
+**Foundations — why the principles hold at all.** Twelve files under `references/foundations/`,
 each deriving a principle from a mechanism rather than from anyone's practice. Read one when a
 rule is contested, when adapting the model to a context it wasn't written for, or when deciding
 whether a principle applies here at all. The point of a first-principles tier isn't depth for its
@@ -176,7 +179,35 @@ true, and a rule taken on authority never does.
 | Rigor proportional to maturity | Verification cost is justified against the consequence of failure and the probability the thing survives — `references/foundations/uncertainty-and-information.md` and `references/foundations/irreversibility-and-optionality.md` together | Consequence of failure is set externally — harm, regulation, contract — in which case rigor is set by the consequence, never by the stage |
 | Ownership end to end | Agency costs appear wherever the decider doesn't bear the consequence; every handoff creates one — `references/foundations/incentives-and-trust.md` | Decider and consequence-bearer must be kept separate by design (audit, regulated separation of duties) |
 | Transform, don't restart; reinvest | Reinvested returns compound geometrically; learning curves track cumulative experience; shared cost divided over *k* consumers — `references/foundations/compounding-and-capital.md` | There is no next cycle, decay exceeds return, or *k* = 1 |
-| Decision latency and batch size | Cycle time = WIP ÷ throughput; waiting time scales as 1/(1−ρ) — `references/foundations/flow-and-queues.md` | The work isn't a repeating flow, or the constraint is somewhere else entirely |
+| Decision latency and batch size | Cycle time = WIP ÷ throughput; waiting time scales as 1/(1−ρ); batch size raises both P(bad release) and time to restore, which is why speed and stability co-move — `references/foundations/flow-and-queues.md` | The work isn't a repeating flow, or the constraint is somewhere else entirely |
+| Reliability as a budget; the error budget's consequence | Availability multiplies along a dependency chain and improves only through redundancy capped by failure correlation, while each nine costs geometrically more and buys less — so the optimum is interior — `references/foundations/reliability-and-redundancy.md` | No usable denominator (too little traffic), failure cost set externally (safety, regulation, contract), or the chain is dominated by a dependency you don't control |
+| The toil ceiling; automate the top item | Load that scales with the system consumes a fixed capacity, and the work that removes it is drawn from the same pool — saturation is self-locking, and Amdahl bounds what automation can reach — `references/foundations/load-and-automation.md` | Frequency × horizon is small, each instance is irregular, or the manual step *is* the control on an irreversible action |
+| Write the decision down; capture what generalizes | Code is checked continuously and documents are checked by nobody, so a document's error rate rises with the rate of change of what it describes while belief in it doesn't decay at all — `references/foundations/knowledge-and-decay.md` | The subject doesn't change, nobody will read it, the knowledge is single-use, or a machine already derives it from the source |
+| The review standard, diff size, and what may block | Defect cost is monotone in survival time; filters compose as ∏(1−pᵢ) only when independent; reviewer attention per change is fixed, and the reviewer holds the artifact while the author holds the intent — `references/foundations/defects-and-detection.md` | The defect class isn't visible in the artifact (performance, load, real usage), there is no next reader, or another filter already has p ≈ 1 |
+
+**Two files in the tier aren't rows in this table**, because they are about the table rather than
+in it. `references/foundations/conflicting-mechanisms.md` handles the case the table cannot: two
+mechanisms both present and predicting opposite actions. A conflict isn't a contradiction — each
+mechanism prices a different cost — so the resolution is to put both in the same units, compare
+magnitudes (most conflicts are lopsided by 10× and only look balanced because both sides were
+stated qualitatively), find the crossover point rather than a winner, check whether one is the
+other's carved-out special case, break a genuine tie with reversibility, and otherwise admit the
+decision is under-determined by mechanism and send it to whoever owns the outcome. It carries the
+nine standing conflicts inside this plugin and what each side of them prices.
+
+And the second: `references/foundations/how-to-argue.md` is the standard the tier holds itself
+to — the ladder of grounds (measured here > measured elsewhere >
+derived from a model whose assumptions hold here > published practice > analogy > authority), the
+four parts a derivation must contain (mechanism, assumptions, a prediction that could come out
+otherwise, and the condition that voids it), "hard to vary" as the working test, and the three ways
+a mechanism argument goes wrong — theatre, over-transfer, and picking the mechanism that gives you
+what you wanted. Read it when an argument about a rule is going badly, or before importing a
+practice from a context that isn't yours.
+
+**The quantitative half is runnable.** Every mechanism in this tier that makes an arithmetic claim
+is also a function in `../../scripts/mechanisms.mjs`, whose `--test` mode pins the figures used in
+the reference files and worked examples. Argue from the mechanism, then run it on your own numbers:
+`node scripts/mechanisms.mjs serialAvailability 0.9999 0.999 0.9995`.
 
 **How to use the table.** When you're about to apply a principle in an unfamiliar context, read
 the middle column and ask whether that mechanism is actually operating here. When someone disputes
@@ -186,8 +217,9 @@ is the same content read from the other end: whole contexts where several mechan
 once.
 
 `references/provenance.md` records where these principles come from — company documents,
-engineering writing, the IPO prospectus, and outside reporting including the critical kind — so
-each claim can be traced rather than taken on this file's word.
+engineering writing, the IPO prospectus, and outside reporting including the critical kind for the
+operating half; the site-reliability, engineering-practices and delivery-research literature for
+the running-a-service half — so each claim can be traced rather than taken on this file's word.
 
 ## How this fits the rest of the plugin
 
@@ -195,7 +227,8 @@ This skill sets the *standard*; the other desks do the specialist work under it.
 
 - `software-architecture` decides the shape of a system; this skill decides whether that shape's
   complications were earned. Its `scaling-and-infra.md` trigger framework is the long form of the
-  complication ledger.
+  complication ledger, and its `code-review.md` is where these standards are actually enforced on
+  a change — the review is the gate an unearned complication has to get past.
 - `prd` and `product-strategist` generate and evaluate product bets; this skill ranks them by
   expected value and writes the kill criterion.
 - `growth` / `gtm` own acquisition and retention strategy; this skill fixes the standard of
@@ -221,7 +254,11 @@ from the ones above:
   is speculative — the same verdict the complication ledger gives a generic abstraction with one
   call site. When that's true of a file, the honest options are to delete it or to state plainly
   that it's kept for a use that hasn't happened yet; what's not allowed is treating its existence
-  as evidence of its value.
+  as evidence of its value. Stated plainly for the newest three: the foundations files on
+  reliability, operational load, and defect detection were written alongside the practice files
+  they support, not in response to a contested verdict — so they are, for now, in the "kept for a
+  use that hasn't happened yet" category, and the first real dispute they fail to settle is the
+  evidence that should shrink or delete them.
 - **Mechanical instrumentation instead of none.** `scripts/check-plugin.mjs` is this desk's
   minimum viable measurement: it fails when a reference doesn't resolve, when a file is orphaned,
   or when `docs/architecture.md` stops describing what's on disk. It doesn't measure whether the
@@ -229,9 +266,16 @@ from the ones above:
   over. It was earned the way the ledger requires: on its first run it found 38 broken paths,
   26 of them pre-existing.
 
-## Related agent
+## Related agents
 
 `agents/operating-partner.md` applies all six references at once to a plan, a diff, a roadmap, or
 an inherited codebase and returns a verdict per principle, looping on fixes until no unearned
 complexity or real gap remains. Use it for a full pass; use the reference files directly for a
 single decision while you're already working.
+
+`agents/reliability-engineer.md` takes the operational half of this desk —
+`references/reliability-and-incidents.md` plus the engineering blueprints it points at — and runs
+it against a specific system: a production-readiness review before a service carries real traffic,
+structure during a live incident, the postmortem afterwards, or an audit of service levels,
+alerting, on-call and toil. It reports over-investment as plainly as gaps, and never touches a
+running system.

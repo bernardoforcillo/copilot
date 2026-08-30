@@ -1,5 +1,11 @@
 # Reading & typography
 
+**The constants under this lens.** The perceptual span in reading (~7–9 characters right of
+fixation), foveal acuity, and contrast sensitivity are in `foundations/perceptual-limits.md`; line
+length, size and contrast recommendations here are those constants applied, not stylistic
+preferences — which is what makes them demonstrable rather than negotiable, and what obliges you to
+withdraw them for a channel with different constants.
+
 Reading is not innate — it is a skill bolted onto a visual system that evolved for natural scenes, faces, and objects, not glyphs. This file traces the neuroscience of that "cultural recycling": from the cortical real estate reading claims for itself, to the moment-by-moment mechanics of how eyes move across text, to the practical typographic levers — line length, size, spacing, justification, medium — that either work with those mechanics or fight them. Two conclusions recur throughout and should anchor most typography decisions: (1) skilled readers decode words by parallel, letter-by-letter recognition, not by matching a whole-word "shape," which invalidates a whole folk theory of legibility (notably the case against all-caps); and (2) reading speed is bottlenecked by crowding and by how much text fits, uncrowded, within the eye's perceptual span per fixation — not by raw visual acuity — which is why generous spacing and a moderate line length consistently beat cramming text smaller and tighter.
 
 ## The Visual Word Form Area (McCandliss, Cohen & Dehaene, 2003)

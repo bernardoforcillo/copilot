@@ -1,5 +1,11 @@
 # Cognitive load & memory
 
+**The constants under this lens.** Working memory of ~4 ± 1 chunks and the serial nature of
+attention are in `foundations/perceptual-limits.md`, which also carries the Hick–Hyman correction:
+grouping does not beat a flat list on choice time (two-stage choice pays the intercept twice) — it
+wins by cutting the *search*, which is linear in the items scanned. Argue a load finding from those
+constants, and withdraw it when the population is expert or measurable directly.
+
 Working memory is small, effortful, and easily overloaded — every design choice either spends that scarce budget or protects it.
 
 ## Working-memory capacity (Miller, 1956; Cowan, 2001)

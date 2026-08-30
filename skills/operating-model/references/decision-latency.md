@@ -85,6 +85,33 @@ Two numbers worth watching, both cheap to reconstruct from git and your issue tr
 
 If either is dominated by waiting rather than doing, the fix is a process change, not more effort.
 
+Four further numbers are worth reconstructing once a quarter, because together they say whether
+speed is being bought at the cost of stability or alongside it. They're the standard delivery
+measures from the multi-year DevOps research programme summarized in *Accelerate* (Forsgren,
+Humble and Kim, 2018), and the result that matters is the one most people assume away:
+
+| Number | What it is | What it tells you |
+| --- | --- | --- |
+| **Deployment frequency** | How often a change reaches users | Batch size, in practice rather than in intent |
+| **Lead time for change** | Commit → running in production | Where the queue is: review, CI, or a release window |
+| **Change failure rate** | Share of deploys that need a fix or a rollback | Whether the speed is real or borrowed |
+| **Time to restore** | Failure → service restored | The property that makes small batches safe |
+
+**Throughput and stability move together, not against each other.** Teams that deploy more often
+also fail less and recover faster, because the same things cause both: small batches, an automated
+pipeline, and a rehearsed rollback. The trade-off people assume between "moving fast" and "being
+careful" is usually a symptom of an expensive release process — fix the process, and the trade-off
+stops existing. That's the same conclusion `foundations/flow-and-queues.md` reaches from the
+queueing side; the four numbers are how you check it against your own repo instead of taking it on
+authority.
+
+Two cautions before treating them as targets. They're a diagnosis, not a scoreboard: pushed on
+directly they're trivially gamed (deploy frequency rises if you split one change into six commits;
+change failure rate falls if you stop calling things failures), which is the Goodhart problem from
+`foundations/uncertainty-and-information.md` in its most common industrial form. And at very small scale the denominators are
+tiny — with four deploys a month, a change failure rate is a fraction with an uninformative
+numerator, and the honest read is the trend over a quarter, not this month's number.
+
 ## Anti-patterns
 
 - **Treating every decision as one-way.** The most common form of slowness, and it feels like

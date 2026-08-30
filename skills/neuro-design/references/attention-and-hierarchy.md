@@ -1,5 +1,12 @@
 # Attention & visual hierarchy
 
+**The constants under this lens.** Serial attention for anything requiring a decision, change
+blindness, and the ~2° high-acuity window are stated as mechanisms in
+`foundations/perceptual-limits.md`, together with the signal-detection argument that makes an
+element which claims attention and usually doesn't deserve it a net negative for the whole
+interface. They void for expert users recalling rather than searching, for non-visual channels, and
+where nothing is being decided.
+
 Human vision cannot process a whole scene at once — a small set of pre-attentive channels pulls the eye first, top-down goals steer what gets searched, and anything outside the current focus of attention is easily missed entirely, which together dictate how a single, unambiguous focal point should be built and protected.
 
 ## Feature-integration theory & pre-attentive pop-out (Treisman, 1980)

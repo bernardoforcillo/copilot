@@ -13,6 +13,14 @@ runs in a project it sets up everything it needs, then proceeds straight to the 
 work. Two modes hang off this one entry point — `ingest`, which distils a just-completed
 plan or PRD into the wiki, and `lint`, which health-checks the wiki that already exists.
 
+**Why a wiki rather than more documentation.** The mechanism is in
+`${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/foundations/knowledge-and-decay.md`: a
+document has no filter of its own, so its error rate rises with the rate of change of whatever it
+describes while confidence in it stays flat — which is why this skill captures the *durable* half
+(decisions, reasons, what transfers) rather than descriptions a machine could regenerate, why every
+page has an owner and a date, why the lint pass exists at all, and why deleting a page is a normal
+outcome rather than a failure. Read it before arguing with the routing rubric.
+
 ## Bootstrap (runs before either mode, every invocation)
 
 Before doing anything else, check whether `.claude/memory/` exists in the current project:

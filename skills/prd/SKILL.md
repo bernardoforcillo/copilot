@@ -16,6 +16,33 @@ The output is a single file, `docs/superpowers/prd/YYYY-MM-DD-<feature>.md`, wri
 template below. Once the user approves it, this skill hands off to `superpowers:brainstorming`
 to turn the approved PRD into a technical spec, which then feeds `writing-plans`.
 
+## Why this shape (the mechanism, not the ritual)
+
+Before defending any step of the procedure below, read
+`references/foundations/demand-and-discovery.md`. It derives the whole shape from one asymmetry:
+demand is private information revealed by behaviour, not by statement, so a specification's
+accuracy is inherited from its evidence and never from its detail — which is why the problem-lock
+gate exists, why interviews reconstruct past switching instead of forecasting, why the base rate
+(most changes move nothing) makes cost-to-find-out the term worth optimising, and why an MVP is
+defined by the signal it can produce rather than by a feature count. It also names the contexts
+where none of this applies — contracted work, a legal requirement, one known internal user — in
+which case run the requirement, not the discovery.
+
+## If the plugins this skill hands off to aren't installed
+
+This skill routes work to `superpowers:brainstorming` (technical spec), `feature-dev:code-architect`
+(feasibility read), and `superpowers:systematic-debugging` (the bug case). None of them is
+guaranteed to be present, and a dangling instruction is worse than no instruction — so each has a
+stated fallback, and the report says which path was taken:
+
+| Missing | Fallback |
+| --- | --- |
+| `superpowers:brainstorming` | Write the technical spec inline from the approved PRD, and dispatch `copilot:software-architect` for the shape review that brainstorming would otherwise have driven |
+| `feature-dev:code-architect` | Dispatch `copilot:software-architect` for the feasibility read instead; it carries the scaling and code-organization references and can answer the same question at lower resolution |
+| `superpowers:systematic-debugging` | Handle the bug case directly — reproduce, isolate, fix, add the regression test — and record it per `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/reliability-and-incidents.md` |
+
+Check availability before promising a hand-off, not after the PRD is approved.
+
 ## When NOT to use this
 
 - **A bug or a purely technical change** — no new product surface, just fixing or refactoring

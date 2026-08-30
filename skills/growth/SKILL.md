@@ -12,6 +12,18 @@ experiment rigor — and it chains `gtm-engineer` itself when the ask includes i
 just strategy. This skill's job is to route the request correctly and relay what comes back, not
 to reproduce any of that reasoning here.
 
+## The arithmetic underneath
+
+Before accepting or arguing with a growth recommendation — yours, the agent's, or someone else's —
+read `references/foundations/loops-and-saturation.md`. It reduces the desk to one difference
+equation (N grows by acquisition, shrinks by churn, and the acquisition term is either a constant
+flow or proportional to N) and derives the rest from it: why a paid channel run at constant
+intensity has a ceiling of a/c, why halving churn does what doubling spend does, what k has to
+beat for a loop to compound, why cost per acquisition is a curve rather than a number, and why
+payback horizon is a financing constraint rather than a preference. It also says where the equation
+stops describing the business — one-shot purchases, a market too small for a loop to run, long
+enterprise cycles, gated distribution.
+
 ## How to dispatch
 
 1. **Compose the prompt.** Pass the user's task verbatim, plus whatever context the agent can't

@@ -46,6 +46,20 @@ One metric that counts **value delivered to users**, not value extracted from th
 result; the north star is the leading behavior that produces it. Test: if this number doubled and
 revenue didn't follow within a plausible lag, the choice is wrong.
 
+## How a node gets on the tree
+
+Never by being easy to log. Derive each one in three steps, and keep the first two next to the
+metric so the next reader can check the reasoning rather than the number alone:
+
+| Goal (in words) | Signals (observable behaviour) | Metric (with window and denominator) |
+| --- | --- | --- |
+| <what success means for the user here> | <what they'd do, or stop doing, if it worked — including the failure-shaped signals: abandonment, retries, tickets> | <the rate you can actually compute> |
+
+For a user-facing surface, the five categories worth choosing between — happiness, engagement,
+adoption, retention, task success — and the rule that you pick one or two rather than filling in
+all five, are in
+`${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/evidence-and-experimentation.md`.
+
 ## Guardrails
 
 The metrics that must not get worse while the others improve: latency, error rate, support volume,

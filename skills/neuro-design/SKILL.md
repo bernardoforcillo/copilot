@@ -20,6 +20,17 @@ For reviewing an *existing* UI instead of building one, use the `neuro-design-au
 
 Full sources: `references/bibliography.md`.
 
+## The constants underneath the lenses
+
+`references/foundations/perceptual-limits.md` is the tier below the six lenses: the fixed constants
+they are guidance for — the ~2° high-acuity window, ~4 chunks of working memory, serial attention,
+change blindness, Fitts's logarithmic pointing time, Hick–Hyman's logarithmic choice time, and the
+100 ms / 1 s / 10 s response thresholds — plus the signal-detection argument that makes an
+attention-claiming element that is usually not worth attending to a *negative* for the whole
+channel. Read it when a finding is disputed: argue from the constant, and withdraw the finding when
+the constant doesn't apply (an expert recalling rather than searching, a non-visual channel, an
+interaction where slowing the user down is the point).
+
 ## Cross-domain lenses
 
 Twenty adjacent fields whose research transfers to interface design. Each augments one or more core lenses and carries its own evidence and boundary conditions ("where the analogy breaks"). Read on demand.

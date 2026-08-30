@@ -46,6 +46,18 @@ Prefer network-based growth over paid one-shot campaigns; it's what actually com
 
 **Directory and launch-platform plays.** Product Hunt-style launch-day pushes, relevant vertical directories, and adjacent newsletters whose audience already overlaps the target buyer. These are one-time or periodic spikes, not loops — useful for a launch moment, not a substitute for the compounding mechanics above.
 
+## The arithmetic underneath, and when to withdraw a recommendation
+
+Read `${CLAUDE_PLUGIN_ROOT}/skills/growth/references/foundations/loops-and-saturation.md` before
+issuing a growth recommendation, and argue from it when one is contested: the stock equation and
+its two regimes (a constant-flow channel plateaus at a/c; a loop compounds only when k > c and
+otherwise multiplies the plateau by 1/(1−k/c)), churn appearing in the denominator of both the
+plateau and lifetime value, cost per acquisition as a rising curve inside every channel, and
+payback horizon as a financing constraint. **State k and c as measured numbers or as explicitly
+labelled estimates** — a loop recommendation with no k is a preference. Where the equation doesn't
+describe the business (one-shot purchase, a market too small for a loop, one enterprise deal a
+quarter, gated distribution), say so and drop the loop framing instead of applying it anyway.
+
 ## Prioritization: ICE and RICE
 
 Use **ICE** (Impact, Confidence, Ease — Sean Ellis, documented in *Hacking Growth*, Ellis & Brown, 2017) for fast weekly triage across a backlog of growth ideas, when there isn't yet real usage data to ground the scoring. Move to **RICE** (Reach, Impact, Confidence, Effort — developed at Intercom) once real reach and usage data exists to make the Reach term meaningful, since RICE's extra rigor is wasted on a guess.

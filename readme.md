@@ -11,7 +11,12 @@ operating model that decides what's worth building at all. Single-maintainer, so
 Design decisions and reviews grounded in cited neuroscience/cognitive-science research
 (attention, cognitive load, perception & color, motor interaction, emotion, typography).
 
-- Skill `neuro-design` — apply the six lenses while building a UI.
+- Skill `neuro-design` — apply the six lenses while building a UI, over
+  `references/foundations/perceptual-limits.md`: the fixed constants the lenses are guidance for
+  (acuity window, working-memory chunks, serial attention, Fitts's and Hick–Hyman's logarithms, the
+  100 ms / 1 s / 10 s thresholds) and the signal-detection argument that makes an
+  attention-claiming element which is usually not worth attending to a negative for the whole
+  interface.
 - Skill `neuro-design-audit` — review an existing UI against the same lenses, inline.
 - Agent `neuro-design-reviewer` — delegate an isolated, structured second-opinion critique.
 
@@ -35,23 +40,40 @@ definition) plus concrete company case studies (Amazon's PRFAQ, Superhuman's PMF
 DoorDash's experimentation platform).
 
 - Skill `prd` — facilitates a five-phase design-thinking dialogue, writes a PRD, hands off to
-  `superpowers:brainstorming` for the technical spec.
+  `superpowers:brainstorming` for the technical spec. Its
+  `references/foundations/demand-and-discovery.md` derives the shape from the mechanism: demand is
+  revealed by behaviour rather than statement, the base rate says most changes move nothing, and a
+  document inherits the accuracy of its evidence rather than of its detail — plus the contexts
+  where discovery doesn't apply because the requirement is already fixed.
 - Agent `product-strategist` — the research engine `prd` dispatches per phase; peer-dispatches
   the three lenses below for Ideate.
-- Agent `growth-marketer` / skill `growth` — network-based growth strategy and metrics diagnosis.
+- Agent `growth-marketer` / skill `growth` — network-based growth strategy and metrics diagnosis,
+  under `growth/references/foundations/loops-and-saturation.md`: the stock equation and its two
+  regimes (a constant-flow channel plateaus at a/c; a loop compounds only when k beats churn), churn
+  in the denominator of both the plateau and lifetime value, cost per acquisition as a rising curve
+  rather than a number, and payback horizon as a financing constraint.
 - Agent `gtm-engineer` / skill `gtm` — the doer: copy, SEO, analytics, signal-based GTM automation.
 - In-product UX questions route to `neuro-design-reviewer` above instead of a separate agent.
 
 ### Software architecture
-- Skill `software-architecture` with four reference files: two technology-agnostic (scaling/
-  infra trigger-action rules; layered code-organization/dependency-direction rules), two
-  concrete to Bernardo's own Go + Vite/React + Kubernetes/Flux stack.
-- Agent `software-architect` — reviews a design/PR against all four by default; scaffolds a
-  new service, module, or k8s app/channel on request.
+- Skill `software-architecture` with five reference files: three technology-agnostic (scaling/
+  infra trigger-action rules; layered code-organization/dependency-direction rules; the code-review
+  standard — approve on overall code health, why diff size decides what review catches, the
+  one-business-day response, what CI owns versus what a human is for, and the priors that change
+  when the diff came from an agent), two concrete to Bernardo's own Go + Vite/React +
+  Kubernetes/Flux stack.
+- Agent `software-architect` — the *shape*: reviews a design against every applicable file, or
+  scaffolds a new service, module, or k8s app/channel on request.
+- Agent `code-reviewer` — the *change*: reviews a diff, a PR, or a working tree against the
+  code-review standard and returns one verdict (approve / approve with nits / changes requested /
+  split first), findings separated into blocking, suggestion and nit, and a fix loop when you want
+  them applied rather than listed. Hands a finding up to `software-architect` when it stops being
+  about the diff and starts being about the boundary, and to `operating-partner` when the honest
+  finding is that the change shouldn't exist yet.
 
 ### Operating model
 How work gets chosen, how much rigor it earns, who owns it end to end, what counts as evidence, and
-what happens to a system you inherit rather than start. Twelve reference files in two tiers.
+what happens to a system you inherit rather than start. Twenty-one reference files in three tiers.
 
 *Core, one per principle*: radical simplicity (the burden of proof sits on every complication, not
 on the simple version), ownership and execution, impact and prioritization by expected value,
@@ -62,27 +84,64 @@ scale and at codebase scale), talent and standards.
 in a shared layer, when extraction is earned, whether the platform is paying), pricing and value
 capture (the business half — packaging before price, levers ordered by reversibility, and the line
 between monetization and extraction), reliability and incidents (reliability as a budget set by
-maturity, and what an incident owes you), decision latency (one-way vs two-way doors, batch size,
-work in progress as rotting inventory), limits and failure modes (where this model does not
-transfer, and how it damages itself where it does), and worked examples (four end-to-end passes
-with real verdicts).
+maturity, the error budget as the thing that makes a target operational, a ceiling on toil, how the
+incident itself is run when one person is command, operations and communications at once, and what
+an incident owes you), decision latency (one-way vs two-way doors, batch size, work in progress as
+rotting inventory, and the four delivery measures that say whether speed was bought at the cost of
+stability), limits and failure modes (where this model does not transfer, and how it damages itself
+where it does), and worked examples (four end-to-end passes with real verdicts).
 
 *Foundations, under `references/foundations/`*: the mechanism each principle is derived from, so a
 rule can be argued with instead of obeyed — interaction combinatorics and essential-vs-accidental
 complexity; value of information, base rates and the sample-size arithmetic that says what a small
-product can and can't settle; reversibility as the axis decisions actually sort on; Little's Law
-and the 1/(1−ρ) latency curve; compounding, learning curves and transaction costs; agency costs and
-repeated games. Each file ends with the condition under which its mechanism is absent — which is
+product can and can't settle; reversibility as the axis decisions actually sort on; Little's Law,
+the 1/(1−ρ) latency curve, and why batch size puts speed and stability on the same side rather than
+opposite ones; compounding, learning curves and transaction costs; agency costs and repeated games.
+Four of the ten cover the operational half: availability composing along a dependency chain and
+the correlation ceiling that decides what redundancy is actually worth (so the optimum sits below
+100% by arithmetic, not resignation); operational load that scales with the system against a fixed
+capacity, which saturates and then locks, plus Amdahl's bound on what automation can reach; and
+defect filters composing as ∏(1−pᵢ) only where they fail independently, with fixed reviewer
+attention making diff size the control variable and the author/reviewer information gap deciding
+what a review is allowed to block; and knowledge decay — code is checked continuously, documents
+are checked by nobody, so the durable half gets written and the volatile half gets generated or
+deleted. Each file ends with the condition under which its mechanism is absent — which is
 also the condition under which the principle above it stops being true. The derivation table in
 the skill maps principle → mechanism → what voids it.
 
+Two files in the tier are about the tier rather than in it. `conflicting-mechanisms.md` handles the
+case a derivation table cannot: two mechanisms both present and predicting opposite actions — delete
+the fallback or keep it, small batches or an atomic cutover, automate the toil or keep the operator
+sharp. A conflict isn't a contradiction, since each side prices a different cost, so the procedure
+is to put both in the same units, compare magnitudes before directions (most conflicts are lopsided
+by 10× and only look balanced because both sides were argued qualitatively), find the crossover
+point instead of a winner, break a genuine tie with reversibility, and otherwise admit the decision
+is under-determined by mechanism and hand it to whoever owns the outcome. It tabulates the nine
+standing conflicts inside this plugin and what each side of them is pricing.
+
+And `references/foundations/how-to-argue.md` — the ladder of
+grounds (measured here > measured elsewhere > derived from a model whose assumptions hold here >
+published practice > analogy > authority), the four parts a derivation must contain, "hard to vary"
+as the working test, and the three ways a mechanism argument fails (theatre, over-transfer, and
+picking the mechanism that gives you the answer you wanted). It carries the case that justifies the calculator: a Hick's-law claim repeated in nearly every summary of that law — group 30 options into
+5 groups of 6 and the choice gets faster — turned out to be false the first time the arithmetic was
+actually executed, and the design desk's file now derives grouping from search cost instead.
+
 `references/provenance.md` traces every principle to its source — including the critical reporting
-on where the playbook does damage, the standard literature behind the foundations tier, and an
-explicit note on which files are this plugin's own construction rather than distillation.
+on where the playbook does damage, the site-reliability, engineering-practices and delivery-research
+literature behind the running-a-service half, the standard literature behind the foundations tier,
+and an explicit note on which files are this plugin's own construction rather than distillation,
+and which practices don't transfer below a certain scale.
 
 - Skill `operating-model` — the six principles, the operating-loop graph they gate, a *reduction
   loop* that strips unjustified complications one at a time until each survivor has a written
   justification, and the derivation table linking each principle to the mechanism it comes from.
+- Agent `reliability-engineer` — the operational half, run against a specific system: a
+  production-readiness review before a service carries real traffic, structure during a live
+  incident (restore first, split command from hands-on-the-system from comms, keep the live doc),
+  the postmortem afterwards, or an audit of service levels, alerting, on-call and toil. Reports
+  over-investment as plainly as gaps, never runs a command that mutates a running system, and never
+  states a threshold or a cost from memory.
 - Agent `operating-partner` — a full pass over a plan, diff, roadmap, or inherited codebase: it
   establishes whether the model applies to the target's domain at all, then which maturity column
   the product is in, then a verdict per principle (`aligned` / `unearned complexity` /
@@ -136,18 +195,62 @@ deployment — plus the step most modeling guides omit: carrying the model throu
 
 ### Project reference base
 `docs/engineering/` and `docs/product/` hold the blueprints a project copies into its own docs:
-system design and ADR templates, API and data-modeling guides, testing strategy, observability and
-SLOs, a security baseline, release and environments — and on the product side JTBD brief, PRD,
-metrics tree, experiment brief, pricing and packaging worksheet, roadmap and bets, launch
-readiness. Each is a page or two, each asks only for what changes a decision, and each points back
+system design and ADR templates, API and data-modeling guides, testing strategy (including the
+size contract that decides what a test may touch), observability and SLOs (golden signals and
+burn-rate alerting), a security baseline (identity, supply chain, build provenance), release and
+environments (with the production-readiness gate a service passes before it carries real traffic),
+and a blameless incident postmortem template — and on the product side JTBD brief, PRD, metrics
+tree, experiment brief, pricing and packaging worksheet, roadmap and bets, launch readiness. Each is a page or two, each asks only for what changes a decision, and each points back
 at the desk whose rules it applies.
 
 ## Checks
 
 `node scripts/check-plugin.mjs` validates the plugin's structure: skill/agent frontmatter, every
 path-shaped file reference, orphaned reference files, mermaid blocks (closed, and declaring a known
-diagram type), and whether `docs/architecture.md`'s dispatch graph and loop-adopters table still
-describe what exists. No dependencies; exit 0 means consistent.
+diagram type), whether `docs/architecture.md`'s dispatch graph and loop-adopters table still
+describe what exists, whether the counts written in prose ("the six references", "eleven
+foundations files", "seven end-to-end applications") still match the filesystem — that one earned
+its place by going stale four times in a single session — and whether every file in a
+`references/foundations/` directory keeps the tier's contract: it opens as a foundation, names the
+principle it generates and the mechanism, and ends with the condition that voids it.
+
+It also runs `scripts/mechanisms.mjs --test`. That file is the arithmetic of the foundations tier as
+runnable functions — serial and redundant availability, error budgets, queue multipliers, batch
+defect probability, filter escape probability, toil saturation and automation payback, growth
+plateau and lifetime value, Fitts and Hick — with a self-test pinning every figure quoted in the
+references and worked examples, so prose and model cannot drift apart. Use it directly on your own
+numbers: `node scripts/mechanisms.mjs serialAvailability 0.9999 0.999 0.9995`, or
+`node scripts/mechanisms.mjs list`. Both scripts have no dependencies; exit 0 means consistent.
+
+## Self-audit
+
+[`docs/self-audit.md`](docs/self-audit.md) runs the plugin's own rules against the plugin: the
+production-readiness gate applied to the artifact, the filter-composition analysis (which of this
+repo's checks are actually independent of each other — the answer is uncomfortable, since most of
+the prose is written and reviewed inside the same process), the complication ledger applied to its
+own reference files, this branch measured against its own diff-size rule, and the recurring manual
+work with the one item that was automated as a result. It is dated, and it says what to do when it
+goes stale.
+
+## Red team
+
+[`docs/red-team.md`](docs/red-team.md) is the pass that tries to break the plugin's own claims,
+using arithmetic, internal counterexamples and the repo's own history. Nine claims were attacked
+and none survived in its original form: two mediocre filters beat one good one *only while their
+misses are less than ~52% correlated*; small batches do **not** reduce how often something breaks
+(holding volume fixed, the number of defect-carrying releases rises toward volume × p — what falls
+is per-release rate, blast radius and time to restore); "every dependency is availability spent"
+counts hard dependencies only, since a degradable one leaves the serial product; the replica-versus
+rollback rule flips when fewer than half your incidents are self-inflicted; the toil ceiling's
+urgency swings from ~29 months to ~7 with the growth rate; LTV = revenue ÷ churn assumes a constant
+hazard and can be a third of the truth on a real cohort; "a stale document is worse than none" holds
+only when the reader can't tell it's stale, which makes dating the fix and deletion the exception;
+and the self-audit's own claim that the checker is independent of its author was half wrong — its
+execution is, its rule selection isn't.
+
+Each verdict changed the source file rather than being defended in the document, and every number is
+reproducible with `node scripts/mechanisms.mjs` — including `sweep`, which shows where a conclusion
+flips as a parameter moves.
 
 ## Evals
 
@@ -159,8 +262,11 @@ that never loads, and advice that loads reliably and is wrong.
   description actually discriminates.
 - `<skill>-tasks.json` — task prompts with objectively checkable assertions, written against the
   specific failures each desk exists to prevent (endorsing a split with no measured trigger,
-  optimising before deleting in a takeover, a sequence diagram with no failure path, a cost model
-  with rates asserted from memory).
+  optimising before deleting in a takeover, protecting a reliability target nobody is spending,
+  answering an incident with "be more careful", approving an unreviewable diff, a sequence diagram
+  with no failure path, a cost model with rates asserted from memory). `software-architecture`
+  has a task set without a trigger set, since that desk is reached by invocation rather than by
+  ambient triggering.
 
 See [evals/README.md](evals/README.md) for how to run them, what the first run measured (perfect
 precision, low recall on both new desks), what that configuration can and cannot resolve, and what

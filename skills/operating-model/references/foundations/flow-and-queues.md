@@ -13,7 +13,9 @@ John Little's 1961 result, which holds for any stable queue regardless of distri
 
 **L = λW** — items in the system = arrival rate × time in system
 
-Rearranged for the version that matters: **cycle time = WIP ÷ throughput.**
+Rearranged for the version that matters: **cycle time = WIP ÷ throughput**
+(`node scripts/mechanisms.mjs littlesLaw 6 2` — six open items at two finished a week is a
+three-week cycle time, and no amount of effort changes that arithmetic while WIP stays at six).
 
 Throughput is hard to change quickly; it's your actual capacity. WIP is trivially changeable — it's
 just how many things you allow to be open at once. So the fastest available lever on how long
@@ -32,6 +34,9 @@ waiting is ρ/(1−ρ), and time in system is 1/(μ(1−ρ)). The shape of 1/(1�
 | 80% | 5× |
 | 90% | 10× |
 | 95% | 20× |
+
+`node scripts/mechanisms.mjs queueMultiplier 0.9`. The batch arithmetic below is
+`batchDefectProbability n p`.
 
 Nothing dramatic happens at 80%; everything happens between 90% and 100%. A person or system
 planned to be fully busy is not efficient, it is a queue with unbounded wait — and the first
@@ -67,6 +72,49 @@ Large batches carry costs that compound rather than add:
 The empirical corroboration is in *Accelerate* (Forsgren, Humble, Kim, 2018): small batches, short
 lead time, and frequent deploys correlate with both higher throughput *and* higher stability —
 the trade-off people assume exists between speed and safety doesn't appear in the data.
+
+### Why speed and stability co-move rather than trade off
+
+The correlation is worth deriving, because taken as a bare finding it sounds like a claim that
+carefulness is free. It isn't; it's a claim about which variable both properties depend on.
+
+Expected loss from a release is **P(the release contains a defect) × time to restore**. Write a
+release as n independent changes each with defect probability p: P = 1 − (1 − p)ⁿ, rising with n.
+And time to restore has a diagnosis term that rises with n as well — with n changes in the batch,
+the candidate-cause set has n entries to eliminate, and the rollback, if it happens, reverts n
+changes' worth of value rather than one.
+
+So batch size appears in *both* factors, in the same direction. Halving it lowers the probability
+that a release is bad and shortens the recovery when one is — while also raising deploy frequency,
+because the transaction cost per change is what was blocking it. Nothing about "moving fast"
+produced the stability; **small batch size produced both**, and the observed trade-off in teams that
+haven't invested in the pipeline is the transaction cost talking: expensive releases make large
+batches locally rational, and large batches make failure both more likely and harder to undo.
+
+The corollary is a diagnosis rather than an aspiration. A team whose change failure rate rises as
+it deploys more often is not disproving the mechanism; it is reporting that its batches did not get
+smaller — the same volume, released more often, with the pipeline, tests, and rollback path
+unchanged.
+
+**What this argument does not say, and what a careless version of it claims.** Hold total change
+volume fixed and split it across more releases; the number of releases that carry a defect goes
+*up*, not down:
+
+| Releases for 100 changes at p = 0.05 | Releases carrying a defect |
+| --- | --- |
+| 1 | 0.99 |
+| 5 | 3.21 |
+| 10 | 4.01 |
+| 25 | 4.64 |
+| 100 | 5.00 |
+
+(`node scripts/mechanisms.mjs defectsPerPeriod 100 10 0.05`.) The limit is V·p — the defects were
+in the changes, and slicing the releases neither creates nor removes them. So small batches do not
+reduce how often something breaks. What they reduce is **per-release** failure probability (which
+is what the change-failure-rate metric measures), the candidate set during diagnosis, the blast
+radius of any one release, and therefore time to restore. The co-movement result is about *rate and
+recovery*, not about the count of incidents, and stating it as "you'll have fewer incidents" is an
+over-claim that the arithmetic refuses.
 
 ## Queues you can't see
 

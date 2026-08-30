@@ -1,5 +1,13 @@
 # Pricing and value capture
 
+**The mechanism under this file.** Two mechanisms make price different from other levers.
+`foundations/irreversibility-and-optionality.md`: a rise on the existing base is socially
+ratcheted — trivial to reverse in code, impossible to reverse in the relationship — so it belongs
+in the one-way-door category however small the diff. And `foundations/incentives-and-trust.md`:
+pricing is a move in a repeated game, so the cost lands in the periods after the one that booked
+the revenue. Both void for a product with no existing base and no repeat interaction, where a price
+is simply a number you are testing.
+
 The business half of the model, and the part with the sharpest edges. The claim underneath it:
 **price is a product decision, not a finance one** — it's the single highest-leverage variable in
 most software businesses, it's usually set once by guessing and then never revisited, and unlike
@@ -11,8 +19,11 @@ restraint, is exactly what earns the model its reputation.
 ## Why price dominates
 
 For a subscription product, revenue is price × conversion × retention. A 10% price increase that
-costs 5% of conversions is a net gain, arithmetically — and this is the calculation that drives
-every aggressive pricing move you've seen. Two things make it more dangerous than it looks:
+costs 5% of conversions is a net gain of 4.5%, arithmetically
+(`node scripts/mechanisms.mjs priceMoveRevenueChange 0.1 0.05`) — and this is the calculation that
+drives every aggressive pricing move you've seen. Note what the arithmetic holds constant to get
+that answer: retention. The same rise costing 15% of conversions is already a loss, and a rise that
+moves *churn* rather than conversion is not priced by this expression at all. Two things make it more dangerous than it looks:
 
 - **The effect isn't only on the margin.** Price is also a positioning signal, an expectation, and
   the term under which existing users agreed to be here. The conversion loss is measurable in a
@@ -58,7 +69,9 @@ If you do it, do it in a way you'd be willing to have quoted back to you:
   the most likely to feel betrayed. "They won't churn" is a true prediction and a bad reason.
 
 The documented version of the aggressive playbook: after acquisitions, price rises in the range of
-a doubling (Evernote's personal plan moved from roughly $100 to $249/yr, about an 86% increase),
+a doubling (Evernote's personal plan reportedly reached $249/yr; the increase depends entirely on
+which prior price you take as the base — from ~$100 it is +149%, from ~$135 it is +86%, and both
+figures circulate),
 free tiers sharply narrowed (WeTransfer capped free transfers at 10/month), and tiers consolidated
 upward (WeTransfer's $15 and $25 plans merged into a single $25 plan). It produced the margin. It
 also produced sustained public backlash, a lasting association between the acquirer's name and

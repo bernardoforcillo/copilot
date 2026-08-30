@@ -1,0 +1,47 @@
+{
+  "skill_name": "software-architecture",
+  "evals": [
+    {
+      "id": 1,
+      "name": "oversized-agent-pr",
+      "prompt": "An agent produced a 1,400-line PR for me: it adds the new export endpoint I asked for, but also refactors our HTTP middleware, adds a retry wrapper with exponential backoff around our database calls, and introduces a new `utils/strings.go` with a slugify function. Tests are green. Do I merge it?",
+      "expected_output": "A review that asks for the change to be split, judges it against overall code health rather than perfection, flags the unearned retry complication and the possibly duplicated helper, and states that approving makes the reviewer the owner.",
+      "files": [],
+      "assertions": [
+        "Declines to approve as-is and asks for the change to be split into separately reviewable pieces, separating refactor from behaviour change",
+        "Flags the retry-with-backoff wrapper as a complication with no stated trigger rather than as a robustness improvement",
+        "Raises the possibility that the new string helper duplicates something already in the codebase, and says to check",
+        "Notes that green tests are not the review signal — that mocks or implementation-asserting tests can pass while proving nothing",
+        "States that whoever approves the change owns it, rather than treating agent authorship as a mitigating factor"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "review-that-will-not-converge",
+      "prompt": "I've been going back and forth on a colleague's 90-line PR for three days. It works and it's tested, but it's not structured the way I'd have written it — they used a switch where I'd have used a map, and the variable names are longer than our usual style. They're getting frustrated. What should I do?",
+      "expected_output": "An answer that applies the code-health standard, distinguishes blocking findings from preferences, ends the round-trip, and names review latency as the real cost being paid.",
+      "files": [],
+      "assertions": [
+        "Applies the standard that a change is approved once it definitely improves the overall code health of the system, even if it is not what the reviewer would have written",
+        "Classifies the switch-versus-map and naming points as preferences or nits rather than blocking findings, unless a written project convention says otherwise",
+        "Recommends approving (with comments if needed) to end the round-trip rather than continuing the exchange",
+        "Names the three-day latency itself as a cost — to the author's context and to everything queued behind it",
+        "Distinguishes a preference from a principle grounded in a technical fact, a measurement, or a written convention"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "indivisible-change-pushback",
+      "prompt": "You told me to split my 1,100-line PR. I can't: it's a single storage-format migration — the writer, the reader, the backfill job and the generated schema types all have to change in one commit or the service can't start. What now?",
+      "expected_output": "A response that goes to the mechanism behind the size rule, accepts that this change is genuinely indivisible, and switches from splitting to reducing the risk of the batch — while separating the parts of the diff that are still separable.",
+      "files": [],
+      "assertions": [
+        "Names why size matters (reviewer attention per change is roughly fixed, so detection per line falls and a large review becomes sampling) rather than repeating the rule",
+        "Accepts the indivisibility instead of insisting on a split, and does not treat the pushback as non-compliance",
+        "Proposes reducing the risk of the batch instead — rehearsal, staged rollout, an expand/contract migration, a tested rollback, or a dry run on real data",
+        "Separates what is still separable: generated files, mechanical renames, or a preparatory refactor that could land first, so the reviewable surface shrinks even if the cutover cannot",
+        "Says what the review should concentrate its remaining attention on given that it cannot read every line with equal care"
+      ]
+    }
+  ]
+}

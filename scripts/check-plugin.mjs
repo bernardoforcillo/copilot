@@ -228,7 +228,128 @@ if (existsSync(join(root, 'evals'))) {
   }
 }
 
-// --- (8) plugin.json and marketplace.json stay in sync ---------------------
+// --- (8) counts stated in prose match what's on disk -----------------------
+// Written numbers drift silently: a file gets added and the sentence that counts
+// them keeps its old word. Every number checked here is one that has actually gone
+// stale in this repo, which is what earns the check.
+const WORDS = {
+  zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8,
+  nine: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15,
+  sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19, twenty: 20,
+  'twenty-one': 21, 'twenty-two': 22, 'twenty-three': 23, 'twenty-four': 24, 'twenty-five': 25,
+};
+const asNumber = (token) => {
+  const t = token.toLowerCase();
+  if (/^\d+$/.test(t)) return Number(t);
+  return Object.prototype.hasOwnProperty.call(WORDS, t) ? WORDS[t] : null;
+};
+const countMd = (dir, recursive = false) => {
+  if (!existsSync(join(root, dir))) return 0;
+  return readdirSync(join(root, dir)).reduce((n, entry) => {
+    const rel = join(dir, entry);
+    if (statSync(join(root, rel)).isDirectory()) return n + (recursive ? countMd(rel, true) : 0);
+    return n + (entry.endsWith('.md') ? 1 : 0);
+  }, 0);
+};
+const claim = (file, label, stated, actual) => {
+  const n = asNumber(stated);
+  if (n === null) return; // not a number word we know — leave it alone
+  if (n !== actual) p(`${file}: says ${stated} ${label}, but ${actual} exist on disk`);
+};
+
+for (const skill of skills) {
+  const file = join('skills', skill, 'SKILL.md');
+  if (!existsSync(join(root, file))) continue;
+  const text = readFileSync(join(root, file), 'utf8');
+  const heading = text.match(/^##\s+The\s+([A-Za-z-]+|\d+)\s+references\s*$/m);
+  if (heading) claim(file, 'reference files', heading[1], countMd(join('skills', skill, 'references')));
+  for (const m of text.matchAll(/([A-Za-z-]+|\d+)\s+files under `references\/foundations\/`/g)) {
+    claim(file, 'foundations files', m[1], countMd(join('skills', skill, 'references', 'foundations')));
+  }
+  for (const m of text.matchAll(/and\s+([a-z-]+|\d+)\s+foundations\s+\(/g)) {
+    claim(file, 'foundations files', m[1], countMd(join('skills', skill, 'references', 'foundations')));
+  }
+}
+
+const adopterClaim = arch.match(/^([A-Za-z-]+|\d+)\s+skills\/agents in this plugin do review/m);
+if (adopterClaim)
+  claim('docs/architecture.md', 'loop adopters', adopterClaim[1], new Set(adopterRows).size);
+
+for (const file of docFiles) {
+  const text = readFileSync(join(root, file), 'utf8');
+  const worked = text.match(/^([A-Za-z-]+|\d+)\s+end-to-end applications/m);
+  if (worked)
+    claim(file, 'worked examples', worked[1], [...text.matchAll(/^##\s+\d+\.\s/gm)].length);
+}
+
+// --- (9) the foundations tier keeps its own contract -----------------------
+// A file in this tier claims to derive a rule from a mechanism. That claim has a shape:
+// what it generates, the mechanism itself, and the condition under which the mechanism is
+// absent — the last one being the part that makes the rest usable in a context nobody
+// wrote it for. A file missing it is an assertion wearing a derivation's title.
+for (const skill of skills) {
+  const dir = join('skills', skill, 'references', 'foundations');
+  if (!existsSync(join(root, dir))) continue;
+  for (const entry of readdirSync(join(root, dir)).filter((f) => f.endsWith('.md'))) {
+    const file = join(dir, entry);
+    const text = readFileSync(join(root, file), 'utf8');
+    if (!/^# Foundation: /m.test(text)) p(`${file}: does not open with '# Foundation: <topic>'`);
+    if (!/\*\*The principles? it generates:\*\*/.test(text))
+      p(`${file}: no '**The principle(s) it generates:**' line — a foundation has to say which rule it is under`);
+    if (!/\*\*The mechanism:\*\*/.test(text))
+      p(`${file}: no '**The mechanism:**' line`);
+    if (!/^##\s+When th(is|ese)\b.*absent/m.test(text))
+      p(`${file}: no '## When this mechanism is absent' section — a rule with no voiding condition is taken on authority`);
+    // The operating-model tier is indexed by that skill's derivation table; a foundation it
+    // doesn't reach is unreachable from the desk it belongs to, whatever else mentions it.
+    if (skill === 'operating-model') {
+      const skillText = readFileSync(join(root, 'skills', skill, 'SKILL.md'), 'utf8');
+      if (!skillText.includes(entry))
+        p(`${file}: not referenced from skills/${skill}/SKILL.md (the derivation table is the tier's index)`);
+    }
+  }
+}
+
+// --- (10) the argument chain is connected ---------------------------------
+// A reader reaches a reference file directly — that is what progressive disclosure means —
+// so a rule whose mechanism is only named in SKILL.md's derivation table is, from where they
+// are standing, taken on authority. Where a skill has a foundations tier, every top-level
+// reference file has to name at least one file in it. Indexes are exempt: they point at
+// everything by construction and derive nothing.
+const CHAIN_EXEMPT = new Set(['provenance.md', 'bibliography.md']);
+for (const skill of skills) {
+  const refDir = join('skills', skill, 'references');
+  const foundDir = join(refDir, 'foundations');
+  if (!existsSync(join(root, foundDir))) continue;
+  for (const entry of readdirSync(join(root, refDir))) {
+    if (!entry.endsWith('.md') || CHAIN_EXEMPT.has(entry)) continue;
+    const file = join(refDir, entry);
+    const text = readFileSync(join(root, file), 'utf8');
+    if (!/foundations\/[a-z0-9-]+\.md/.test(text))
+      p(`${file}: names no file in foundations/ — the rule it states is reachable only as an assertion`);
+  }
+}
+
+// --- (11) the arithmetic in the references still follows from the models ----
+// The figures quoted in the foundations and the worked examples are computed, not asserted.
+// mechanisms.mjs holds the models and pins those figures; if either side moves alone, this fails.
+try {
+  const mech = await import('./mechanisms.mjs');
+  const { checks: mechChecks, failed } = mech.selfTest();
+  for (const c of failed) p(`scripts/mechanisms.mjs: ${c.label} — got ${c.actual}, expected ${c.expected}`);
+  if (!mechChecks.length) p('scripts/mechanisms.mjs: self-test ran no checks');
+  // A model no reference file names is a complication with one call site — its own test.
+  // Either the prose that needs it is missing, or the model is.
+  const prose = [...docFiles].map((f) => readFileSync(join(root, f), 'utf8')).join('\n');
+  for (const name of Object.keys(mech).filter((k) => k !== 'selfTest')) {
+    if (!prose.includes(name))
+      p(`scripts/mechanisms.mjs: model '${name}' is named in no reference file — dead model, or missing prose`);
+  }
+} catch (err) {
+  p(`scripts/mechanisms.mjs: self-test could not run (${err.message})`);
+}
+
+// --- (12) plugin.json and marketplace.json stay in sync --------------------
 const plugin = JSON.parse(readFileSync(join(root, '.claude-plugin/plugin.json'), 'utf8'));
 const market = JSON.parse(readFileSync(join(root, '.claude-plugin/marketplace.json'), 'utf8'));
 const entry = (market.plugins || []).find((x) => x.name === plugin.name);

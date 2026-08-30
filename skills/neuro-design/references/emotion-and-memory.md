@@ -1,5 +1,11 @@
 # Emotion, aesthetics & memory of experience
 
+**The constants under this lens.** The one from `foundations/perceptual-limits.md` that binds here
+is signal detection: a receiver facing enough false alarms rationally stops responding, so an
+interface that manufactures urgency it cannot back up spends the channel it will need later. The
+rest of this lens rests on its own cited evidence rather than on a fixed perceptual constant, and
+saying which is which is what keeps a finding arguable.
+
 Interfaces are not evaluated purely on task completion — they are felt, and they are remembered. Two people can complete the identical flow with the identical number of clicks and walk away with opposite impressions, because affect is generated on a separate, faster track than deliberate judgment, and because memory of an experience is a *reconstruction*, not a recording. This lens covers three linked ideas: (1) emotion shapes cognition and behavior in predictable, mechanistic ways (Norman's three processing levels; positive affect literally broadens thinking and problem-solving); (2) global judgments of an experience — trust, likability, "usability" itself — are colored by affect that is often set before conscious analysis even starts (50 ms first impressions, the aesthetic-usability effect, processing fluency); and (3) the *memory* of an experience, which is what drives return visits, referrals, and reviews, is not an average of every moment but a biased summary dominated by the peak, the end, and duration is largely ignored (peak-end rule, duration neglect). Underneath both effects sits basic neuroscience of reward and loss — dopaminergic reward-prediction-error signaling, and the asymmetric weight the mind gives to losses over equivalent gains. All of these mechanisms are dual-use: they can make a genuinely good product feel as good as it is, or they can be aimed at extracting behavior a clear-headed user wouldn't choose. This file treats the ethical boundary as part of the design principle, not an appendix to it.
 
 ## Three levels of emotional design (Norman, 2004)

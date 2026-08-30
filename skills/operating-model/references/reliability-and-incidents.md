@@ -23,6 +23,87 @@ build:
 The bottom row is the floor at every maturity: data loss and a lost credential are the two failures
 that don't get a proportionality argument, because they can't be recovered from by shipping harder.
 
+## The error budget is what makes the target operational
+
+A reliability target that nothing depends on is a sentence in a document. What turns it into an
+operating instrument is stating it as a budget you are allowed to spend:
+
+- **Pick one or two indicators the user actually feels** — the share of requests that succeed, the
+  latency at a percentile, on the flows that matter. Not uptime of a machine, not CPU.
+- **Set the target from what the product needs**, not from the number of nines that sounds
+  serious. 99.9% over a month is about 43 minutes of failure; 99.99% is about 4, and costs roughly
+  an order of magnitude more to hold. Most products should buy the first one and spend the
+  difference on the product.
+- **The gap between the target and 100% is the budget**, and it is meant to be spent — on releases,
+  migrations, and experiments. A quarter that ends with the budget untouched is not a triumph; it
+  says the target is too strict, or that you bought reliability with velocity you could have spent
+  elsewhere.
+- **The budget has a consequence attached, or it isn't a budget.** Budget remaining → keep
+  shipping. Budget exhausted → reliability work outranks feature work until it recovers, and that
+  ranking is not renegotiated during the incident that caused it. Deciding this in advance is what
+  stops the argument from being had while everyone is upset.
+- **Below the maturity line where an SLO makes sense, say so** rather than inventing one. A
+  prototype with 40 users has no meaningful denominator; the honest version is the "acceptable
+  failure" row of the table above.
+
+The mechanics — indicator specification, burn-rate alerting, the arithmetic of a monthly window —
+are in the project blueprint `../../../docs/engineering/observability-and-slos.md`. This file only
+fixes the operating rule: **the target is a number you chose, the budget is the permission it buys,
+and the consequence of exhausting it is written down before it happens.**
+
+Why the optimum sits below 100% at all — availability multiplying along the dependency chain, the
+correlation ceiling on what redundancy can buy, and the geometric cost of each nine against a
+bounded benefit — is derived in `foundations/reliability-and-redundancy.md`. Read it when someone
+disputes the target, or before applying any of this to a context this desk wasn't written for.
+
+## Toil has a budget too
+
+Toil is operational work that is manual, repetitive, automatable, reactive, devoid of lasting
+value, and — the property that makes it dangerous — **grows in proportion to the thing it
+supports**. Restarting the stuck job every Monday is toil. Diagnosing why it sticks is not.
+
+- **Cap it deliberately.** The standard rule is that no more than half of operational time should
+  be toil; at very small scale the number matters less than the trend. If your operational load is
+  growing at the same rate as your usage, you are on a line that ends with no time to build
+  anything.
+- **Measure it before you argue about it.** One number, reconstructed from your own week: hours
+  spent on work that produced nothing that lasts. Most people are surprised by it in one direction
+  or the other, which is the point.
+- **Automate the top item, not the set.** The single most frequent manual intervention, automated
+  once, usually collapses a quarter of the total — and automating the tail is itself unearned
+  complexity (`radical-simplicity.md`).
+- **Accepting toil is a legitimate answer**, once. "This runs every Monday, takes four minutes, and
+  we are choosing to keep doing it by hand" is a decision. Doing it every Monday while calling it
+  operations, and never pricing it, is not.
+
+The ceiling is not a preference: `foundations/load-and-automation.md` derives it — load that grows
+with the system against a fixed capacity saturates, and the automation that would relieve it is
+funded from the capacity being consumed, so the escape gets unaffordable exactly when it becomes
+necessary. It also carries the payback arithmetic, Amdahl's bound on what automation can reach, and
+the reason to stabilize a procedure before encoding it.
+
+## Running the incident itself
+
+Even alone, the incident has separable jobs, and the failure mode is doing all of them at once
+badly:
+
+- **Command** — decides what happens next and holds the current picture. Whoever holds this does
+  *not* also do the debugging: the moment they're deep in a log, nobody is steering.
+- **Operations** — the only role that touches the system. One pair of hands changing things at a
+  time; two people fixing in parallel is how the second incident starts.
+- **Communications** — tells users and anyone waiting, on a rhythm, even when the update is "still
+  investigating". Silence is read as absence.
+
+At one or two people you wear all three, so make the switching explicit: "I'm stopping the
+diagnosis to post an update" is a role change, and saying it out loud (or in the channel) is what
+stops the update from never happening. Two more rules that pay for themselves:
+
+- **Declare early, downgrade freely.** Declaring an incident that turns out to be small costs a
+  message; not declaring one that turns out to be large costs the first thirty minutes.
+- **Keep a live document as you go** — timeline, what you've tried, what you've ruled out, current
+  hypothesis. It is the handover if someone joins, and it is 80% of the postmortem you would
+  otherwise reconstruct from memory a day later, badly.
+
 ## Alert on the symptom, not the cause
 
 Two rules that cover most alerting failure:
@@ -47,10 +128,19 @@ deliverables, in order, and the second one is non-negotiable:
    understand is correct; understanding it while users are down is not.
 2. **A regression test that fails on the old code.** This is the mechanism that converts an
    incident into a permanent improvement, and the single highest-return habit in this file. No test
-   means the same failure is still available to you, and you've paid for it twice.
+   means the same failure is still available to you, and you've paid for it twice. The reason it's
+   the highest-return one is a base-rate argument, not a habit:
+   `foundations/defects-and-detection.md` — a defect class that has already occurred has
+   demonstrated that the path is reachable and that your process can produce it, which puts its
+   recurrence probability far above the prior for defects in general.
 3. **A written cause, blameless and specific.** What happened, what made it possible, what would
    have caught it earlier, what changes — with an owner and a date, or it isn't an action item.
    "Human error" is never a cause; the cause is the system that allowed one keystroke to do that.
+   Agree the *triggers* for writing a full one in advance — data loss, a large share of the error
+   budget in one event, a manual restore, or the same failure twice — so that writing one is never
+   a judgment about how embarrassing it was. The blueprint to fill in is
+   `../../../docs/engineering/incident-postmortem-template.md`; below the triggers, the note and
+   the regression test are the whole obligation.
 
 An incident is also evidence in the sense `radical-simplicity.md` means it: a failure that already
 happened is exactly the proof that earns a complication. The retry logic, the queue, the extra
@@ -92,3 +182,9 @@ to it.
 - **Prototype-grade reliability on a paid product**, or **mature-grade reliability on a prototype**
   — both are the maturity mismatch, and the second one is the expensive-and-invisible direction.
 - **No tested restore.** Backups whose restore path has never been run are a belief, not a backup.
+- **An SLO with no consequence.** A target published, missed, and followed by the same roadmap.
+  The budget's only function is what it changes when it runs out.
+- **Spending nothing.** A budget that ends every month untouched is reliability bought with
+  velocity that nobody decided to spend.
+- **Toil re-labelled as ownership.** The same manual fix every week, never counted, never
+  automated, and described as being close to the system.

@@ -41,7 +41,9 @@ extraction rule is the third consumer and not the second (`platform-and-compound
 *k* ≥ 3 both to justify the cost and to know what actually varies.
 
 **Learning curves.** Wright's law (1936), observed across manufacturing and repeatedly in software
-delivery: unit cost falls by a roughly constant percentage per doubling of *cumulative* experience.
+delivery: unit cost falls by a roughly constant percentage per doubling of *cumulative* experience
+(`node scripts/mechanisms.mjs learningCurveUnitCost 100 8 0.85` — at an 85% curve, the eighth unit
+costs about 61% of the first).
 Note the variable — cumulative output, not elapsed time. Doing the same class of thing repeatedly
 and keeping what you learn is what moves you down the curve; doing many unrelated things once each
 never does. This is the mechanism behind "the *n*-th transformation is cheaper than the first" and

@@ -44,10 +44,11 @@ Then load the situational ones by detecting the signals directly rather than ask
 - `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/pricing-and-value-capture.md` — when the
   target touches price, packaging, tiers, trial, or a free-tier boundary.
 - `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/reliability-and-incidents.md` — when the
-  target is an incident, a postmortem, an alerting or on-call setup, or a reliability investment.
+  target is an incident, a postmortem, an alerting or on-call setup, a service level objective or
+  error budget, recurring manual operational work, or a reliability investment.
 - `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/decision-latency.md` — when the target is
   a decision that has been open a while, a large batch of changes, a release-cadence or review-process
-  question, or a recurring meeting.
+  question, a delivery-metrics question, or a recurring meeting.
 
 `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/worked-examples.md` carries four full passes in the exact format this agent reports in —
 read it when calibrating what a verdict should look like, not as an input to a specific target.
@@ -102,6 +103,8 @@ term, the agency gap — and check honestly whether it is actually operating in 
 context. **If the mechanism isn't present, withdraw the verdict.** A rule defended by precedent
 after its mechanism has been shown absent is exactly the cargo-culting this desk exists to prevent,
 and it is worse coming from you than from anyone else in the loop.
+
+The standard this obeys is `${CLAUDE_PLUGIN_ROOT}/skills/operating-model/references/foundations/how-to-argue.md`: say which rung of the ladder your grounds sit on, state the assumption the mechanism needs, name the observation that would retire your finding — and check whether you picked this mechanism because it applies or because it gives you the answer you wanted.
 
 ## Review mode (default)
 

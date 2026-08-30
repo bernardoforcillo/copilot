@@ -46,22 +46,23 @@ they don't need a specialist, they need to actually be done:
 
 ## Step 2 — router, not shotgun
 
-Not every decision needs all four lens agents. Read the decision, then use this table to decide
+Not every decision needs all six lens agents. Read the decision, then use this table to decide
 which lenses actually apply:
 
 | Munger discipline | Lens | Dispatch |
 | --- | --- | --- |
 | Psychology (25 tendencies) | Cognitive bias / persuasion | `neuro-design-reviewer` |
 | Microeconomics | Incentives / competitive dynamics | `growth-marketer` |
-| Engineering/Physics | Margin of safety / redundancy / scale | `software-architect` |
+| Engineering/Physics | Margin of safety / redundancy / scale | `software-architect` — or `reliability-engineer` when the decision is about a system already running (failure modes, budgets, operational load) |
 | Evidentiary reasoning | Avoiding self-deception / JTBD evidence | `product-strategist` |
 | Mathematics/probability | Compounding, expected value, base rates | `references/gap-disciplines.md` |
 | Capital allocation | Opportunity cost, earned complexity, kill criteria | `operating-partner` |
 | Biology/evolution | Competitive advantage, niches | `references/gap-disciplines.md` |
 
-Name which of the five lens agents — `neuro-design-reviewer`, `growth-marketer`,
-`software-architect`, `product-strategist`, `operating-partner` — actually apply to the decision
-in front of you (not all five by default), and which entries in `references/gap-disciplines.md`
+Name which of the six lens agents — `neuro-design-reviewer`, `growth-marketer`,
+`software-architect`, `reliability-engineer`, `product-strategist`, `operating-partner` — actually
+apply to the decision in front of you (not all six by default; the engineering row supplies one of
+its two, not both), and which entries in `references/gap-disciplines.md`
 are relevant (read that file directly; it has no dispatchable agent behind it, so it's applied
 inline rather than dispatched). Dispatch the applicable specialist agents in parallel,
 report-only, synchronous (`run_in_background: false` — this plugin's established peer-dispatch
@@ -98,7 +99,7 @@ When the Convergence check finds tension rather than agreement, this doesn't hav
 one pass — see the shared loop-until-converged pattern in `../../docs/architecture.md`.
 Convergence here means two or more independent lenses agree, **or** every applicable lens
 from the lens-mapping table has already been dispatched (this adopter's cap is the mapping
-table itself — at most five agent lenses plus the two gap-discipline entries — not a
+table itself — at most six agent lenses plus the two gap-discipline entries — not a
 separately-stated round number). Each round: dispatch the next applicable lens from the table
 that hasn't run yet, then re-run the synthesis. The double-counting guard above persists across
 every round, not just the round `product-strategist` ran in: once `product-strategist` has been

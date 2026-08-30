@@ -1,5 +1,11 @@
 # Motor control & interaction
 
+**The constants under this lens.** Fitts's law — movement time logarithmic in distance over target
+width, which makes edges and corners effectively infinite targets and small controls a permanent
+tax — is derived in `foundations/perceptual-limits.md`, along with the response thresholds
+(~100 ms, ~1 s, ~10 s). Fitts does not void for expert users; Hick largely does, which is why dense
+professional tools are correct for daily users and wrong for first encounters.
+
 Every tap, drag, click, and keystroke is a movement problem before it is a visual one. The motor system trades speed against accuracy in lawful, quantifiable ways, and the nervous system's feedback loops have real latencies that interface response times either respect or fight. This lens covers the mechanics of pointing (Fitts's law), the mechanics of dragging through constrained paths (the steering law), the perceptual thresholds that make software feel "instant" versus "slow," and the two-phase (ballistic + corrective) structure of every reach, tap, or drag a user makes. Get these numbers right and interaction feels effortless; violate them and no amount of visual polish will make a control feel responsive.
 
 ## Fitts's Law (Fitts, 1954)

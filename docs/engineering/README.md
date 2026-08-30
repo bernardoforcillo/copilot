@@ -16,6 +16,7 @@ what changes a decision.
 | [data-modeling-guide.md](data-modeling-guide.md) | Before the first migration | The life of the schema |
 | [testing-strategy.md](testing-strategy.md) | Once per project, revisited when maturity changes | Reviewed each maturity step |
 | [observability-and-slos.md](observability-and-slos.md) | When the first real user arrives | Reviewed after each incident |
+| [incident-postmortem-template.md](incident-postmortem-template.md) | After an incident that hits the triggers it lists | Until its action items close, then as a record |
 | [security-baseline.md](security-baseline.md) | Before the first deploy that handles real data | Reviewed quarterly |
 | [release-and-environments.md](release-and-environments.md) | Before the second environment exists | The life of the pipeline |
 
